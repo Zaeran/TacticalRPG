@@ -5,8 +5,6 @@ public class MovementScript : MonoBehaviour {
 	
 	bool isMoving = false;
 	Vector3[] pathList = new Vector3[0];
-	Vector3 startPoint;
-	Vector3 endPoint;
 	public float moveSpeed;
 	float startTime;
 	int currentPoint;
@@ -16,8 +14,6 @@ public class MovementScript : MonoBehaviour {
 		isMoving = true;
 		pathList = path;
 		currentPoint = 0;
-		startPoint = pathList[0];
-		endPoint = pathList[1];
 		startTime = Time.time;
 	}
 	

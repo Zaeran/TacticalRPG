@@ -3,21 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FindValidPoints : MonoBehaviour {
-
+	
+	int terrainLayerMask = 1 << 8;
 	Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
 	List<Vector4> validPoints;
-	
+		
 	public List<Vector4> GetPoints(int type, int maxRange, int maxJump){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
-		if(type == 1){ //move
+		switch(type){
+		case 1: //move
 			validPoints = GetValidMovePoints(maxRange, maxJump);
 			return validPoints;
+		case 2: // melee
+			validPoints = GetValidMeleePoints(maxRange, maxJump);
+			return validPoints;
+		default:
+			return new List<Vector4>();
 		}
-		return new List<Vector4>();
 	}
 	
 	private List<Vector4> GetValidMovePoints(int maxMove, int maxJump){
 		//declare variables
-		int terrainLayerMask = 1 << 8;
 		int heightDifference = 0;
 		int distanceWalked = 0;
 		RaycastHit currentPoint;
@@ -40,7 +45,6 @@ public class FindValidPoints : MonoBehaviour {
 		for(int i = maxMove; i > 0; i--){
 			moveTiles += maxMove * 4;
 		}
-		int x = 0;
 		//run for each tile
 		for(int i = 0; i < moveTiles; i++){
 			
@@ -54,7 +58,7 @@ public class FindValidPoints : MonoBehaviour {
 					foreach(RaycastHit rh in walkableTiles){
 						if(Physics.OverlapSphere(rh.point, 0.3f, ~terrainLayerMask).Length == 0){
 							heightDifference = Mathf.FloorToInt(rh.point.y - currentPoint.point.y + 0.1f);
-							if(heightDifference <= maxJump && heightDifference >= -maxJump){
+							if(Mathf.Abs(heightDifference) <= maxJump){
 								//adjacent point is within acceptable height limits
 								if(!positionList.Contains(rh.point)){
 									//point hasn't been travelled to before
@@ -78,5 +82,33 @@ public class FindValidPoints : MonoBehaviour {
 			}				
 		}
 		return finalPointList;
+	}
+	
+	private List<Vector4> GetValidMeleePoints(int maxRange, int maxJump){
+		int heightDifference = 0;
+		List<Vector4> validAttacks = new List<Vector4>();
+		RaycastHit currentPoint;
+		RaycastHit nextRayHit;
+		//test each direction
+		for(int moveDir = 0; moveDir < MoveDirections.Length; moveDir++){
+			Physics.Raycast(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)) + (Vector3.up * 30), Vector3.down, out currentPoint, 50, terrainLayerMask);
+			Vector3 testPoint = currentPoint.point;
+			int pointDistance = 1;
+			//make sure that the max attack range is not exceeded
+			for(int r = 1; r <= maxRange; r++){
+				Vector3 nextPoint = testPoint + MoveDirections[moveDir];
+				//raycast to get height of current point, then use raycasting to find if adjacent points are valid
+				Physics.Raycast(testPoint + (Vector3.up * 30), Vector3.down, out currentPoint, 50,terrainLayerMask);
+				if(Physics.Raycast(nextPoint + (Vector3.up * 30), Vector3.down, out nextRayHit, 50,terrainLayerMask)){
+					heightDifference = Mathf.FloorToInt(nextRayHit.point.y - currentPoint.point.y + 0.1f);
+					if(Mathf.Abs(heightDifference) <= maxJump){
+						validAttacks.Add(new Vector4(nextRayHit.point.x, nextRayHit.point.y, nextRayHit.point.z, pointDistance + 1));
+						pointDistance++;
+						testPoint = nextPoint;
+					}
+				}
+			}
+		}
+		return validAttacks;
 	}
 }

@@ -7,7 +7,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	RaycastHit rayhit;
 	int optionType = 0;
 	int groundOnlyLayer = 1 << 8;
-	int notMoveableLayer = 1 << 9;
 	Vector3 clickPosition = Vector3.zero;
 	Vector4 clickPosition4D = Vector4.zero;
 		
@@ -42,30 +41,43 @@ public class PlayerControlsScript : MonoBehaviour {
 							break;
 						}
 					}
-					if(optionType == 1){
+					switch(optionType){
+					case 1:
 						movePath = pathFind.StartPathFinding(clickPosition4D, validPoints, Attribute.maxJump);
 						if(movePath.Length > 0){
 							optionType = 0;
 							Draw.DestroyValidSquares();
 							Move.MoveToPoint(movePath);
 						}
-						
+						break;
+					case 2:
+						optionType = 0;
+						Debug.Log("ATTACK!");
+						Draw.DestroyValidSquares();
+						break;
+					default:
+						break;
 					}
 				}
 			}
 		}
 		if(optionType == 0){
 			if(Input.GetKeyDown(KeyCode.M)){
-				validPoints = findValid.GetPoints(1, Attribute.maxMove, Attribute.maxJump);
+				optionType = 1;	
+				validPoints = findValid.GetPoints(optionType, Attribute.maxMove, Attribute.maxJump);
 				Draw.DrawValidSquares(validPoints);
-				optionType = 1;
 			}
+			
+			if(Input.GetKeyDown(KeyCode.J)){
+				optionType = 2;
+				validPoints = findValid.GetPoints(optionType, 1, Attribute.maxJump);
+				Draw.DrawValidSquares(validPoints);
+			}
+			
 			
 		}
 		if(Input.GetKeyDown(KeyCode.N)){
 			Draw.DestroyValidSquares();
-			Vector4 test = new Vector4(1,2,3,5);
-			Vector3 test2 = test;
 			optionType = 0;
 		}
 	}

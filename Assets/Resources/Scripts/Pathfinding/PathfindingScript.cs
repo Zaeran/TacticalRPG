@@ -8,6 +8,10 @@ public class PathfindingScript : MonoBehaviour {
 	
 	//Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
 	public Vector3[] StartPathFinding(Vector4 endPos, List<Vector4> validPoints, int maxJump){
+		//fixes a glitch where a player would move to (0,0,0) is they clicked their own square
+		if(endPos.w == 0){
+			return new Vector3[]{transform.position};
+		}
 		return FindPath(endPos, validPoints, maxJump);
 	}
 	

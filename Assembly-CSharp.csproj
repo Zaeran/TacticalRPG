@@ -44,9 +44,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\AI\AIScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\FindValidPoints.cs" />
-     <Compile Include="Assets\Resources\Scripts\Pathfinding\NodeAttributes.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\AttributesScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\MovementScript.cs" />

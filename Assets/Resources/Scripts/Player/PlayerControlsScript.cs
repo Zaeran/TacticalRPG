@@ -18,6 +18,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	PathfindingScript pathFind;
 	PlayerDrawScript Draw;
 	AttributesScript Attribute;
+	MovementScript Move;
 	
 	
 	void Start () {
@@ -25,6 +26,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		pathFind = GetComponent<PathfindingScript>();
 		Draw = GetComponent<PlayerDrawScript>();
 		Attribute = GetComponent<AttributesScript>();
+		Move = GetComponent<MovementScript>();
 	}
 	
 	
@@ -45,11 +47,9 @@ public class PlayerControlsScript : MonoBehaviour {
 						if(movePath.Length > 0){
 							optionType = 0;
 							Draw.DestroyValidSquares();
+							Move.MoveToPoint(movePath);
 						}
-						Debug.Log("END POINT: " + clickPosition);
-						for(int k = 0; k < movePath.Length; k++){
-							Debug.Log(movePath[k]);
-						}
+						
 					}
 				}
 			}

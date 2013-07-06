@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{66F8293C-008F-DCA6-5420-E4ACD1398CA6}</ProjectGuid>
+	<ProjectGuid>{EE646792-0CE0-F56E-88C0-CFC74806661D}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -44,11 +44,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\FindValidPoints.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\RotateCamera.cs" />
+     <Compile Include="Assets\Resources\Scripts\Pathfinding\FindValidPoints.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\NodeAttributes.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\AttributesScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\MovementScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\PlayerDrawScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />

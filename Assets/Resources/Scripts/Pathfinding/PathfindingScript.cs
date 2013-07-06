@@ -24,17 +24,27 @@ public class PathfindingScript : MonoBehaviour {
 		}
 		
 		do{
+			int lowestPntHeight = 100;
+			Vector4 tempCurrentPoint = Vector4.zero;
 			foreach(Vector4 pnt in openList){
 				//test for points one G-Score lower than the current point
 				if(pnt.w == currentPoint.w - 1){
+					int pntHeight = Mathf.Abs((int)(pnt.y - currentPoint.y));
+					int xDistance = Mathf.Abs((int)(pnt.x - currentPoint.x));
+					int zDistance = Mathf.Abs((int)(pnt.z - currentPoint.z));
 					//of those points, test for those 1 space away
-					if((Mathf.Abs((float)(pnt.x - currentPoint.x)) + Mathf.Abs((float)(pnt.z - currentPoint.z))) == 1 && (Mathf.Abs(pnt.y - currentPoint.y) <= maxJump + 0.1f)){
-						currentPoint = pnt;
-						closedList.Add(currentPoint);
-						break;
+					if(xDistance + zDistance == 1 && pntHeight <= (maxJump + 0.05f)){
+						//prioritise points that don't require jumping
+						if(pntHeight < lowestPntHeight){
+							tempCurrentPoint = pnt;
+							lowestPntHeight = pntHeight;
+						}
+						
 					}
 				}
 			}
+			currentPoint = tempCurrentPoint;
+			closedList.Add(currentPoint);
 		}
 		while(currentPoint.w != 0);
 		

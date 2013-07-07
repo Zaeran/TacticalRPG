@@ -52,6 +52,13 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	
+	public void TakeDamage(int damage){
+		if(Stats.Damage(damage)){
+			Controller.DeadCharacter(gameObject);
+			Destroy(gameObject);
+		}
+	}
+	
 	public void StopMovingConfirmation(){
 		remainingAP -= (movePath.Length - 1);
 		ActionComplete();
@@ -141,9 +148,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	IEnumerator MeleeAttack(GameObject target){
-		yield return new WaitForSeconds(1);
-		Destroy(target);
-		Controller.DeadCharacter(target);
+		yield return new WaitForSeconds(1); //replace with animation
+		target.SendMessage("TakeDamage", 1);
 		Draw.DestroyValidSquares();
 		remainingAP -= 3;
 		ActionComplete();

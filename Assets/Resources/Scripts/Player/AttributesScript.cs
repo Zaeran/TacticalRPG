@@ -11,7 +11,11 @@ public class AttributesScript : MonoBehaviour {
 	public int MaxHealth;
 	public int CurrentHealth;	
 	
-	public bool TakeDamage(int damage){
+	private void Start(){
+		CurrentHealth = MaxHealth;
+	}
+	
+	public bool Damage(int damage){
 		CurrentHealth -= damage;
 		if(CurrentHealth <= 0){
 			return true;

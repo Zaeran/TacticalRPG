@@ -61,6 +61,7 @@ public class MovementScript : MonoBehaviour {
 			
 			else{
 				transform.position = Vector3.Lerp(pathList[currentPoint], pathList[currentPoint + 1], fracJourney);
+				//add animation here
 			}
 		}
 		

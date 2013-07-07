@@ -46,6 +46,13 @@ public class AIScript : MonoBehaviour {
 		remainingAP = Stats.maxActions;
 	}
 	
+	public void TakeDamage(int damage){
+		if(Stats.Damage(damage)){
+			Controller.DeadCharacter(gameObject);
+			Destroy(gameObject);
+		}
+	}
+	
 	private void EndTurn(){
 		isMyTurn = false;
 		Controller.TurnOver();
@@ -122,6 +129,7 @@ public class AIScript : MonoBehaviour {
 		isMyTurn = false;
 	}
 	
+	
 	private void AIMeleeAttack(){
 		actionOccuring = true;
 		validPoints = findValid.GetPoints(2, 1, Stats.maxJump);
@@ -130,9 +138,8 @@ public class AIScript : MonoBehaviour {
 	}
 	
 	IEnumerator MeleeAttack(GameObject target){
-		yield return new WaitForSeconds(1);
-		Destroy(target);
-		Controller.DeadCharacter(target);
+		yield return new WaitForSeconds(1); //replace with animation
+		target.SendMessage("TakeDamage", 1);
 		Draw.DestroyValidSquares();
 		remainingAP -= 3;
 		actionOccuring = false;

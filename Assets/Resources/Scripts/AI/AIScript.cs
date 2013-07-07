@@ -17,9 +17,12 @@ public class AIScript : MonoBehaviour {
 	List<Vector4> allPoints = new List<Vector4>();
 	
 	Vector3[] movePath = new Vector3[0];
+	Vector3 startPosition = Vector3.zero;
 	int playerSelected;
 	int xDistance;
 	int zDistance;
+	int distanceToPlayer;
+	int distanceTravelled = 0;
 	
 	bool isMyTurn = false;
 	bool actionOccuring = false;
@@ -43,21 +46,38 @@ public class AIScript : MonoBehaviour {
 		remainingAP = Stats.maxActions;
 	}
 	
+	private void EndTurn(){
+		isMyTurn = false;
+		Controller.TurnOver();
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		if(isMyTurn){
 			if(!actionOccuring){
-				if(remainingAP == 0){
-					isMyTurn = false;
-					Controller.TurnOver();
-					}
-				StartCoroutine(AIMove());
-			}
-			
+				TakeTurn();
+			}		
 		}
 	}
 	
+	private void TakeTurn(){
+		Debug.Log(remainingAP);
+		if(remainingAP == 0){
+			EndTurn();
+		}
+		else if(GetDistanceToPlayer(transform.position) < 1.1f && remainingAP >= 3){
+			AIMeleeAttack();
+		}
+		else if(GetDistanceToPlayer(transform.position) < 1.1f){
+			EndTurn();
+		}
+		else{
+			StartCoroutine(AIMove());	
+		}	
+	}
+	
 	IEnumerator AIMove(){
+		startPosition = transform.position;
 		actionOccuring = true;
 		validPoints = findValid.GetPoints(1, remainingAP, Stats.maxJump);
 		allPoints = findValid.GetPoints(1, 50, 1);
@@ -72,13 +92,13 @@ public class AIScript : MonoBehaviour {
 			//do nothing
 		}
 		else{
+			int tempDistanceToPlayer = 100;
 			foreach(Vector4 pnt in allPoints){
-				xDistance = Mathf.Abs((int)(pnt.x - enemyList[playerSelected].transform.position.x));
-				zDistance = Mathf.Abs((int)(pnt.z - enemyList[playerSelected].transform.position.z));
+				distanceToPlayer = GetDistanceToPlayer(pnt);
 				heightToPlayer = Mathf.Abs((int)(pnt.y - enemyList[playerSelected].transform.position.y));
-				if((xDistance + zDistance) < distanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f){
+				if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f){
 					endPoint = pnt;
-					distanceToPlayer = xDistance + zDistance;
+					tempDistanceToPlayer = distanceToPlayer;
 				}
 			}
 			Draw.DrawValidSquares(validPoints);
@@ -86,11 +106,46 @@ public class AIScript : MonoBehaviour {
 			Draw.DestroyValidSquares();
 			movePath = pathFind.StartPathFinding(endPoint, allPoints, Stats.maxJump);
 			Move.MoveToPoint(movePath, remainingAP);
-			remainingAP -= (remainingAP);
 		}
 	}
 	
 	public void StopMovingConfirmation(){
 		actionOccuring = false;
+		distanceTravelled = Mathf.Abs((int)(startPosition.x - transform.position.x)) + Mathf.Abs((int)(startPosition.z - transform.position.z));
+		remainingAP -= distanceTravelled;
+		Debug.Log(remainingAP);
+	}
+	
+	public void BattleOver(){
+		Debug.Log("END BATTLE");
+		remainingAP = 0;
+		isMyTurn = false;
+	}
+	
+	private void AIMeleeAttack(){
+		actionOccuring = true;
+		validPoints = findValid.GetPoints(2, 1, Stats.maxJump);
+		Draw.DrawValidSquares(validPoints);
+		StartCoroutine(MeleeAttack(enemyList[playerSelected]));		
+	}
+	
+	IEnumerator MeleeAttack(GameObject target){
+		yield return new WaitForSeconds(1);
+		Destroy(target);
+		Controller.DeadCharacter(target);
+		Draw.DestroyValidSquares();
+		remainingAP -= 3;
+		actionOccuring = false;
+	}
+	
+	private int GetDistanceToPlayer(Vector4 Point){
+		xDistance = Mathf.Abs((int)(Point.x - enemyList[playerSelected].transform.position.x));
+		zDistance = Mathf.Abs((int)(Point.z - enemyList[playerSelected].transform.position.z));
+		return xDistance + zDistance;
+	}
+	private int GetDistanceToPlayer(Vector3 Point){
+		xDistance = Mathf.Abs((int)(Point.x - enemyList[playerSelected].transform.position.x));
+		zDistance = Mathf.Abs((int)(Point.z - enemyList[playerSelected].transform.position.z));
+		return xDistance + zDistance;
 	}
 }

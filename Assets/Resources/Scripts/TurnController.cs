@@ -7,6 +7,7 @@ public class TurnController : MonoBehaviour {
 	List<GameObject> characters = new List<GameObject>();
 	GameObject[] orderedCharacters = new GameObject[0];
 	int currentTurn = 0;
+	bool battleOver = false;
 	
 	AttributesScript Stats;
 	PlayerControlsScript charScript;
@@ -18,32 +19,10 @@ public class TurnController : MonoBehaviour {
 	
 	void StartBattle(){
 		//add all characters in the battle to the character list
-		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){
-			characters.Add(g);
-		}
-		foreach(GameObject g in GameObject.FindGameObjectsWithTag("NPC")){
-			characters.Add(g);
-		}
-
-		int orderNumber = 0;
-		orderedCharacters = new GameObject[characters.Count];
-		
+		GetAllCharacters();
 		//order characters in order of speed stat
-		while(characters.Count != 0){
-			int highestSpeed = 0;
-			GameObject highestSpeedObject = null;
-			
-			foreach(GameObject g in characters){
-				Stats = g.GetComponent<AttributesScript>();
-				if(Stats.speedStat > highestSpeed){
-					highestSpeed = Stats.speedStat;
-					highestSpeedObject = g;
-				}
-			}
-			orderedCharacters[orderNumber] = highestSpeedObject;
-			characters.Remove(highestSpeedObject);
-			orderNumber++;
-		}
+		OrderCharacters();
+
 		
 		StartCoroutine(NextTurn());
 	}
@@ -59,8 +38,35 @@ public class TurnController : MonoBehaviour {
 			aiScript = orderedCharacters[currentTurn].GetComponent<AIScript>();
 			aiScript.NextTurn();
 		}
+	}
+	void GetAllCharacters(){
+		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){
+			characters.Add(g);
+		}
+		foreach(GameObject g in GameObject.FindGameObjectsWithTag("NPC")){
+			characters.Add(g);
+		}
+	}
+	
+	void OrderCharacters(){
+		int orderNumber = 0;
+		orderedCharacters = new GameObject[characters.Count];
+		while(characters.Count != 0){
+			int highestSpeed = 0;
+			GameObject highestSpeedObject = null;
 			
-		
+			foreach(GameObject g in characters){
+				Stats = g.GetComponent<AttributesScript>();
+				if(Stats.speedStat > highestSpeed){
+					highestSpeed = Stats.speedStat;
+					highestSpeedObject = g;
+				}
+			}
+			orderedCharacters[orderNumber] = highestSpeedObject;
+			characters.Remove(highestSpeedObject);
+			orderNumber++;
+		}
+		GetAllCharacters();
 	}
 	
 	public void TurnOver(){
@@ -68,6 +74,45 @@ public class TurnController : MonoBehaviour {
 		if(currentTurn == orderedCharacters.Length){
 			currentTurn = 0;
 		}
-		StartCoroutine(NextTurn());
+		if(!battleOver){
+			StartCoroutine(NextTurn());
+		}
+	}
+	
+	//character has died
+	public void DeadCharacter(GameObject g){
+		bool enemyExists = false;
+		bool playerExists = false;
+		GameObject currentCharTurn = orderedCharacters[currentTurn];
+		Debug.Log(characters.Count);
+		characters.Remove(g);
+		foreach(GameObject go in characters){
+			if(go.tag == "NPC"){
+				enemyExists = true;
+				break;
+			}
+		}
+		foreach(GameObject go in characters){
+			if(go.tag == "Player"){
+				playerExists = true;
+				break;
+			}
+		}
+		if(!enemyExists){
+			battleOver = true;
+			Debug.Log("YOU WIN!");
+			charScript.BattleOver();
+		}
+		else if(!playerExists){
+			battleOver = true;
+			Debug.Log("YOU LOSE");
+			aiScript.BattleOver();
+		}
+		else{
+			OrderCharacters();
+			if(orderedCharacters[currentTurn] != currentCharTurn){
+				currentTurn--;
+			}
+		}
 	}
 }

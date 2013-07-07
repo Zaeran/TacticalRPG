@@ -12,11 +12,16 @@ public class MovementScript : MonoBehaviour {
 	int currentPoint;
 	
 	PlayerControlsScript parentScript;
+	AIScript parentAIScript;
 	
 	void Start(){
 		if(GetComponent<PlayerControlsScript>()){
 			isPlayer = true;
 			parentScript = GetComponent<PlayerControlsScript>();
+		}
+		else if(GetComponent<AIScript>()){
+			isPlayer = false;
+			parentAIScript = GetComponent<AIScript>();
 		}
 	}
 	
@@ -38,6 +43,9 @@ public class MovementScript : MonoBehaviour {
 				isMoving = false;
 				if(isPlayer){
 					parentScript.StopMovingConfirmation();
+				}
+				else{
+					parentAIScript.StopMovingConfirmation();
 				}
 			}
 			

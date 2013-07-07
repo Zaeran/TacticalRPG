@@ -11,6 +11,7 @@ public class AIScript : MonoBehaviour {
 	PlayerDrawScript Draw;
 	FindValidPoints findValid;
 	AttributesScript Stats;
+	TurnController Controller;
 	
 	List<Vector4> validPoints = new List<Vector4>();
 	List<Vector4> allPoints = new List<Vector4>();
@@ -20,28 +21,46 @@ public class AIScript : MonoBehaviour {
 	int xDistance;
 	int zDistance;
 	
+	bool isMyTurn = false;
+	bool actionOccuring = false;
+	int remainingAP = 0;
+	
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		enemyList = GameObject.FindGameObjectsWithTag("Player");
 		Stats = GetComponent<AttributesScript>();
 		pathFind = GetComponent<PathfindingScript>();
 		Draw = GetComponent<PlayerDrawScript>();
 		Move = GetComponent<MovementScript>();
 		findValid = GetComponent<FindValidPoints>();
+		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		playerSelected = Random.Range(0, enemyList.Length);
+	}
+	
+	public void NextTurn(){
+		isMyTurn = true;
+		remainingAP = Stats.maxActions;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space)){
-			StartCoroutine(AIMove());		
+		if(isMyTurn){
+			if(!actionOccuring){
+				if(remainingAP == 0){
+					isMyTurn = false;
+					Controller.TurnOver();
+					}
+				StartCoroutine(AIMove());
+			}
+			
 		}
 	}
 	
 	IEnumerator AIMove(){
-		validPoints = findValid.GetPoints(1, Stats.maxMove, Stats.maxJump);
-		allPoints = findValid.GetPoints(1, 30, 1);
+		actionOccuring = true;
+		validPoints = findValid.GetPoints(1, remainingAP, Stats.maxJump);
+		allPoints = findValid.GetPoints(1, 50, 1);
 		int distanceToPlayer = 100;
 		int heightToPlayer;
 		Vector4 endPoint = Vector4.zero;
@@ -62,13 +81,16 @@ public class AIScript : MonoBehaviour {
 					distanceToPlayer = xDistance + zDistance;
 				}
 			}
-			Debug.Log(endPoint);
-			Debug.Log(distanceToPlayer);
 			Draw.DrawValidSquares(validPoints);
 			yield return new WaitForSeconds(1);
 			Draw.DestroyValidSquares();
 			movePath = pathFind.StartPathFinding(endPoint, allPoints, Stats.maxJump);
-			Move.MoveToPoint(movePath, Stats.maxMove);
+			Move.MoveToPoint(movePath, remainingAP);
+			remainingAP -= (remainingAP);
 		}
+	}
+	
+	public void StopMovingConfirmation(){
+		actionOccuring = false;
 	}
 }

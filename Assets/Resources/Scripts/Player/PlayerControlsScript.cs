@@ -31,8 +31,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
-	}
-	
+	}	
 	
 	void Update () {
 		if(isMyTurn){ //can only act on your turn
@@ -62,18 +61,19 @@ public class PlayerControlsScript : MonoBehaviour {
 		optionType = 0;
 		actionOccuring = false;
 	}
-	
+	//called when turn starts
 	public void nextTurn(){
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
+
 	}
-	
+	//no opposition left. disable character
 	public void BattleOver(){
 		Debug.Log("END BATTLE");
 		ActionComplete();
 		remainingAP = 0;
 	}
-	
+	//keyboard inputs
 	private void GetInputs(){
 		if(Input.GetKeyDown(KeyCode.M)){
 			optionType = 1;	
@@ -93,16 +93,19 @@ public class PlayerControlsScript : MonoBehaviour {
 			isMyTurn = false;
 			Controller.TurnOver();
 		}
+		
 	}
-	
+	//left mouse click
 	private void LeftClick(){
 		clickPosition4D = Vector4.zero;
+		//gets the in-game position of mouse, ensures that only flat ground is clicked, then uses that value for input
 		if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rayhit, 100, groundOnlyLayer)){ //click on ground
 			if(rayhit.normal == new Vector3(0,1,0)){ //ensures that only flat ground can be clicked on
-				clickPosition = new Vector3(Mathf.Floor(rayhit.point.x + 0.5f), Mathf.Floor(rayhit.point.y), Mathf.Floor(rayhit.point.z + 0.5f));
+				clickPosition = new Vector3(Mathf.Floor(rayhit.point.x + 0.5f), rayhit.point.y, Mathf.Floor(rayhit.point.z + 0.5f));
 				for(int i = 0; i < 20; i++){
 					if(validPoints.Contains(new Vector4(clickPosition.x, clickPosition.y, clickPosition.z, i))){
 						clickPosition4D = new Vector4(clickPosition.x, clickPosition.y, clickPosition.z,i);
+						Debug.Log(clickPosition4D);
 						break;
 					}
 				}
@@ -112,7 +115,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 		}
 	}
-	
+	//possibilities of left-click
 	private void LeftClickOptions(){
 		switch(optionType){
 		case 1:

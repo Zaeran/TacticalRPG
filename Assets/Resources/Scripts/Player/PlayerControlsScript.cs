@@ -96,6 +96,12 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 		}
 		
+		if(Input.GetKeyDown(KeyCode.K)){
+			optionType = 3;
+			validPoints = findValid.GetPoints(optionType, 4, 2);
+			Draw.DrawValidSquares(validPoints);
+		}
+		
 		if(Input.GetKeyDown(KeyCode.N)){
 			isMyTurn = false;
 			Controller.TurnOver();

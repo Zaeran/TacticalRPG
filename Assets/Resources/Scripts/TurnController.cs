@@ -12,9 +12,11 @@ public class TurnController : MonoBehaviour {
 	AttributesScript Stats;
 	PlayerControlsScript charScript;
 	AIScript aiScript;
+	RotateCamera cameraScript;
 	
 	void Start(){
 		StartBattle();
+		cameraScript = GameObject.FindGameObjectWithTag("MainCamPoint").GetComponent<RotateCamera>();
 	}
 	
 	void StartBattle(){
@@ -38,6 +40,7 @@ public class TurnController : MonoBehaviour {
 			aiScript = orderedCharacters[currentTurn].GetComponent<AIScript>();
 			aiScript.NextTurn();
 		}
+		cameraScript.SetFollow(orderedCharacters[currentTurn]);
 	}
 	void GetAllCharacters(){
 		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){

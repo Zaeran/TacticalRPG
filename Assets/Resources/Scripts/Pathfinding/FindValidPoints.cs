@@ -139,8 +139,8 @@ public class FindValidPoints : MonoBehaviour {
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit[] initialTile;
 		int horDistanceToPoint = 0;
-		for(int x = -maxRange; x <= maxRange; x++){ // x direction
-			for(int z = -(maxRange - Mathf.Abs(x)); z <= maxRange - Mathf.Abs(x); z++){
+		for(int x = -maxRange - 3; x <= maxRange + 3; x++){ // x direction
+			for(int z = -(maxRange - Mathf.Abs(x))  - 3; z <= maxRange - Mathf.Abs(x) + 3; z++){
 				initialTile = Physics.RaycastAll(transform.position + new Vector3(x,0,z) + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
 				foreach(RaycastHit rh in initialTile){
 					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - transform.position.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - transform.position.z))));

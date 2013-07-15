@@ -23,6 +23,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	AttributesScript Stats;
 	MovementScript Move;
 	TurnController Controller;	
+	AimProjectileScript ProjectileAim;
+	ProjectileScript Projectile;
 	
 	void Awake () {
 		findValid = GetComponent<FindValidPoints>();
@@ -30,6 +32,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		Draw = GetComponent<PlayerDrawScript>();
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
+		ProjectileAim = GetComponent<AimProjectileScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 	}	
 	
@@ -130,6 +133,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	//possibilities of left-click
 	private void LeftClickOptions(){
+		Collider[] col;
 		switch(optionType){
 		case 1:
 			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
@@ -140,13 +144,28 @@ public class PlayerControlsScript : MonoBehaviour {
 			actionOccuring = true;
 			break;
 		case 2:
-			Collider[] col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
+			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
 			foreach(Collider c in col){
 				if(c.tag == "NPC"){
 					StartCoroutine(MeleeAttack(c.gameObject));
 					break;
 				}
 			}
+			break;
+		case 3:
+			GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position, Quaternion.identity) as GameObject;
+			Projectile = cheese.GetComponent<ProjectileScript>();
+			Projectile.Initialise(ProjectileAim.Aim(clickPosition), clickPosition);
+			
+			/**
+			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
+			foreach(Collider c in col){
+				if(c.tag == "NPC"){
+					StartCoroutine(MeleeAttack(c.gameObject));
+					break;
+				}
+			}
+			**/
 			break;
 		default:
 			break;

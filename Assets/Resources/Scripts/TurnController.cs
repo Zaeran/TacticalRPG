@@ -53,6 +53,7 @@ public class TurnController : MonoBehaviour {
 	
 	void OrderCharacters(){
 		int orderNumber = 0;
+		Debug.Log("ALIVE CHARS: " + characters.Count);
 		orderedCharacters = new GameObject[characters.Count];
 		while(characters.Count != 0){
 			int highestSpeed = 0;
@@ -87,8 +88,9 @@ public class TurnController : MonoBehaviour {
 		bool enemyExists = false;
 		bool playerExists = false;
 		GameObject currentCharTurn = orderedCharacters[currentTurn];
-		Debug.Log(characters.Count);
+		Debug.Log("Characters alive: " + characters.Count);
 		characters.Remove(g);
+		Debug.Log("Characters alive: " + characters.Count);
 		foreach(GameObject go in characters){
 			if(go.tag == "NPC"){
 				enemyExists = true;

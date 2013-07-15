@@ -48,6 +48,7 @@ public class AIScript : MonoBehaviour {
 	
 	public void TakeDamage(int damage){
 		if(Stats.Damage(damage)){
+			gameObject.tag = "NPCDead";
 			Controller.DeadCharacter(gameObject);
 			Destroy(gameObject);
 		}

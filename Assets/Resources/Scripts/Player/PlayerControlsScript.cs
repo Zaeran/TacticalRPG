@@ -17,6 +17,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	List<Vector4> validPoints = new List<Vector4>();
 	Vector3[] movePath = new Vector3[0];
 	
+	//components
 	FindValidPoints findValid;
 	PathfindingScript pathFind;
 	PlayerDrawScript Draw;
@@ -26,7 +27,15 @@ public class PlayerControlsScript : MonoBehaviour {
 	AimProjectileScript ProjectileAim;
 	ProjectileScript Projectile;
 	
+	//key assignments
+	const KeyCode moveButton = KeyCode.M;
+	const KeyCode meleeButton = KeyCode.J;
+	const KeyCode rangedButton = KeyCode.K;
+	const KeyCode passButton = KeyCode.N;
+	const KeyCode cancelButton = KeyCode.F;
+	
 	void Awake () {
+		//initialize all component variables
 		findValid = GetComponent<FindValidPoints>();
 		pathFind = GetComponent<PathfindingScript>();
 		Draw = GetComponent<PlayerDrawScript>();
@@ -44,9 +53,15 @@ public class PlayerControlsScript : MonoBehaviour {
 					LeftClick();
 				}
 			}
+			//no option selected, so check for inputs
 			if(optionType == 0){
 				GetInputs();				
 			}
+			//cancel action
+			if(Input.GetKeyDown(cancelButton)){
+			    ActionComplete();
+			}
+			
 			
 			if(remainingAP == 0){
 				isMyTurn = false;
@@ -55,6 +70,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	
+	//called by other objects when damage is inflicted
 	public void TakeDamage(int damage){
 		if(Stats.Damage(damage)){
 			Controller.DeadCharacter(gameObject);
@@ -62,14 +78,17 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	
+	//movement is over. remove AP and reset everything
 	public void StopMovingConfirmation(){
 		remainingAP -= (movePath.Length - 1);
 		ActionComplete();
 	}
 	
+	//an action has been performed. allow new action to occur and remove all marker squares
 	private void ActionComplete(){
 		optionType = 0;
 		actionOccuring = false;
+		Draw.DestroyValidSquares();
 	}
 	//called when turn starts
 	public void nextTurn(){
@@ -85,13 +104,13 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	//keyboard inputs
 	private void GetInputs(){
-		if(Input.GetKeyDown(KeyCode.M)){
+		if(Input.GetKeyDown(moveButton)){
 			optionType = 1;	
 			validPoints = findValid.GetPoints(optionType,remainingAP,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
 		}
 		
-		if(Input.GetKeyDown(KeyCode.J)){
+		if(Input.GetKeyDown(meleeButton)){
 			if(remainingAP >= 3){
 				optionType = 2;
 				validPoints = findValid.GetPoints(optionType, 1,Stats.maxJump);
@@ -99,13 +118,15 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 		}
 		
-		if(Input.GetKeyDown(KeyCode.K)){
-			optionType = 3;
-			validPoints = findValid.GetPoints(optionType, 4, 2);
-			Draw.DrawValidSquares(validPoints);
+		if(Input.GetKeyDown(rangedButton)){
+			if(remainingAP >= 3){
+				optionType = 3;
+				validPoints = findValid.GetPoints(optionType, 4, 2);
+				Draw.DrawValidSquares(validPoints);
+			}
 		}
 		
-		if(Input.GetKeyDown(KeyCode.N)){
+		if(Input.GetKeyDown(passButton)){
 			isMyTurn = false;
 			Controller.TurnOver();
 		}
@@ -121,11 +142,10 @@ public class PlayerControlsScript : MonoBehaviour {
 				for(int i = 0; i < 20; i++){
 					if(validPoints.Contains(new Vector4(clickPosition.x, clickPosition.y, clickPosition.z, i))){
 						clickPosition4D = new Vector4(clickPosition.x, clickPosition.y, clickPosition.z,i);
-						Debug.Log(clickPosition4D);
 						break;
 					}
 				}
-				if(clickPosition4D != Vector4.zero){
+				if(clickPosition4D != Vector4.zero){ //the position clicked was a valid position
 					LeftClickOptions();
 				}
 			}
@@ -135,49 +155,49 @@ public class PlayerControlsScript : MonoBehaviour {
 	private void LeftClickOptions(){
 		Collider[] col;
 		switch(optionType){
-		case 1:
-			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
-			if(movePath.Length > 0){
-				Draw.DestroyValidSquares();
-				Move.MoveToPoint(movePath, remainingAP);
-			}
-			actionOccuring = true;
-			break;
-		case 2:
-			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
-			foreach(Collider c in col){
-				if(c.tag == "NPC"){
-					StartCoroutine(MeleeAttack(c.gameObject));
-					break;
+			case 1: //movement
+				movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
+				if(movePath.Length > 0){
+					Draw.DestroyValidSquares();
+					Move.MoveToPoint(movePath, remainingAP);
 				}
-			}
-			break;
-		case 3:
-			GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position, Quaternion.identity) as GameObject;
-			Projectile = cheese.GetComponent<ProjectileScript>();
-			Projectile.Initialise(ProjectileAim.Aim(clickPosition), clickPosition);
-			
-			/**
-			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
-			foreach(Collider c in col){
-				if(c.tag == "NPC"){
-					StartCoroutine(MeleeAttack(c.gameObject));
-					break;
+				actionOccuring = true;
+				break;
+			case 2: //melee attack
+				col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
+				foreach(Collider c in col){
+					if(c.tag == "NPC"){
+						StartCoroutine(MeleeAttack(c.gameObject));
+						break;
+					}
 				}
-			}
-			**/
-			break;
-		default:
-			break;
+				break;
+			case 3: //ranged attack
+				StartCoroutine(RangedAttack());
+				break;
+			default:
+				break;
 		}
 	}
 	
+	//melee attack coroutine
 	IEnumerator MeleeAttack(GameObject target){
 		yield return new WaitForSeconds(1); //replace with animation
 		target.SendMessage("TakeDamage", 1);
-		Draw.DestroyValidSquares();
 		remainingAP -= 3;
 		ActionComplete();
+	}
+	
+	//ranged attack coroutine
+	IEnumerator RangedAttack(){
+		yield return new WaitForSeconds(1); //replace with animation
+		//create 'arrow', and fire it at the selected square
+		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position, Quaternion.identity) as GameObject;
+		Projectile = cheese.GetComponent<ProjectileScript>();
+		Projectile.Initialise(ProjectileAim.Aim(clickPosition), clickPosition);
 		
+		yield return new WaitForSeconds(1); //allow time for arrow to hit
+		remainingAP -= 3;
+		ActionComplete();
 	}
 }

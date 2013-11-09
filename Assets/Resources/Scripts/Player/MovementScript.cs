@@ -36,11 +36,12 @@ public class MovementScript : MonoBehaviour {
 	
 	//where the magic happens
 	void Update(){
-		
+		//character is moving
 		if(isMoving){
-			float fracJourney = (Time.time - startTime) * moveSpeed;
-			if(currentPoint == pathList.Length - 1 || maxMovement <= 0){
+			float fracJourney = (Time.time - startTime) * moveSpeed; //calculate how far along our path we are
+			if(currentPoint == pathList.Length - 1 || maxMovement <= 0){ //at the end of the path
 				isMoving = false;
+				//alert the base script that the movement is over
 				if(isPlayer){
 					parentScript.StopMovingConfirmation();
 				}
@@ -48,11 +49,12 @@ public class MovementScript : MonoBehaviour {
 					parentAIScript.StopMovingConfirmation();
 				}
 			}
-			
+			//when we reach the end of the lerp, we've reached the next square
+			//go to next square in the list
 			else if(fracJourney > 1){
 				fracJourney = 1;
 				maxMovement--;
-				transform.position = Vector3.Lerp(pathList[currentPoint], pathList[currentPoint + 1], 1);
+				transform.position = Vector3.Lerp(pathList[currentPoint], pathList[currentPoint + 1], 1); //ensures we end in the middle of the square
 				if(currentPoint != pathList.Length - 1){
 					currentPoint++;
 					startTime = Time.time;

@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 public class PathfindingScript : MonoBehaviour {
 	
-	const string NodeFilePath = "Objects/Pathfinding/Node";
-	
-	//Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
 	public Vector3[] StartPathFinding(Vector4 endPos, List<Vector4> validPoints, int maxJump){
 		//fixes a glitch where a player would move to (0,0,0) is they clicked their own square
 		if(endPos.w == 0){
@@ -15,6 +12,8 @@ public class PathfindingScript : MonoBehaviour {
 		return FindPath(endPos, validPoints, maxJump);
 	}
 	
+	//finds a path to a given point
+	//returns a Vector3 array of the path to follow
 	Vector3[] FindPath(Vector4 end, List<Vector4> openList, int maxJump){
 		List<Vector4> closedList = new List<Vector4>();
 		Vector4 currentPoint = Vector4.zero;
@@ -27,6 +26,7 @@ public class PathfindingScript : MonoBehaviour {
 			currentPoint = end;
 		}
 		
+		//starts at the end of the list, then works its way back down to the start
 		do{
 			int lowestPntHeight = 100;
 			Vector4 tempCurrentPoint = Vector4.zero;
@@ -47,12 +47,14 @@ public class PathfindingScript : MonoBehaviour {
 					}
 				}
 			}
+			//add the point to the list
 			currentPoint = tempCurrentPoint;
 			closedList.Add(currentPoint);
 		}
-		while(currentPoint.w != 0);
+		while(currentPoint.w != 0); //repeat until the starting point is reached
 		
 		Vector3[] pathList = new Vector3[closedList.Count];
+		//convert the Vector4s into Vector3s
 		foreach(Vector4 pnt in closedList){
 			pathList[Mathf.FloorToInt(pnt.w)] = (Vector3)pnt;
 		}

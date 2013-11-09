@@ -85,18 +85,21 @@ public class AIScript : MonoBehaviour {
 	}
 	
 	IEnumerator AIMove(){
+		//set initial position
 		startPosition = transform.position;
 		actionOccuring = true;
+		//find valid points
 		validPoints = findValid.GetPoints(1, remainingAP, Stats.maxJump);
 		allPoints = findValid.GetPoints(1, 50, 1);
 		int distanceToPlayer = 100;
 		int heightToPlayer;
 		Vector4 endPoint = Vector4.zero;
-		//if not next to player, select point closest to a player
+		//find distance to closest player from current position
 		xDistance = Mathf.Abs((int)(transform.position.x - enemyList[playerSelected].transform.position.x));
 		zDistance = Mathf.Abs((int)(transform.position.z - enemyList[playerSelected].transform.position.z));
 		heightToPlayer = Mathf.Abs((int)(transform.position.y - enemyList[playerSelected].transform.position.y));
-		if(xDistance + zDistance < 1.1f && heightToPlayer < Stats.maxJump){
+		
+		if(xDistance + zDistance < 1.1f && heightToPlayer < Stats.maxJump){//next to player
 			//do nothing
 		}
 		else{
@@ -104,7 +107,7 @@ public class AIScript : MonoBehaviour {
 			foreach(Vector4 pnt in allPoints){
 				distanceToPlayer = GetDistanceToPlayer(pnt);
 				heightToPlayer = Mathf.Abs((int)(pnt.y - enemyList[playerSelected].transform.position.y));
-				if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f){
+				if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f && distanceToPlayer > 0.5f){
 					endPoint = pnt;
 					tempDistanceToPlayer = distanceToPlayer;
 				}

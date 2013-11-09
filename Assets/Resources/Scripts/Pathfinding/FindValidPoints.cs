@@ -38,14 +38,15 @@ public class FindValidPoints : MonoBehaviour {
 		RaycastHit[] walkableTiles;
 		RaycastHit[] initialTile;
 		
+		//begin at the object's location
 		initialTile = Physics.RaycastAll(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)) + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
-		foreach(RaycastHit r in initialTile){
+		foreach(RaycastHit r in initialTile){ //get current tile, instead of tile at same x/z but different height
 			if(r.point.y == transform.position.y){
 				startPoint = r.point;
 				break;
 				}
 		}
-		Debug.Log(startPoint);
+		//add the starting point to the list of available positions
 		positionList.Add(startPoint);
 		pointList.Add(new Vector4(startPoint.x, startPoint.y, startPoint.z, 0));
 		testPoint = startPoint;
@@ -64,16 +65,20 @@ public class FindValidPoints : MonoBehaviour {
 				
 				//raycast to get height of current point, then use raycasting to find if adjacent points are valid
 				initialTile = Physics.RaycastAll(testPoint + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-				foreach(RaycastHit r in initialTile){
+				foreach(RaycastHit r in initialTile){ //get current tile, instead of tile at same x/z but different height
 					if(r.point.y == testPoint.y){
 						currentPoint = r;
 						break;
 					}
 				}
+				//raycast the adjacent tile
 				walkableTiles = Physics.RaycastAll(nextPoint + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
 				foreach(RaycastHit rh in walkableTiles){
+					//ensure that tile is empty
 					if(Physics.OverlapSphere(rh.point, 0.3f, ~terrainLayerMask).Length == 0){
+						//calculate the height difference between current and adjacent tile
 						heightDifference = Mathf.FloorToInt(rh.point.y - currentPoint.point.y + 0.1f);
+						//can character reach this height?
 						if(Mathf.Abs(heightDifference) <= maxJump){
 							//adjacent point is within acceptable height limits
 							if(!positionList.Contains(rh.point)){
@@ -99,6 +104,8 @@ public class FindValidPoints : MonoBehaviour {
 		return finalPointList;
 	}
 	
+	//gets valid points for melee combat.
+	//points are in a straight line
 	private List<Vector4> GetValidMeleePoints(int maxRange, int maxJump){
 		int heightDifference = 0;
 		List<Vector4> validAttacks = new List<Vector4>();
@@ -134,6 +141,8 @@ public class FindValidPoints : MonoBehaviour {
 		return validAttacks;
 	}
 	
+	//gets valid points for ranged attacks
+	//points can be at any location in range. no adjacent tiles required
 	private List<Vector4> GetValidRangedPoints(int maxRange, int maxDrop){
 		Debug.Log((2-1)/3);
 		List<Vector4> validAttacks = new List<Vector4>();

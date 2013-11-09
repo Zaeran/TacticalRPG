@@ -7,6 +7,7 @@ public class PlayerDrawScript : MonoBehaviour {
 	public GameObject Node;
 	List<GameObject> createdObject = new List<GameObject>();
 	
+	//draws sqares at the locations given in the list
 	public void DrawValidSquares(List<Vector4> squares){
 		foreach(Vector4 square in squares){
 			if(square.w != 0){
@@ -16,6 +17,7 @@ public class PlayerDrawScript : MonoBehaviour {
 		}
 	}
 	
+	//removes all created squares
 	public void DestroyValidSquares(){
 		foreach(GameObject g in createdObject){
 			Destroy(g);

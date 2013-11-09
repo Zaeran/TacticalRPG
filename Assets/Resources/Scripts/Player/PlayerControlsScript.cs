@@ -173,8 +173,22 @@ public class PlayerControlsScript : MonoBehaviour {
 				}
 				break;
 			case 3: //ranged attack
-				StartCoroutine(RangedAttack());
-				break;
+			    //target adjacent
+			/**
+			    if(Vector3.Distance(clickPosition, transform.position) < 1.5f){
+					col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
+					foreach(Collider c in col){
+						if(c.tag == "NPC"){
+							StartCoroutine(MeleeAttack(c.gameObject));
+							break;
+						}
+					}
+				}
+				**/
+				//else{
+					StartCoroutine(RangedAttack());
+				//}
+					break;
 			default:
 				break;
 		}
@@ -192,7 +206,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	IEnumerator RangedAttack(){
 		yield return new WaitForSeconds(1); //replace with animation
 		//create 'arrow', and fire it at the selected square
-		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position, Quaternion.identity) as GameObject;
+		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,0.4f,0), Quaternion.identity) as GameObject;
 		Projectile = cheese.GetComponent<ProjectileScript>();
 		Projectile.Initialise(ProjectileAim.Aim(clickPosition), clickPosition);
 		

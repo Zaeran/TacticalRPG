@@ -14,7 +14,6 @@ public class AimProjectileScript : MonoBehaviour {
 		else{
 			aimAngle = 45 + Mathf.FloorToInt(elevationAngle / 2);
 		}
-		Debug.Log(elevationAngle + " , " + aimAngle);
 		return aimAngle;
 	}
 	

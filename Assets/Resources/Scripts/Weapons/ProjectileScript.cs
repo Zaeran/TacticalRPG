@@ -8,6 +8,7 @@ public class ProjectileScript : MonoBehaviour {
 	
 	//set starting speed and direction
 	public void Initialise(int angleDeg, Vector3 endPos){
+		Debug.Log("ANGLE: " + angleDeg);
 		endPos += Vector3.up * 0.5f; //aim just above the ground in the required square
 		float angle = angleDeg * Mathf.Deg2Rad;
 		rigid = GetComponent<Rigidbody>();
@@ -16,13 +17,16 @@ public class ProjectileScript : MonoBehaviour {
 		forwardDir = forwardDir.normalized;
 		transform.LookAt(forwardDir);
 		
-		int height = Mathf.FloorToInt(endPos.y - transform.position.y);
+		float height = Mathf.FloorToInt(endPos.y - transform.position.y) + 0.4f;
 		
 		//calculate the forace required to hit the location
 		float startVelocityMagnitude;
-		startVelocityMagnitude = (0.5f*Physics.gravity.magnitude*Mathf.Pow(distance,2)) / (height - (distance * Mathf.Tan(angle)) * Mathf.Pow(Mathf.Cos(angle),2));
+		startVelocityMagnitude = (0.5f * Physics.gravity.magnitude * Mathf.Pow(distance,2)) / ((height - (distance * Mathf.Tan(angle))) * Mathf.Pow(Mathf.Cos(angle),2));
 		startVelocityMagnitude = Mathf.Sqrt(Mathf.Abs(startVelocityMagnitude));
-		Vector3 startVelocity = (forwardDir * (startVelocityMagnitude + 1) * Mathf.Cos(angle)) + (Vector3.up * Mathf.Sin(angle) * startVelocityMagnitude);		rigid.velocity = startVelocity;
+		Debug.Log(startVelocityMagnitude);
+		//xCos(angle), ySin(angle)
+		Vector3 startVelocity = (forwardDir * (startVelocityMagnitude) * Mathf.Cos(angle)) + (Vector3.up * Mathf.Sin(angle) * startVelocityMagnitude);
+		rigid.velocity = startVelocity;
 		StartCoroutine(Cooldown());
 	}
 	

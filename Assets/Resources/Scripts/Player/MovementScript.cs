@@ -10,6 +10,7 @@ public class MovementScript : MonoBehaviour {
 	public float moveSpeed;
 	float startTime;
 	int currentPoint;
+	int squaresMoved;
 	
 	PlayerControlsScript parentScript;
 	AIScript parentAIScript;
@@ -32,6 +33,7 @@ public class MovementScript : MonoBehaviour {
 		currentPoint = 0;
 		startTime = Time.time;
 		maxMovement = maxMove;
+		squaresMoved = 0;
 	}
 	
 	//where the magic happens
@@ -46,7 +48,7 @@ public class MovementScript : MonoBehaviour {
 					parentScript.StopMovingConfirmation();
 				}
 				else{
-					parentAIScript.StopMovingConfirmation();
+					parentAIScript.StopMovingConfirmation(squaresMoved);
 				}
 			}
 			//when we reach the end of the lerp, we've reached the next square
@@ -57,6 +59,7 @@ public class MovementScript : MonoBehaviour {
 				transform.position = Vector3.Lerp(pathList[currentPoint], pathList[currentPoint + 1], 1); //ensures we end in the middle of the square
 				if(currentPoint != pathList.Length - 1){
 					currentPoint++;
+					squaresMoved++;
 					startTime = Time.time;
 				}
 			}

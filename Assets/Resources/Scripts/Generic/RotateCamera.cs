@@ -26,7 +26,11 @@ public class RotateCamera : MonoBehaviour {
 	
 	void Update () {
 		
-		if(Input.GetKey(KeyCode.LeftShift)){
+		if(Input.GetKeyDown(KeyCode.LeftShift)){
+			freeLook = !freeLook;
+		}
+		
+		if(freeLook){
 			transform.position += new Vector3(transform.forward.x, 0, transform.forward.z) * Input.GetAxis("Mouse Y");
 			transform.position += new Vector3(transform.right.x, 0, transform.right.z) * Input.GetAxis("Mouse X");
 		}

@@ -11,6 +11,11 @@ public class PlayerControlsScript : MonoBehaviour {
 	int groundOnlyLayer = 1 << 8;
 	int remainingAP = 0;
 	
+	bool longAction = false;
+	int longActionAP = 0;
+	int longActionPerformed = 0;
+	GameObject longActionTarget = null;
+	
 	Vector3 clickPosition = Vector3.zero;
 	Vector4 clickPosition4D = Vector4.zero;
 			
@@ -24,7 +29,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	AttributesScript Stats;
 	MovementScript Move;
 	TurnController Controller;	
-	AimProjectileScript ProjectileAim;
 	ProjectileScript Projectile;
 	
 	//key assignments
@@ -33,6 +37,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	const KeyCode rangedButton = KeyCode.K;
 	const KeyCode passButton = KeyCode.N;
 	const KeyCode cancelButton = KeyCode.F;
+	const KeyCode spellButton = KeyCode.L;
 	
 	void Awake () {
 		//initialize all component variables
@@ -41,7 +46,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		Draw = GetComponent<PlayerDrawScript>();
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
-		ProjectileAim = GetComponent<AimProjectileScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 	}	
 	
@@ -62,7 +66,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			    ActionComplete();
 			}
 			
-			
+		    //end turn when AP is 0
 			if(remainingAP == 0){
 				isMyTurn = false;
 				Controller.TurnOver();
@@ -94,6 +98,10 @@ public class PlayerControlsScript : MonoBehaviour {
 	public void nextTurn(){
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
+		
+		if(longAction){
+			StartCoroutine(MagicAttack(longActionTarget));
+		}
 
 	}
 	//no opposition left. disable character
@@ -126,6 +134,12 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 		}
 		
+		if(Input.GetKeyDown(spellButton)){
+			optionType = 4;
+			validPoints = findValid.GetPoints(optionType, 10,1);
+			Draw.DrawValidSquares(validPoints);
+		}
+		
 		if(Input.GetKeyDown(passButton)){
 			isMyTurn = false;
 			Controller.TurnOver();
@@ -155,42 +169,35 @@ public class PlayerControlsScript : MonoBehaviour {
 	private void LeftClickOptions(){
 		Collider[] col;
 		switch(optionType){
-			case 1: //movement
-				movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
-				if(movePath.Length > 0){
-					Draw.DestroyValidSquares();
-					Move.MoveToPoint(movePath, remainingAP);
-				}
-				actionOccuring = true;
-				break;
-			case 2: //melee attack
-				col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
-				foreach(Collider c in col){
-					if(c.tag == "NPC"){
-						StartCoroutine(MeleeAttack(c.gameObject));
-						break;
-					}
-				}
-				break;
-			case 3: //ranged attack
-			    //target adjacent
-			/**
-			    if(Vector3.Distance(clickPosition, transform.position) < 1.5f){
-					col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
-					foreach(Collider c in col){
-						if(c.tag == "NPC"){
-							StartCoroutine(MeleeAttack(c.gameObject));
-							break;
-						}
-					}
-				}
-				**/
-				//else{
-					StartCoroutine(RangedAttack());
-				//}
+		case 1: //movement
+			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
+			if(movePath.Length > 0){
+				Draw.DestroyValidSquares();
+				Move.MoveToPoint(movePath, remainingAP);
+			}
+			actionOccuring = true;
+			break;
+		case 2: //melee attack
+			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
+			foreach(Collider c in col){
+				if(c.tag == "NPC"){
+					StartCoroutine(MeleeAttack(c.gameObject));
 					break;
-			default:
+				}
+			}
+			break;
+		case 3: //ranged attack
+			StartCoroutine(RangedAttack());
+			break;
+		case 4:
+			col = Physics.OverlapSphere(clickPosition, 0.3f);
+			foreach(Collider c in col){
+				StartCoroutine(MagicAttack(c.gameObject));
 				break;
+			}
+			break;
+		default:
+			break;
 		}
 	}
 	
@@ -204,14 +211,42 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	//ranged attack coroutine
 	IEnumerator RangedAttack(){
+		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
 		//create 'arrow', and fire it at the selected square
-		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,0.4f,0), Quaternion.identity) as GameObject;
+		Debug.Log(clickPosition);
+		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		Projectile = cheese.GetComponent<ProjectileScript>();
-		Projectile.Initialise(ProjectileAim.Aim(clickPosition), clickPosition);
+		Projectile.Initialise(60, clickPosition, projectileHeight);
 		
 		yield return new WaitForSeconds(1); //allow time for arrow to hit
 		remainingAP -= 3;
 		ActionComplete();
+	}
+	
+	IEnumerator MagicAttack(GameObject target){
+		yield return new WaitForSeconds(1);
+		if(!longAction){
+			longActionTarget = target;
+			longAction = true;
+			longActionAP = 7;
+			longActionPerformed = 1;
+		}
+		int tempLongAP = longActionAP;
+		longActionAP -= remainingAP;
+		remainingAP -= tempLongAP;		
+		if(longActionAP <= 0){
+			longAction = false;
+			longActionAP = 0;
+			longActionTarget = null;
+			longActionPerformed = 0;
+			Destroy(target);
+		}
+		ActionComplete();
+		if(remainingAP < 0){
+			remainingAP = 0;
+		}
+		
+		
 	}
 }

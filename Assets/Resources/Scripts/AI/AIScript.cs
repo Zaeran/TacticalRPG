@@ -22,7 +22,8 @@ public class AIScript : MonoBehaviour {
 	int xDistance;
 	int zDistance;
 	int distanceToPlayer;
-	int distanceTravelled = 0;
+	
+	int atkType;
 	
 	bool isMyTurn = false;
 	bool actionOccuring = false;
@@ -39,6 +40,8 @@ public class AIScript : MonoBehaviour {
 		findValid = GetComponent<FindValidPoints>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		playerSelected = Random.Range(0, enemyList.Length);
+		//atkType = Random.Range(1,3);
+		atkType = 2;
 	}
 	
 	public void NextTurn(){
@@ -73,6 +76,9 @@ public class AIScript : MonoBehaviour {
 		if(remainingAP == 0){
 			EndTurn();
 		}
+		else if(GetDistanceToPlayer(transform.position) < 4.01f && GetDistanceToPlayer(transform.position) > 1.1f && remainingAP >= 3){
+		    AIRangedAttack();	
+		}
 		else if(GetDistanceToPlayer(transform.position) < 1.1f && remainingAP >= 3){
 			AIMeleeAttack();
 		}
@@ -104,12 +110,25 @@ public class AIScript : MonoBehaviour {
 		}
 		else{
 			int tempDistanceToPlayer = 100;
+			int rangeDistToPlayer = Random.Range(2,5);
 			foreach(Vector4 pnt in allPoints){
 				distanceToPlayer = GetDistanceToPlayer(pnt);
 				heightToPlayer = Mathf.Abs((int)(pnt.y - enemyList[playerSelected].transform.position.y));
-				if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f && distanceToPlayer > 0.5f){
-					endPoint = pnt;
-					tempDistanceToPlayer = distanceToPlayer;
+				if(atkType == 1){
+					if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f && distanceToPlayer > 0.5f){
+						endPoint = pnt;
+						tempDistanceToPlayer = distanceToPlayer;
+					}
+				}
+				else if(atkType == 2){
+					if(distanceToPlayer < rangeDistToPlayer && distanceToPlayer > 1.5f && heightToPlayer <= Stats.maxJump){
+						endPoint = pnt;
+						break;
+					}
+					else if(distanceToPlayer < tempDistanceToPlayer && heightToPlayer <= Stats.maxJump + 0.1f){
+					    endPoint = pnt;
+						tempDistanceToPlayer = distanceToPlayer;
+					}
 				}
 			}
 			Draw.DrawValidSquares(validPoints);
@@ -119,12 +138,17 @@ public class AIScript : MonoBehaviour {
 			Move.MoveToPoint(movePath, remainingAP);
 		}
 	}
-	
-	public void StopMovingConfirmation(){
+	//movement over. reset things and remove AP
+	public void StopMovingConfirmation(int squaresMoved){
 		actionOccuring = false;
-		distanceTravelled = Mathf.Abs((int)(startPosition.x - transform.position.x)) + Mathf.Abs((int)(startPosition.z - transform.position.z));
-		remainingAP -= distanceTravelled;
+		remainingAP -= squaresMoved;
 		Debug.Log(remainingAP);
+	}
+	
+		//an action has been performed. allow new action to occur and remove all marker squares
+	private void ActionComplete(){
+		actionOccuring = false;
+		Draw.DestroyValidSquares();
 	}
 	
 	public void BattleOver(){
@@ -136,7 +160,7 @@ public class AIScript : MonoBehaviour {
 	
 	private void AIMeleeAttack(){
 		actionOccuring = true;
-		validPoints = findValid.GetPoints(2, 1, Stats.maxJump);
+		validPoints = findValid.GetPoints(2, 2, Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 		StartCoroutine(MeleeAttack(enemyList[playerSelected]));		
 	}
@@ -144,9 +168,29 @@ public class AIScript : MonoBehaviour {
 	IEnumerator MeleeAttack(GameObject target){
 		yield return new WaitForSeconds(1); //replace with animation
 		target.SendMessage("TakeDamage", 1);
-		Draw.DestroyValidSquares();
 		remainingAP -= 3;
-		actionOccuring = false;
+		ActionComplete();
+	}
+	
+	private void AIRangedAttack(){
+		actionOccuring = true;
+		validPoints = findValid.GetPoints(4, 3, Stats.maxJump);
+		Draw.DrawValidSquares(validPoints);
+		StartCoroutine(RangedAttack(enemyList[playerSelected]));	
+	}
+	
+	IEnumerator RangedAttack(GameObject target){
+		const float projectileHeight = 0.4f;
+		yield return new WaitForSeconds(1); //replace with animation
+		//create 'arrow', and fire it at the selected square
+		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,0.4f,0), Quaternion.identity) as GameObject;
+		ProjectileScript Projectile = cheese.GetComponent<ProjectileScript>();
+		Projectile.Initialise(60, enemyList[playerSelected].transform.position, projectileHeight);
+		Debug.Log(enemyList[playerSelected].transform.position);
+		
+		yield return new WaitForSeconds(1); //allow time for arrow to hit
+		remainingAP -= 3;
+		ActionComplete();
 	}
 	
 	private int GetDistanceToPlayer(Vector4 Point){

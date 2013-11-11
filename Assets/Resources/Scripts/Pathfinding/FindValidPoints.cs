@@ -8,7 +8,7 @@ public class FindValidPoints : MonoBehaviour {
 	Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
 	List<Vector4> validPoints;
 		
-	public List<Vector4> GetPoints(int type, int maxRange, int maxJump){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
+	public List<Vector4> GetPoints(int type, int maxRange = 0, int maxJump = 0){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
 		switch(type){
 		case 1: //move
 			validPoints = GetValidMovePoints(maxRange, maxJump);
@@ -18,6 +18,9 @@ public class FindValidPoints : MonoBehaviour {
 			return validPoints;
 		case 3: // ranged
 			validPoints = GetValidRangedPoints(maxRange, maxJump);
+			return validPoints;
+		case 4:
+			validPoints = GetValidMagicPoints(30, 30);
 			return validPoints;
 		default:
 			return new List<Vector4>();
@@ -156,6 +159,23 @@ public class FindValidPoints : MonoBehaviour {
 					if(Mathf.FloorToInt(horDistanceToPoint + ((rh.point.y - transform.position.y)/maxDrop)) <= maxRange){
 						validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 					}
+				}
+			}
+		}
+		
+		return validAttacks;
+	}
+	
+	private List<Vector4> GetValidMagicPoints(int maxRange, int maxDrop){
+		List<Vector4> validAttacks = new List<Vector4>();
+		RaycastHit[] initialTile;
+		int horDistanceToPoint = 0;
+		for(int x = -20; x <= 20; x++){ // x direction
+			for(int z = -20; z <= 20; z++){
+				initialTile = Physics.RaycastAll(new Vector3(x,0,z) + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
+				foreach(RaycastHit rh in initialTile){
+					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - transform.position.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - transform.position.z))));
+					validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 				}
 			}
 		}

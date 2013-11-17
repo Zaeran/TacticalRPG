@@ -10,9 +10,7 @@ public class ProjectileScript : MonoBehaviour {
 	//aims for center of square
 	public void Initialise(int angleDeg, Vector3 endPos, float projectileHeight){
 		collider.enabled = false;
-		Debug.Log(angleDeg);
 		float angle = angleDeg * Mathf.Deg2Rad;
-		Debug.Log(angle);
 		rigid = GetComponent<Rigidbody>();
 		Vector3 forwardDir = new Vector3(endPos.x - transform.position.x, 0, endPos.z - transform.position.z);
 		float distance = Mathf.Abs(forwardDir.magnitude);
@@ -45,7 +43,6 @@ public class ProjectileScript : MonoBehaviour {
 				c.collider.SendMessage("TakeDamage", 1);
 			}
 			//destroy self after hitting something
-			Debug.Log(c.contacts[0].point);
 			Destroy(gameObject);
 		}
 	}

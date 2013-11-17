@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class PlayerControlsScript : MonoBehaviour {
 	//variables and such
@@ -22,6 +23,10 @@ public class PlayerControlsScript : MonoBehaviour {
 	List<Vector4> validPoints = new List<Vector4>();
 	Vector3[] movePath = new Vector3[0];
 	
+	//casting
+	Dictionary<string, int> spellList = new Dictionary<string, int>();
+	string currentSpell = null;
+	
 	//components
 	FindValidPoints findValid;
 	PathfindingScript pathFind;
@@ -30,6 +35,14 @@ public class PlayerControlsScript : MonoBehaviour {
 	MovementScript Move;
 	TurnController Controller;	
 	ProjectileScript Projectile;
+	MagicScript Magic;
+	
+	//weapon
+	TextAsset weaponData;
+	string wpnName;
+	int wpnDamage;
+	int wpnRange;
+	
 	
 	//key assignments
 	const KeyCode moveButton = KeyCode.M;
@@ -47,6 +60,21 @@ public class PlayerControlsScript : MonoBehaviour {
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
+		Magic = GetComponent<MagicScript>();
+		spellList.Add("DestroyBlock", 7);
+		weaponData = Resources.Load("Data/OneHandMeleeWeapons") as TextAsset;
+		string[] testString = weaponData.text.Split('\n');
+		wpnName = "Bow";
+		foreach(string wpnData in testString){
+			if(wpnData.StartsWith(wpnName)){
+				string[] wpn = wpnData.Split(' ');
+				wpnDamage = int.Parse(wpn[1]);
+				wpnRange = int.Parse(wpn[2]);
+				break;
+			}
+		}
+		
+		Debug.Log("Damage: " + wpnDamage + " Range: " + wpnRange);
 	}	
 	
 	void Update () {
@@ -72,6 +100,10 @@ public class PlayerControlsScript : MonoBehaviour {
 				Controller.TurnOver();
 			}
 		}
+	}
+	
+	void SetWeaponStats(){
+
 	}
 	
 	//called by other objects when damage is inflicted
@@ -102,7 +134,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		if(longAction){
 			StartCoroutine(MagicAttack(longActionTarget));
 		}
-
 	}
 	//no opposition left. disable character
 	public void BattleOver(){
@@ -187,7 +218,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 			break;
 		case 3: //ranged attack
-			StartCoroutine(RangedAttack());
+			StartCoroutine(RangedAttack(clickPosition));
 			break;
 		case 4:
 			col = Physics.OverlapSphere(clickPosition, 0.3f);
@@ -201,6 +232,38 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	
+	#region Actions
+	
+	void MoveAction(){
+		optionType = 1;	
+		validPoints = findValid.GetPoints(optionType,remainingAP,Stats.maxJump);
+		Draw.DrawValidSquares(validPoints);
+	}
+	
+	void MeleeAction(){
+		if(remainingAP >= 3){
+			optionType = 2;
+			validPoints = findValid.GetPoints(optionType, 1,Stats.maxJump);
+			Draw.DrawValidSquares(validPoints);
+		}
+	}
+	
+	void RangedAction(){
+		if(remainingAP >= 3){
+			optionType = 3;
+			validPoints = findValid.GetPoints(optionType, 4, 2);
+			Draw.DrawValidSquares(validPoints);
+		}
+	}
+	
+	void MagicAction(){
+		optionType = 4;
+		validPoints = findValid.GetPoints(optionType, 10,1);
+		Draw.DrawValidSquares(validPoints);
+		currentSpell = "DestroyBlock";
+	}	
+	#endregion
+	
 	//melee attack coroutine
 	IEnumerator MeleeAttack(GameObject target){
 		yield return new WaitForSeconds(1); //replace with animation
@@ -210,14 +273,13 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	//ranged attack coroutine
-	IEnumerator RangedAttack(){
+	IEnumerator RangedAttack(Vector3 aimPosition){
 		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
 		//create 'arrow', and fire it at the selected square
-		Debug.Log(clickPosition);
 		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		Projectile = cheese.GetComponent<ProjectileScript>();
-		Projectile.Initialise(60, clickPosition, projectileHeight);
+		Projectile.Initialise(60, aimPosition, projectileHeight);
 		
 		yield return new WaitForSeconds(1); //allow time for arrow to hit
 		remainingAP -= 3;
@@ -225,11 +287,11 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	IEnumerator MagicAttack(GameObject target){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(1); //animation delay
 		if(!longAction){
 			longActionTarget = target;
 			longAction = true;
-			longActionAP = 7;
+			longActionAP = spellList["DestroyBlock"];
 			longActionPerformed = 1;
 		}
 		int tempLongAP = longActionAP;
@@ -240,13 +302,42 @@ public class PlayerControlsScript : MonoBehaviour {
 			longActionAP = 0;
 			longActionTarget = null;
 			longActionPerformed = 0;
-			Destroy(target);
+			MethodInfo spell = Magic.GetType().GetMethod("Teleport");
+			Debug.Log(spell.Name);
+			spell.Invoke(Magic, new object[]{target, clickPosition});
 		}
 		ActionComplete();
 		if(remainingAP < 0){
 			remainingAP = 0;
 		}
+	}
+	
+	void OnGUI(){
+		if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
+			MoveAction();
+		}
 		
+		if(GUI.Button(new Rect(0,50,100,40), "MELEE")){
+			MeleeAction();
+		}
 		
+		if(GUI.Button(new Rect(0,100,100,40), "RANGED")){
+			RangedAction();
+		}
+		
+		if(GUI.Button(new Rect(0,150,100,40), "MAGIC")){
+			MagicAction();
+		}
+		
+		if(GUI.Button(new Rect(0,200,100,40), "CANCEL")){
+			ActionComplete();
+		}
+		
+		if(GUI.Button(new Rect(0,250,100,40), "PASS")){
+			isMyTurn = false;
+			Controller.TurnOver();
+		}
+		
+		GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
 	}
 }

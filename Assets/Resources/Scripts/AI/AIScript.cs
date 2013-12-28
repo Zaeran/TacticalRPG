@@ -27,6 +27,8 @@ public class AIScript : MonoBehaviour {
 	
 	bool isMyTurn = false;
 	bool actionOccuring = false;
+	bool isReacting = false;
+	bool targetReactionOccuring = false;
 	int remainingAP = 0;
 	
 	
@@ -41,7 +43,7 @@ public class AIScript : MonoBehaviour {
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		playerSelected = Random.Range(0, enemyList.Length);
 		//atkType = Random.Range(1,3);
-		atkType = 2;
+		atkType = 1;
 	}
 	
 	public void NextTurn(){
@@ -76,10 +78,10 @@ public class AIScript : MonoBehaviour {
 		if(remainingAP == 0){
 			EndTurn();
 		}
-		else if(GetDistanceToPlayer(transform.position) < 4.01f && GetDistanceToPlayer(transform.position) > 1.1f && remainingAP >= 3){
+		else if(atkType == 2 && GetDistanceToPlayer(transform.position) < 4.01f && GetDistanceToPlayer(transform.position) > 1.1f && remainingAP >= 3){
 		    AIRangedAttack();	
 		}
-		else if(GetDistanceToPlayer(transform.position) < 1.1f && remainingAP >= 3){
+		else if(atkType == 1 && GetDistanceToPlayer(transform.position) < 1.1f && remainingAP >= 3){
 			AIMeleeAttack();
 		}
 		else if(GetDistanceToPlayer(transform.position) < 1.1f){
@@ -157,16 +159,35 @@ public class AIScript : MonoBehaviour {
 		isMyTurn = false;
 	}
 	
+	//enable reaction
+	public void Reaction(){
+		
+	}
+	//enemy has finished reaction
+	public void ContinueFromReaction(){
+		if(atkType == 1){
+			StartCoroutine(MeleeAttackEnd(enemyList[playerSelected]));
+			targetReactionOccuring = false;
+		}
+	}
+	
 	
 	private void AIMeleeAttack(){
 		actionOccuring = true;
 		validPoints = findValid.GetPoints(2, 2, Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
-		StartCoroutine(MeleeAttack(enemyList[playerSelected]));		
+		StartCoroutine(MeleeAttackStart(enemyList[playerSelected]));		
 	}
 	
-	IEnumerator MeleeAttack(GameObject target){
-		yield return new WaitForSeconds(1); //replace with animation
+	IEnumerator MeleeAttackStart(GameObject target){
+		yield return new WaitForSeconds(0.5f); //replace with animation (halfway)
+		target.SendMessage("Reaction", gameObject);
+		Draw.DestroyValidSquares();
+		targetReactionOccuring = true;
+	}
+	
+	IEnumerator MeleeAttackEnd(GameObject target){
+		yield return new WaitForSeconds(0.5f);
 		target.SendMessage("TakeDamage", 1);
 		remainingAP -= 3;
 		ActionComplete();
@@ -185,7 +206,7 @@ public class AIScript : MonoBehaviour {
 		//create 'arrow', and fire it at the selected square
 		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,0.4f,0), Quaternion.identity) as GameObject;
 		ProjectileScript Projectile = cheese.GetComponent<ProjectileScript>();
-		Projectile.Initialise(60, enemyList[playerSelected].transform.position, projectileHeight);
+		Projectile.Initialise(60, enemyList[playerSelected].transform.position, projectileHeight, 1);
 		Debug.Log(enemyList[playerSelected].transform.position);
 		
 		yield return new WaitForSeconds(1); //allow time for arrow to hit

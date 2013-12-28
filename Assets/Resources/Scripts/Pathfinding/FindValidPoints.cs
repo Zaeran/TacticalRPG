@@ -147,7 +147,6 @@ public class FindValidPoints : MonoBehaviour {
 	//gets valid points for ranged attacks
 	//points can be at any location in range. no adjacent tiles required
 	private List<Vector4> GetValidRangedPoints(int maxRange, int maxDrop){
-		Debug.Log((2-1)/3);
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit[] initialTile;
 		int horDistanceToPoint = 0;
@@ -156,7 +155,7 @@ public class FindValidPoints : MonoBehaviour {
 				initialTile = Physics.RaycastAll(transform.position + new Vector3(x,0,z) + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
 				foreach(RaycastHit rh in initialTile){
 					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - transform.position.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - transform.position.z))));
-					if(Mathf.FloorToInt(horDistanceToPoint + ((rh.point.y - transform.position.y)/maxDrop)) <= maxRange){
+					if(Mathf.FloorToInt(horDistanceToPoint + ((rh.point.y - transform.position.y)/maxDrop)) <= maxRange){ // adds range for height decrease, reduces for height increase
 						validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 					}
 				}

@@ -56,7 +56,7 @@ public class TurnController : MonoBehaviour {
 		Debug.Log("ALIVE CHARS: " + characters.Count);
 		orderedCharacters = new GameObject[characters.Count];
 		while(characters.Count != 0){
-			int highestSpeed = 0;
+			int highestSpeed = -1;
 			GameObject highestSpeedObject = null;
 			
 			foreach(GameObject g in characters){

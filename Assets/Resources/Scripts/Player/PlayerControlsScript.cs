@@ -7,11 +7,20 @@ public class PlayerControlsScript : MonoBehaviour {
 	//variables and such
 	bool actionOccuring = false;
 	bool isMyTurn = false;
+	bool isReacting = false;
+	bool targetReactionOccuring = false;
+	GameObject attackedFromTarget;
+	GameObject targetObject;
 	RaycastHit rayhit;
 	int optionType = 0;
 	int groundOnlyLayer = 1 << 8;
-	int remainingAP = 0;
+	public int remainingAP = 0;
+	int reactionNo = 0;
 	
+	int damageReduction = 0;
+	int evadeChance = 0;
+	
+	//longAction stuff
 	bool longAction = false;
 	int longActionAP = 0;
 	int longActionPerformed = 0;
@@ -39,7 +48,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	//weapon
 	TextAsset weaponData;
-	string wpnName;
+	public string wpnName;
 	int wpnDamage;
 	int wpnRange;
 	
@@ -62,23 +71,13 @@ public class PlayerControlsScript : MonoBehaviour {
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		Magic = GetComponent<MagicScript>();
 		spellList.Add("DestroyBlock", 7);
-		weaponData = Resources.Load("Data/OneHandMeleeWeapons") as TextAsset;
-		string[] testString = weaponData.text.Split('\n');
-		wpnName = "Bow";
-		foreach(string wpnData in testString){
-			if(wpnData.StartsWith(wpnName)){
-				string[] wpn = wpnData.Split(' ');
-				wpnDamage = int.Parse(wpn[1]);
-				wpnRange = int.Parse(wpn[2]);
-				break;
-			}
-		}
-		
+		weaponData = Resources.Load("Data/OneHandMeleeWeapons") as TextAsset;	
+		SetWeaponStats();
 		Debug.Log("Damage: " + wpnDamage + " Range: " + wpnRange);
 	}	
 	
 	void Update () {
-		if(isMyTurn){ //can only act on your turn
+		if((isMyTurn || isReacting) && !targetReactionOccuring){ //can only act on your turn or if reacting
 			//left mouse click
 			if(Input.GetMouseButtonDown(0)){
 				if(!actionOccuring){
@@ -103,12 +102,34 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	void SetWeaponStats(){
-
+		//get each line individually
+		string[] testString = weaponData.text.Split('\n');
+		//remove spaces from name
+		string wpnNameNoSpaces = "";
+		for(int i = 0; i < wpnName.Length; i++){
+			if(wpnName[i] != ' '){
+				wpnNameNoSpaces += wpnName[i];
+			}
+			
+		}
+		//get the data from the file
+		foreach(string wpnData in testString){
+			if(wpnData.StartsWith(wpnNameNoSpaces)){
+				string[] wpn = wpnData.Split(' ');
+				wpnDamage = int.Parse(wpn[1]);
+				wpnRange = int.Parse(wpn[2]);
+				break;
+			}
+		}
 	}
 	
 	//called by other objects when damage is inflicted
 	public void TakeDamage(int damage){
-		if(Stats.Damage(damage)){
+		int damageTaken = damage - damageReduction;
+		if(damageTaken < 0){
+			damageTaken = 0;
+		}
+		if(Stats.Damage(damageTaken)){
 			Controller.DeadCharacter(gameObject);
 			Destroy(gameObject);
 		}
@@ -116,7 +137,13 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	//movement is over. remove AP and reset everything
 	public void StopMovingConfirmation(){
-		remainingAP -= (movePath.Length - 1);
+		if(!isReacting){
+			remainingAP -= (movePath.Length - 1);
+		}
+		else{
+			remainingAP -= (movePath.Length - 1) * 2;
+			ReactionComplete();
+		}
 		ActionComplete();
 	}
 	
@@ -124,17 +151,57 @@ public class PlayerControlsScript : MonoBehaviour {
 	private void ActionComplete(){
 		optionType = 0;
 		actionOccuring = false;
+		isReacting = false;
 		Draw.DestroyValidSquares();
+		if(isReacting){
+			ReactionComplete();
+		}
 	}
 	//called when turn starts
 	public void nextTurn(){
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
+		reactionNo = 0;
 		
 		if(longAction){
 			StartCoroutine(MagicAttack(longActionTarget));
 		}
 	}
+	//enable reaction
+	public void Reaction(GameObject target){
+		reactionNo++;
+		attackedFromTarget = target;
+		if(remainingAP < 3){
+			ReactionComplete();
+		}
+		else{
+			isReacting = true;
+			StartCoroutine(ReactionTimer(reactionNo));
+			//Block();
+		}
+	}
+	
+	IEnumerator ReactionTimer(int reactionNumber){
+		yield return new WaitForSeconds(4);
+		if(isReacting && reactionNumber == reactionNo){
+			ActionComplete();
+		}
+	}
+	
+	private void ReactionComplete(){
+		ActionComplete();
+		isReacting = false;
+		attackedFromTarget.SendMessage("ContinueFromReaction");
+	}
+	//enemy has finished reaction
+	public void ContinueFromReaction(){
+		if(optionType == 2){ //melee
+			StartCoroutine(MeleeAttackEnd());
+			targetReactionOccuring = false;
+		}
+	}
+	
+	
 	//no opposition left. disable character
 	public void BattleOver(){
 		Debug.Log("END BATTLE");
@@ -172,6 +239,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 		
 		if(Input.GetKeyDown(passButton)){
+			ActionComplete();
 			isMyTurn = false;
 			Controller.TurnOver();
 		}
@@ -211,8 +279,9 @@ public class PlayerControlsScript : MonoBehaviour {
 		case 2: //melee attack
 			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
 			foreach(Collider c in col){
-				if(c.tag == "NPC"){
-					StartCoroutine(MeleeAttack(c.gameObject));
+				if(c.tag == "NPC" || c.tag == "Player"){
+					targetObject = c.gameObject;
+					StartCoroutine(MeleeAttackStart());
 					break;
 				}
 			}
@@ -223,6 +292,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		case 4:
 			col = Physics.OverlapSphere(clickPosition, 0.3f);
 			foreach(Collider c in col){
+				targetObject = c.gameObject;
 				StartCoroutine(MagicAttack(c.gameObject));
 				break;
 			}
@@ -235,7 +305,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	#region Actions
 	
 	void MoveAction(){
-		optionType = 1;	
+		optionType = 1;
 		validPoints = findValid.GetPoints(optionType,remainingAP,Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 	}
@@ -243,7 +313,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	void MeleeAction(){
 		if(remainingAP >= 3){
 			optionType = 2;
-			validPoints = findValid.GetPoints(optionType, 1,Stats.maxJump);
+			validPoints = findValid.GetPoints(optionType, wpnRange,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
 		}
 	}
@@ -251,7 +321,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	void RangedAction(){
 		if(remainingAP >= 3){
 			optionType = 3;
-			validPoints = findValid.GetPoints(optionType, 4, 2);
+			validPoints = findValid.GetPoints(optionType, wpnRange, 2);
 			Draw.DrawValidSquares(validPoints);
 		}
 	}
@@ -264,10 +334,50 @@ public class PlayerControlsScript : MonoBehaviour {
 	}	
 	#endregion
 	
-	//melee attack coroutine
-	IEnumerator MeleeAttack(GameObject target){
-		yield return new WaitForSeconds(1); //replace with animation
-		target.SendMessage("TakeDamage", 1);
+	#region Reactions
+	void BlockReaction(){
+		if(remainingAP > 3){
+			actionOccuring = true;
+			StartCoroutine(BlockRoutine());
+		}
+		else{
+			ReactionComplete();
+		}
+	}
+	void Dodge(){
+		if(remainingAP > 2){
+			optionType = 1;
+			validPoints = findValid.GetPoints(optionType,1,Stats.maxJump);
+			Draw.DrawValidSquares(validPoints);
+		}
+		else{
+			ReactionComplete();
+		}
+	}
+	void Manoeuvre(){
+		
+	}
+	void CounterAttack(){
+		
+	}
+	void Evade(){
+		
+	}
+	#endregion
+	
+	#region ActionCoroutines
+	//melee attack coroutines
+	IEnumerator MeleeAttackStart(){
+		yield return new WaitForSeconds(0.5f); //replace with animation
+		targetObject.SendMessage("Reaction", gameObject);
+		Draw.DestroyValidSquares();
+		targetReactionOccuring = true;
+	}
+
+	IEnumerator MeleeAttackEnd(){
+		yield return new WaitForSeconds(0.5f); //replace with animation
+		targetObject.SendMessage("TakeDamage", wpnDamage);
+		targetReactionOccuring = false;
 		remainingAP -= 3;
 		ActionComplete();
 	}
@@ -277,9 +387,9 @@ public class PlayerControlsScript : MonoBehaviour {
 		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
 		//create 'arrow', and fire it at the selected square
-		GameObject cheese = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
-		Projectile = cheese.GetComponent<ProjectileScript>();
-		Projectile.Initialise(60, aimPosition, projectileHeight);
+		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
+		Projectile = proj.GetComponent<ProjectileScript>();
+		Projectile.Initialise(60, aimPosition, projectileHeight, wpnDamage);
 		
 		yield return new WaitForSeconds(1); //allow time for arrow to hit
 		remainingAP -= 3;
@@ -311,33 +421,62 @@ public class PlayerControlsScript : MonoBehaviour {
 			remainingAP = 0;
 		}
 	}
+	#endregion
+	
+	#region ReactionCoroutines
+	IEnumerator BlockRoutine(){
+		int blockValue = 2; //replace with shield/wpn value
+		yield return new WaitForSeconds(0.5f); //block animation
+		damageReduction += blockValue;
+		ReactionComplete();
+		yield return new WaitForSeconds(1.5f);
+		damageReduction -= blockValue;
+	}
+	#endregion
 	
 	void OnGUI(){
-		if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
-			MoveAction();
+		if(isMyTurn && !targetReactionOccuring){
+			if(optionType == 0){
+				if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
+					MoveAction();
+				}
+				
+				if(GUI.Button(new Rect(0,50,100,40), "MELEE")){
+					MeleeAction();
+				}
+				
+				if(GUI.Button(new Rect(0,100,100,40), "RANGED")){
+					RangedAction();
+				}
+				
+				if(GUI.Button(new Rect(0,150,100,40), "MAGIC")){
+					MagicAction();
+				}
+				
+				if(GUI.Button(new Rect(0,250,100,40), "PASS")){
+					ActionComplete();
+					isMyTurn = false;
+					if(!isReacting){
+						Controller.TurnOver();
+					}
+				}
+			}
+			if(GUI.Button(new Rect(0,200,100,40), "CANCEL")){
+				ActionComplete();
+				if(isReacting){
+					
+				}
+			}
+			GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
 		}
-		
-		if(GUI.Button(new Rect(0,50,100,40), "MELEE")){
-			MeleeAction();
+		else if(isReacting){
+			if(GUI.Button(new Rect(0,0,100,40), "DODGE")){
+				Dodge();
+			}
+			
+			if(GUI.Button(new Rect(0,50,100,40), "BLOCK")){
+				BlockReaction();
+			}
 		}
-		
-		if(GUI.Button(new Rect(0,100,100,40), "RANGED")){
-			RangedAction();
-		}
-		
-		if(GUI.Button(new Rect(0,150,100,40), "MAGIC")){
-			MagicAction();
-		}
-		
-		if(GUI.Button(new Rect(0,200,100,40), "CANCEL")){
-			ActionComplete();
-		}
-		
-		if(GUI.Button(new Rect(0,250,100,40), "PASS")){
-			isMyTurn = false;
-			Controller.TurnOver();
-		}
-		
-		GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
 	}
 }

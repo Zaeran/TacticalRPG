@@ -8,6 +8,8 @@ public class WeaponList : MonoBehaviour {
 	Dictionary<string, int> wpnDamage;
 	Dictionary<string, int> wpnRange;
 	Dictionary<string, int> wpnCost;
+	Dictionary<string, int> wpnMagDamageType;
+	Dictionary<string, int> wpnMagDamage;
 	Dictionary<string, string> wpnSkill;
 
 	TextAsset weaponData;
@@ -20,6 +22,8 @@ public class WeaponList : MonoBehaviour {
 		wpnRange = new Dictionary<string, int>();
 		wpnCost = new Dictionary<string, int>();
 		wpnSkill = new Dictionary<string, string>();
+		wpnMagDamage = new Dictionary<string, int>();
+		wpnMagDamageType = new Dictionary<string, int>();
 		weaponData = Resources.Load("Data/Weapons") as TextAsset;	
 		LoadWeaponData();
 		Debug.Log(wpnType["Bow"] + ", " + wpnDamage["Bow"]);
@@ -37,17 +41,25 @@ public class WeaponList : MonoBehaviour {
 				wpnType.Add(wpn[0], int.Parse(wpn[1]));
 				wpnDamage.Add(wpn[0], int.Parse(wpn[2]));
 				wpnRange.Add(wpn[0], int.Parse(wpn[3]));
-				wpnCost.Add(wpn[0], int.Parse(wpn[4]));
-				wpnSkill.Add(wpn[0], wpn[5]);
+				wpnMagDamageType.Add(wpn[0], int.Parse(wpn[4]));
+				wpnMagDamage.Add(wpn[0], int.Parse(wpn[5]));
+				wpnCost.Add(wpn[0], int.Parse(wpn[6]));
+				wpnSkill.Add(wpn[0], wpn[7]);
 			}
 		}
 	}
 
 	public int[] GetWeaponCombatStats(string weapon){
-		int[] stats = new int[3];
+		int[] stats = new int[5];
 		stats[0] = wpnType[weapon];
 		stats[1] = wpnDamage[weapon];
 		stats[2] = wpnRange[weapon];
+		stats[3] = wpnMagDamageType[weapon];
+		stats[4] = wpnMagDamage[weapon];
 		return stats;
+	}
+
+	public string GetWeaponSkill(string weapon){
+		return wpnSkill[weapon];
 	}
 }

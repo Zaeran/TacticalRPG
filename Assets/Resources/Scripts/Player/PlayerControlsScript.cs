@@ -211,7 +211,13 @@ public class PlayerControlsScript : MonoBehaviour {
 			break;
 		case "Attack": //melee attack
 			Draw.DestroyValidSquares();
-			Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
+			if(KnownAbilities.SkillSucceeds("Attack", wpnName)){
+				Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
+			}
+			else{
+				ActionComplete(3);
+				Debug.Log("Skill Failed");
+			}
 			break;
 		case "Magic":
 			col = Physics.OverlapSphere(clickPosition, 0.3f);
@@ -257,6 +263,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	#endregion
 	
 	#region Reactions
+	//these will be added to SkillList
 	void BlockReaction(){
 		if(remainingAP > 3){
 			actionOccuring = true;
@@ -288,16 +295,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	#endregion
 	
 	#region ActionCoroutines
-	//melee attack coroutines
-	IEnumerator MeleeAttack(){
-		targetObject.SendMessage("Reaction", gameObject);
-		Draw.DestroyValidSquares();
-		yield return new WaitForSeconds(1.0f); //replace with animation
-		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
-		targetObject.SendMessage("TakeDamage", wpnDamage);
-		remainingAP -= 3;
-		ActionComplete();
-	}
 	
 	IEnumerator MagicAttack(GameObject target){
 		yield return new WaitForSeconds(1); //animation delay

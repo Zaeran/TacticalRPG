@@ -26,7 +26,7 @@ public class RotateCamera : MonoBehaviour {
 	
 	void Update () {
 		
-		if(Input.GetKeyDown(KeyCode.LeftShift)){
+		if(Input.GetKeyDown(KeyCode.LeftControl)){
 			freeLook = !freeLook;
 		}
 		

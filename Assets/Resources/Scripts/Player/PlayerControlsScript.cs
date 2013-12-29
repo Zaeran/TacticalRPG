@@ -39,7 +39,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	//components
 	FindValidPoints findValid;
 	PathfindingScript pathFind;
-	PlayerDrawScript Draw;
+	DrawSquaresScript Draw;
 	AttributesScript Stats;
 	MovementScript Move;
 	TurnController Controller;	
@@ -64,7 +64,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		//initialize all component variables
 		findValid = GetComponent<FindValidPoints>();
 		pathFind = GetComponent<PathfindingScript>();
-		Draw = GetComponent<PlayerDrawScript>();
+		Draw = GetComponent<DrawSquaresScript>();
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
@@ -89,6 +89,13 @@ public class PlayerControlsScript : MonoBehaviour {
 			if(Input.GetKeyDown(cancelButton)){
 			    ActionComplete();
 			}
+
+			if(Input.GetKeyDown(KeyCode.LeftShift)){
+				Time.timeScale = 0.2f;
+			}
+			if(Input.GetKeyUp(KeyCode.LeftShift)){
+				Time.timeScale = 1.0f;
+			}
 			
 		    //end turn when AP is 0
 			if(remainingAP == 0){
@@ -108,6 +115,10 @@ public class PlayerControlsScript : MonoBehaviour {
 			Controller.DeadCharacter(gameObject);
 			Destroy(gameObject);
 		}
+		if(isReacting){
+			ReactionComplete();
+		}
+		Time.timeScale = 1.0f;
 	}
 	
 	//movement is over. remove AP and reset everything
@@ -147,36 +158,13 @@ public class PlayerControlsScript : MonoBehaviour {
 	public void Reaction(GameObject target){
 		reactionNo++;
 		attackedFromTarget = target;
-		if(remainingAP < 3){
-			ReactionComplete();
-		}
-		else{
-			isReacting = true;
-			StartCoroutine(ReactionTimer(reactionNo));
-			//Block();
-		}
-	}
-	
-	IEnumerator ReactionTimer(int reactionNumber){
-		yield return new WaitForSeconds(4);
-		if(isReacting && reactionNumber == reactionNo){
-			ActionComplete();
-		}
+		isReacting = true;
 	}
 	
 	private void ReactionComplete(){
 		ActionComplete();
 		isReacting = false;
-		attackedFromTarget.SendMessage("ContinueFromReaction");
-	}
-	//enemy has finished reaction
-	public void ContinueFromReaction(){
-		if(optionType == 2){ //melee
-			StartCoroutine(MeleeAttackEnd());
-			targetReactionOccuring = false;
-		}
-	}
-	
+	}	
 	
 	//no opposition left. disable character
 	public void BattleOver(){
@@ -257,7 +245,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			foreach(Collider c in col){
 				if(c.tag == "NPC" || c.tag == "Player"){
 					targetObject = c.gameObject;
-					StartCoroutine(MeleeAttackStart());
+					StartCoroutine(MeleeAttack());
 					break;
 				}
 			}
@@ -345,18 +333,12 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	#region ActionCoroutines
 	//melee attack coroutines
-	IEnumerator MeleeAttackStart(){
-		yield return new WaitForSeconds(0.5f); //replace with animation
+	IEnumerator MeleeAttack(){
 		targetObject.SendMessage("Reaction", gameObject);
 		Draw.DestroyValidSquares();
-		targetReactionOccuring = true;
-	}
-
-	IEnumerator MeleeAttackEnd(){
-		yield return new WaitForSeconds(0.5f); //replace with animation
+		yield return new WaitForSeconds(1.0f); //replace with animation
 		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
 		targetObject.SendMessage("TakeDamage", wpnDamage);
-		targetReactionOccuring = false;
 		remainingAP -= 3;
 		ActionComplete();
 	}

@@ -8,7 +8,7 @@ public class AIScript : MonoBehaviour {
 	
 	PathfindingScript pathFind;
 	MovementScript Move;
-	PlayerDrawScript Draw;
+	DrawSquaresScript Draw;
 	FindValidPoints findValid;
 	AttributesScript Stats;
 	TurnController Controller;
@@ -37,7 +37,7 @@ public class AIScript : MonoBehaviour {
 		enemyList = GameObject.FindGameObjectsWithTag("Player");
 		Stats = GetComponent<AttributesScript>();
 		pathFind = GetComponent<PathfindingScript>();
-		Draw = GetComponent<PlayerDrawScript>();
+		Draw = GetComponent<DrawSquaresScript>();
 		Move = GetComponent<MovementScript>();
 		findValid = GetComponent<FindValidPoints>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();

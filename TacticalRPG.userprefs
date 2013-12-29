@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Weapons\WeaponList.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\Weapons\WeaponList.cs" Line="51" Column="16" />
-      <File FileName="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" Line="73" Column="36" />
+      <File FileName="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" Line="126" Column="32" />
+      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="19" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

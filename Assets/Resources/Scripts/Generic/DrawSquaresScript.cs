@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerDrawScript : MonoBehaviour {
+public class DrawSquaresScript : MonoBehaviour {
 	
 	public GameObject Node;
 	List<GameObject> createdObject = new List<GameObject>();

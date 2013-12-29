@@ -6,10 +6,14 @@ public class ProjectileScript : MonoBehaviour {
 	Rigidbody rigid;
 	bool canCollide = false;
 	int wpnDamage;
+	int skillCost;
+	GameObject origin;
 	
 	//set starting speed and direction
 	//aims for center of square
-	public void Initialise(int angleDeg, Vector3 endPos, float projectileHeight, int damage){
+	public void Initialise(int angleDeg, Vector3 endPos, float projectileHeight, int damage, GameObject firedBy, int cost){
+		origin = firedBy;
+		skillCost = cost;
 		wpnDamage = damage;
 		collider.enabled = false;
 		float angle = angleDeg * Mathf.Deg2Rad;
@@ -41,6 +45,7 @@ public class ProjectileScript : MonoBehaviour {
 	void OnCollisionEnter(Collision c){
 	    //if a character is hit, do damage
 		if(canCollide){
+			origin.SendMessage("ActionComplete", skillCost);
 			if(c.collider.tag == "NPC" || c.collider.tag == "Player"){
 				c.collider.SendMessage("TakeDamage", wpnDamage);
 			}

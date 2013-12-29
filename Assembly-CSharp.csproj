@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\AI\AIScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Camera\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\AimProjectileScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\AttributesScript.cs" />

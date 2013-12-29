@@ -25,7 +25,7 @@ public class SkillList : MonoBehaviour {
 
 	//used to initialise a skill
 	//required info: name of skill, target of skill, character skill originating from, and name of weapon (replace with equipment list later)
-	public void PerformSkill(string skillName, Vector3 target, GameObject origin, string weaponName = ""){
+	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost, string weaponName = ""){
 		int wpnDamage = Weapons.GetWeaponCombatStats(weaponName)[1];
 		int wpnType = Weapons.GetWeaponCombatStats(weaponName)[0];
 		Debug.Log(wpnType);
@@ -33,10 +33,10 @@ public class SkillList : MonoBehaviour {
 		switch(skillName){
 		case "Attack":
 			if(wpnType == 1 || wpnType == 2){
-				StartCoroutine(MeleeAttack(target, wpnDamage, origin));
+				StartCoroutine(MeleeAttack(target, wpnDamage, origin, skillCost));
 			}
 			else if(wpnType == 3 || wpnType == 4){
-				StartCoroutine(RangedAttack(target, wpnDamage, origin));
+				StartCoroutine(RangedAttack(target, wpnDamage, origin, skillCost));
 			}
 			break;
 		case "Move":
@@ -51,7 +51,7 @@ public class SkillList : MonoBehaviour {
 
 	}
 	
-	IEnumerator MeleeAttack(Vector3 target, int damage, GameObject origin){
+	IEnumerator MeleeAttack(Vector3 target, int damage, GameObject origin, int skillCost){
 		Collider[] col;
 		GameObject character = null;
 		//test that the square contains a character
@@ -79,20 +79,15 @@ public class SkillList : MonoBehaviour {
 		if(character != null){
 			character.SendMessage("TakeDamage", damage);
 		}
-		origin.SendMessage("ActionComplete", 3); //replace with skill cost
+		origin.SendMessage("ActionComplete", skillCost); //replace with skill cost
 	}
 
-	IEnumerator RangedAttack(Vector3 target, int damage, GameObject origin){
+	IEnumerator RangedAttack(Vector3 target, int damage, GameObject origin, int skillCost){
 		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
-		int wpnDamage = damage;
 		//create 'arrow', and fire it at the selected square
 		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
-		Projectile.Initialise(60, target, projectileHeight, wpnDamage);
-		
-		yield return new WaitForSeconds(1); //allow time for arrow to hit
-		origin.SendMessage("ActionComplete", 3); //replace with skill cost
-
+		Projectile.Initialise(60, target, projectileHeight, damage, origin, skillCost);
 	}
 }

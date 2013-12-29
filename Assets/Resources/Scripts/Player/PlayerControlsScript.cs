@@ -86,10 +86,6 @@ public class PlayerControlsScript : MonoBehaviour {
 					LeftClick();
 				}
 			}
-			//cancel action
-			if(Input.GetKeyDown(cancelButton)){
-			    ActionComplete();
-			}
 
 			if(Input.GetKeyDown(KeyCode.LeftShift)){
 				Time.timeScale = 0.2f;
@@ -129,13 +125,11 @@ public class PlayerControlsScript : MonoBehaviour {
 	//movement is over. remove AP and reset everything
 	public void StopMovingConfirmation(){
 		if(!isReacting){
-			remainingAP -= (movePath.Length - 1);
+			ActionComplete(movePath.Length - 1);
 		}
 		else{
-			remainingAP -= (movePath.Length - 1) * 2;
-			ReactionComplete();
+			ActionComplete((movePath.Length - 1) * 2);
 		}
-		ActionComplete();
 	}
 	
 	//an action has been performed. allow new action to occur and remove all marker squares
@@ -199,36 +193,24 @@ public class PlayerControlsScript : MonoBehaviour {
 	//possibilities of left-click
 	private void LeftClickOptions(){
 		Collider[] col;
-		switch(skillSelected){
-		case "Move": //movement
-			Skills.PerformSkill("Move", clickPosition, gameObject, wpnName);
+		if(skillSelected == "Move"){
 			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
 			if(movePath.Length > 0){
 				Draw.DestroyValidSquares();
 				Move.MoveToPoint(movePath, remainingAP);
 			}
 			actionOccuring = true;
-			break;
-		case "Attack": //melee attack
+		}
+		else if(skillSelected != ""){
+			actionOccuring = true;
 			Draw.DestroyValidSquares();
-			if(KnownAbilities.SkillSucceeds("Attack", wpnName)){
-				Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
+			if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
+				Skills.PerformSkill(skillSelected, clickPosition, gameObject, Skills.getSkillCost(skillSelected), wpnName);
 			}
 			else{
-				ActionComplete(3);
+				Skills.getSkillCost(skillSelected);
 				Debug.Log("Skill Failed");
 			}
-			break;
-		case "Magic":
-			col = Physics.OverlapSphere(clickPosition, 0.3f);
-			foreach(Collider c in col){
-				targetObject = c.gameObject;
-				StartCoroutine(MagicAttack(c.gameObject));
-				break;
-			}
-			break;
-		default:
-			break;
 		}
 	}
 	
@@ -351,6 +333,7 @@ public class PlayerControlsScript : MonoBehaviour {
 					}
 					
 					if(GUI.Button(new Rect(0,200,100,40), "PASS")){
+						Draw.DestroyValidSquares();
 						ActionComplete();
 						isMyTurn = false;
 						if(!isReacting){

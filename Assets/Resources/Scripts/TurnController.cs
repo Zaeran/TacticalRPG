@@ -11,7 +11,7 @@ public class TurnController : MonoBehaviour {
 	
 	AttributesScript Stats;
 	PlayerControlsScript charScript;
-	AIScript aiScript;
+	//AIScript aiScript;
 	RotateCamera cameraScript;
 	
 	void Start(){
@@ -37,8 +37,8 @@ public class TurnController : MonoBehaviour {
 			charScript.nextTurn();
 		}
 		else if(orderedCharacters[currentTurn].tag == ("NPC")){
-			aiScript = orderedCharacters[currentTurn].GetComponent<AIScript>();
-			aiScript.NextTurn();
+			//aiScript = orderedCharacters[currentTurn].GetComponent<AIScript>();
+			//aiScript.NextTurn();
 		}
 		cameraScript.SetFollow(orderedCharacters[currentTurn]);
 	}
@@ -111,7 +111,7 @@ public class TurnController : MonoBehaviour {
 		else if(!playerExists){
 			battleOver = true;
 			Debug.Log("YOU LOSE");
-			aiScript.BattleOver();
+			//aiScript.BattleOver();
 		}
 		else{
 			OrderCharacters();

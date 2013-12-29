@@ -13,17 +13,17 @@ public class MovementScript : MonoBehaviour {
 	int squaresMoved;
 	
 	PlayerControlsScript parentScript;
-	AIScript parentAIScript;
+	//AIScript parentAIScript;
 	
 	void Start(){
 		if(GetComponent<PlayerControlsScript>()){
 			isPlayer = true;
 			parentScript = GetComponent<PlayerControlsScript>();
 		}
-		else if(GetComponent<AIScript>()){
-			isPlayer = false;
-			parentAIScript = GetComponent<AIScript>();
-		}
+//		else if(GetComponent<AIScript>()){
+//			isPlayer = false;
+//			parentAIScript = GetComponent<AIScript>();
+//		}
 	}
 	
 	//called by control script to initialize move values
@@ -48,7 +48,7 @@ public class MovementScript : MonoBehaviour {
 					parentScript.StopMovingConfirmation();
 				}
 				else{
-					parentAIScript.StopMovingConfirmation(squaresMoved);
+					//parentAIScript.StopMovingConfirmation(squaresMoved);
 				}
 			}
 			//when we reach the end of the lerp, we've reached the next square

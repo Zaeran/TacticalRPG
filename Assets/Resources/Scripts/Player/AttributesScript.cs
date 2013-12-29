@@ -19,8 +19,11 @@ public class AttributesScript : MonoBehaviour {
 	}
 	
 	public bool Damage(int damage){
-		int damageTaken = Mathf.Clamp(damage - statusEffects.damageReductionPhysical, 0, 10000);
-		CurrentHealth -= damage;
+		int damageTaken = damage - statusEffects.damageReductionPhysical;
+		if(damageTaken < 0){
+			damageTaken = 0;
+		}
+		CurrentHealth -= damageTaken;
 		if(CurrentHealth <= 0){
 			return true;
 		}

@@ -7,6 +7,7 @@ public class TurnController : MonoBehaviour {
 	List<GameObject> characters = new List<GameObject>();
 	GameObject[] orderedCharacters = new GameObject[0];
 	int currentTurn = 0;
+	int currentRound;
 	bool battleOver = false;
 	
 	AttributesScript Stats;
@@ -16,6 +17,7 @@ public class TurnController : MonoBehaviour {
 	
 	void Start(){
 		StartBattle();
+		currentRound = 0;
 		cameraScript = GameObject.FindGameObjectWithTag("MainCamPoint").GetComponent<RotateCamera>();
 	}
 	
@@ -31,7 +33,7 @@ public class TurnController : MonoBehaviour {
 	
 	IEnumerator NextTurn(){
 		yield return new WaitForSeconds(1);
-		Debug.Log(orderedCharacters[currentTurn].name);
+		Debug.Log(currentRound + ": " + orderedCharacters[currentTurn].name);
 		if(orderedCharacters[currentTurn].tag == ("Player")){
 			charScript = orderedCharacters[currentTurn].GetComponent<PlayerControlsScript>();
 			charScript.nextTurn();
@@ -77,6 +79,7 @@ public class TurnController : MonoBehaviour {
 		currentTurn++;
 		if(currentTurn == orderedCharacters.Length){
 			currentTurn = 0;
+			currentRound++;
 		}
 		if(!battleOver){
 			StartCoroutine(NextTurn());

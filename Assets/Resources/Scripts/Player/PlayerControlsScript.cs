@@ -17,10 +17,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	int reactionNo = 0;
 
 	string skillSelected;
-	
-	int damageReduction = 0;
-	int evadeChance = 0;
-	
+
 	//longAction stuff
 	bool longAction = false;
 	int longActionAP = 0;
@@ -65,7 +62,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	void Awake () {
 		//initialize all component variables
-
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
 		KnownAbilities = GetComponent<CharacterKnownAbilities>();
@@ -90,15 +86,8 @@ public class PlayerControlsScript : MonoBehaviour {
 				}
 			}
 
-			if(Input.GetKeyDown(KeyCode.LeftShift)){
-				Time.timeScale = 0.2f;
-			}
-			if(Input.GetKeyUp(KeyCode.LeftShift)){
-				Time.timeScale = 1.0f;
-			}
-			
 		    //end turn when AP is 0
-			if(remainingAP == 0){
+			if(remainingAP == 0 && isMyTurn){
 				isMyTurn = false;
 				Controller.TurnOver();
 			}
@@ -111,9 +100,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			Controller.DeadCharacter(gameObject);
 			Destroy(gameObject);
 		}
-		if(isReacting){
-			ReactionComplete();
-		}
+		ActionComplete();
 		try{
 			gameObject.SendMessage("ReactionComplete");
 		}
@@ -138,9 +125,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		actionOccuring = false;
 		isReacting = false;
 		Draw.DestroyValidSquares();
-		if(isReacting){
-			ReactionComplete();
-		}
 	}
 	//called when turn starts
 	public void nextTurn(){
@@ -158,11 +142,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		attackedFromTarget = target;
 		isReacting = true;
 	}
-	
-	private void ReactionComplete(){
-		ActionComplete();
-		isReacting = false;
-	}	
 	
 	//no opposition left. disable character
 	public void BattleOver(){
@@ -191,7 +170,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	//possibilities of left-click
 	private void LeftClickOptions(){
-		Collider[] col;
 		if(skillSelected == "Move"){
 			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump, gameObject);
 			if(movePath.Length > 0){
@@ -245,6 +223,9 @@ public class PlayerControlsScript : MonoBehaviour {
 				}
 			}
 		}
+		else{
+			ActionComplete();
+		}
 	}
 	
 	void MagicAction(){
@@ -256,15 +237,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	#region Reactions
 	//these will be added to SkillList
-	void BlockReaction(){
-		if(remainingAP > 3){
-			actionOccuring = true;
-			StartCoroutine(BlockRoutine());
-		}
-		else{
-			ReactionComplete();
-		}
-	}
 	void Dodge(){
 		if(remainingAP > 2){
 			skillSelected = "Move";
@@ -272,7 +244,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			Draw.DrawValidSquares(validPoints);
 		}
 		else{
-			ReactionComplete();
+			ActionComplete();
 		}
 	}
 	void Manoeuvre(){
@@ -312,17 +284,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		if(remainingAP < 0){
 			remainingAP = 0;
 		}
-	}
-	#endregion
-	
-	#region ReactionCoroutines
-	IEnumerator BlockRoutine(){
-		int blockValue = 2; //replace with shield/wpn value
-		yield return new WaitForSeconds(0.5f); //block animation
-		damageReduction += blockValue;
-		ReactionComplete();
-		yield return new WaitForSeconds(1.5f);
-		damageReduction -= blockValue;
 	}
 	#endregion
 	
@@ -366,7 +327,8 @@ public class PlayerControlsScript : MonoBehaviour {
 				}
 				
 				if(GUI.Button(new Rect(0,50,100,40), "BLOCK")){
-					BlockReaction();
+					skillSelected = "Block";
+					Skill ();
 				}
 			}
 		}

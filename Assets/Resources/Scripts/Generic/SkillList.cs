@@ -10,13 +10,11 @@ public class SkillList : MonoBehaviour {
 	int groundOnlyLayer = 1 << 8;
 
 	WeaponList Weapons;
-	MovementScript Move;
 
 	// Use this for initialization
 	void Start () {
 		skills = new Dictionary<string, int>();
 		isSkillTargeted = new Dictionary<string, bool>();
-		Move = GetComponent<MovementScript>();
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
 		skills.Add("Attack", 3);
 		isSkillTargeted.Add("Attack", true);
@@ -48,7 +46,7 @@ public class SkillList : MonoBehaviour {
 			}
 			break;
 		case "Block":
-			StartCoroutine(Block(2, origin));
+			StartCoroutine(Block(2, origin, skillCost));
 			break;
 		default: break;
 		}
@@ -97,10 +95,11 @@ public class SkillList : MonoBehaviour {
 	#endregion
 
 	#region reaction skills
-	IEnumerator Block(int blockValue, GameObject origin){
+	IEnumerator Block(int blockValue, GameObject origin, int skillCost){
 		yield return new WaitForSeconds(0.2f); //block animation
 		ReactionDamageReduction block = origin.AddComponent<ReactionDamageReduction>();
 		block.Initialize(blockValue);
+		origin.SendMessage("ActionComplete", skillCost);
 	}
 	#endregion
 }

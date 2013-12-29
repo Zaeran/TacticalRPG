@@ -15,6 +15,7 @@ public class AttributesScript : MonoBehaviour {
 	
 	private void Start(){
 		CurrentHealth = MaxHealth;
+		statusEffects = GetComponent<CharacterBuffsDebuffs>();
 	}
 	
 	public bool Damage(int damage){

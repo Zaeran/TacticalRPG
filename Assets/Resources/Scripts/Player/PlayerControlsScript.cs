@@ -65,16 +65,19 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	void Awake () {
 		//initialize all component variables
-		findValid = GetComponent<FindValidPoints>();
-		pathFind = GetComponent<PathfindingScript>();
-		Draw = GetComponent<DrawSquaresScript>();
+
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
+		KnownAbilities = GetComponent<CharacterKnownAbilities>();
+
+		pathFind = GameObject.FindGameObjectWithTag("Controller").GetComponent<PathfindingScript>();
+		findValid = GameObject.FindGameObjectWithTag("Controller").GetComponent<FindValidPoints>();
+		Draw = GameObject.FindGameObjectWithTag("Controller").GetComponent<DrawSquaresScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		Magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
 		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
-		KnownAbilities = GetComponent<CharacterKnownAbilities>();
+
 		skillSelected = "";
 	}	
 	
@@ -190,7 +193,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	private void LeftClickOptions(){
 		Collider[] col;
 		if(skillSelected == "Move"){
-			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
+			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump, gameObject);
 			if(movePath.Length > 0){
 				Draw.DestroyValidSquares();
 				Move.MoveToPoint(movePath, remainingAP);
@@ -214,7 +217,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	
 	void MoveAction(){
 		skillSelected = "Move";
-		validPoints = findValid.GetPoints("Move",remainingAP,Stats.maxJump);
+		validPoints = findValid.GetPoints("Move", gameObject,remainingAP,Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 	}
 
@@ -224,10 +227,10 @@ public class PlayerControlsScript : MonoBehaviour {
 				int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
 				int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
 				if(wpnType == 1 || wpnType == 2){
-					validPoints = findValid.GetPoints("Melee", wpnRange,Stats.maxJump);
+					validPoints = findValid.GetPoints("Melee", gameObject, wpnRange,Stats.maxJump);
 				}
 				else{
-					validPoints = findValid.GetPoints("Ranged", wpnRange,Stats.maxJump);
+					validPoints = findValid.GetPoints("Ranged", gameObject, wpnRange,Stats.maxJump);
 				}
 				Draw.DrawValidSquares(validPoints);
 			}
@@ -245,7 +248,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	void MagicAction(){
-		validPoints = findValid.GetPoints("Magic", 10,1);
+		validPoints = findValid.GetPoints("Magic", gameObject, 10,1);
 		Draw.DrawValidSquares(validPoints);
 		currentSpell = "DestroyBlock";
 	}	
@@ -265,7 +268,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	void Dodge(){
 		if(remainingAP > 2){
 			skillSelected = "Move";
-			validPoints = findValid.GetPoints("Move",1,Stats.maxJump);
+			validPoints = findValid.GetPoints("Move", gameObject,1,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
 		}
 		else{

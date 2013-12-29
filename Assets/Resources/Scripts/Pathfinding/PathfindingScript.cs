@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class PathfindingScript : MonoBehaviour {
 	
-	public Vector3[] StartPathFinding(Vector4 endPos, List<Vector4> validPoints, int maxJump){
+	public Vector3[] StartPathFinding(Vector4 endPos, List<Vector4> validPoints, int maxJump, GameObject origin){
 		//fixes a glitch where a player would move to (0,0,0) is they clicked their own square
 		if(endPos.w == 0){
-			return new Vector3[]{transform.position};
+			return new Vector3[]{origin.transform.position};
 		}
 		return FindPath(endPos, validPoints, maxJump);
 	}

@@ -8,6 +8,7 @@ public class ReactionDamageReduction : MonoBehaviour {
 
 	public void Initialize(int value){
 		reduction = value;
+		status = GetComponent<CharacterBuffsDebuffs>();
 		status.damageReductionPhysical += reduction;
 	}
 

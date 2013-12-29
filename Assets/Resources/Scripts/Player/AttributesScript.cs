@@ -12,10 +12,13 @@ public class AttributesScript : MonoBehaviour {
 	//base stats
 	public int MaxHealth;
 	public int CurrentHealth;	
+
+	FloatingNumbersScript floatingDisplay;
 	
 	private void Start(){
 		CurrentHealth = MaxHealth;
 		statusEffects = GetComponent<CharacterBuffsDebuffs>();
+		floatingDisplay = GameObject.FindGameObjectWithTag("GameData").GetComponent<FloatingNumbersScript>();
 	}
 	
 	public bool Damage(int damage){
@@ -24,6 +27,7 @@ public class AttributesScript : MonoBehaviour {
 			damageTaken = 0;
 		}
 		CurrentHealth -= damageTaken;
+		floatingDisplay.SetText(damageTaken.ToString(), transform.position + Vector3.up);
 		if(CurrentHealth <= 0){
 			return true;
 		}

@@ -51,15 +51,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	TextAsset weaponData;
 	public string wpnName;
 	
-	
-	//key assignments
-	const KeyCode moveButton = KeyCode.M;
-	const KeyCode meleeButton = KeyCode.J;
-	const KeyCode rangedButton = KeyCode.K;
-	const KeyCode passButton = KeyCode.N;
-	const KeyCode cancelButton = KeyCode.F;
-	const KeyCode spellButton = KeyCode.L;
-	
 	void Awake () {
 		//initialize all component variables
 		Stats = GetComponent<AttributesScript>();
@@ -315,9 +306,6 @@ public class PlayerControlsScript : MonoBehaviour {
 				}
 				if(GUI.Button(new Rect(0,150,100,40), "CANCEL")){
 					ActionComplete();
-					if(isReacting){
-						
-					}
 				}
 				GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
 			}

@@ -46,7 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\Camera\RotateCamera.cs" />
+     <Compile Include="Assets\Resources\Scripts\CameraGUI\FloatingNumbersScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\CameraGUI\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\AimProjectileScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\MagicList.cs" />

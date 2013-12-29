@@ -1,4 +1,0 @@
-WEAPON/DAMAGE/RANGE/HANDS
-
-ShortSword 1 1 1
-Bow 2 4 2

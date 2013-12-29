@@ -45,12 +45,11 @@ public class PlayerControlsScript : MonoBehaviour {
 	TurnController Controller;	
 	ProjectileScript Projectile;
 	MagicScript Magic;
+	WeaponList Weapons;
 	
 	//weapon
 	TextAsset weaponData;
 	public string wpnName;
-	int wpnDamage;
-	int wpnRange;
 	
 	
 	//key assignments
@@ -70,10 +69,8 @@ public class PlayerControlsScript : MonoBehaviour {
 		Move = GetComponent<MovementScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		Magic = GetComponent<MagicScript>();
+		Weapons = GameObject.FindGameObjectWithTag("GameData").GetComponent<WeaponList>();
 		spellList.Add("DestroyBlock", 7);
-		weaponData = Resources.Load("Data/OneHandMeleeWeapons") as TextAsset;	
-		SetWeaponStats();
-		Debug.Log("Damage: " + wpnDamage + " Range: " + wpnRange);
 	}	
 	
 	void Update () {
@@ -100,29 +97,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 		}
 	}
-	
-	void SetWeaponStats(){
-		//get each line individually
-		string[] testString = weaponData.text.Split('\n');
-		//remove spaces from name
-		string wpnNameNoSpaces = "";
-		for(int i = 0; i < wpnName.Length; i++){
-			if(wpnName[i] != ' '){
-				wpnNameNoSpaces += wpnName[i];
-			}
-			
-		}
-		//get the data from the file
-		foreach(string wpnData in testString){
-			if(wpnData.StartsWith(wpnNameNoSpaces)){
-				string[] wpn = wpnData.Split(' ');
-				wpnDamage = int.Parse(wpn[1]);
-				wpnRange = int.Parse(wpn[2]);
-				break;
-			}
-		}
-	}
-	
+
 	//called by other objects when damage is inflicted
 	public void TakeDamage(int damage){
 		int damageTaken = damage - damageReduction;
@@ -162,6 +137,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
 		reactionNo = 0;
+		Debug.Log(optionType);
 		
 		if(longAction){
 			StartCoroutine(MagicAttack(longActionTarget));
@@ -313,6 +289,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	void MeleeAction(){
 		if(remainingAP >= 3){
 			optionType = 2;
+			int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
 			validPoints = findValid.GetPoints(optionType, wpnRange,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
 		}
@@ -321,6 +298,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	void RangedAction(){
 		if(remainingAP >= 3){
 			optionType = 3;
+			int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
 			validPoints = findValid.GetPoints(optionType, wpnRange, 2);
 			Draw.DrawValidSquares(validPoints);
 		}
@@ -376,6 +354,7 @@ public class PlayerControlsScript : MonoBehaviour {
 
 	IEnumerator MeleeAttackEnd(){
 		yield return new WaitForSeconds(0.5f); //replace with animation
+		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
 		targetObject.SendMessage("TakeDamage", wpnDamage);
 		targetReactionOccuring = false;
 		remainingAP -= 3;
@@ -386,6 +365,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	IEnumerator RangedAttack(Vector3 aimPosition){
 		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
+		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
 		//create 'arrow', and fire it at the selected square
 		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		Projectile = proj.GetComponent<ProjectileScript>();
@@ -441,19 +421,21 @@ public class PlayerControlsScript : MonoBehaviour {
 					MoveAction();
 				}
 				
-				if(GUI.Button(new Rect(0,50,100,40), "MELEE")){
-					MeleeAction();
+				if(GUI.Button(new Rect(0,50,100,40), "ATTACK")){
+					int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
+					if(wpnType == 1 || wpnType == 2){
+						MeleeAction();
+					}
+					else{
+						RangedAction();
+					}
 				}
 				
-				if(GUI.Button(new Rect(0,100,100,40), "RANGED")){
-					RangedAction();
-				}
-				
-				if(GUI.Button(new Rect(0,150,100,40), "MAGIC")){
+				if(GUI.Button(new Rect(0,100,100,40), "MAGIC")){
 					MagicAction();
 				}
 				
-				if(GUI.Button(new Rect(0,250,100,40), "PASS")){
+				if(GUI.Button(new Rect(0,200,100,40), "PASS")){
 					ActionComplete();
 					isMyTurn = false;
 					if(!isReacting){
@@ -461,7 +443,7 @@ public class PlayerControlsScript : MonoBehaviour {
 					}
 				}
 			}
-			if(GUI.Button(new Rect(0,200,100,40), "CANCEL")){
+			if(GUI.Button(new Rect(0,150,100,40), "CANCEL")){
 				ActionComplete();
 				if(isReacting){
 					

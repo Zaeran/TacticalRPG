@@ -51,7 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\Generic\AimProjectileScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\AttributesScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Generic\MagicScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Generic\MagicList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\MovementScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\PersistentObject.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\SkillList.cs" />
@@ -60,9 +60,9 @@
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Weapons\Terrain\TerrainGeneration.cs" />
      <None Include="Assets\Resources\Data\Weapons.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

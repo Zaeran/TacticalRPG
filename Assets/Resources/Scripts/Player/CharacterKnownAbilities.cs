@@ -12,15 +12,25 @@ public class CharacterKnownAbilities : MonoBehaviour {
 	Dictionary<string, int> magicKnown;
 
 	SkillList skills;
-	MagicScript magic;
+	MagicList magic;
 
 	// Use this for initialization
 	void Start () {
-		skills = GameObject.FindGameObjectWithTag("GameData").GetComponent<SkillList>();
-		magic = GameObject.FindGameObjectWithTag("GameData").GetComponent<MagicScript>();
+		skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
+		magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
 		skillsKnown = new Dictionary<string, int>();
 		magicKnown = new Dictionary<string, int>();
 	}
 
+	//checks that the skill succeeds
+	public bool SkillSucceeds(string skillName){
+		if(Random.Range(0,101) < skillsKnown[skillName]){
+			return true;
+		}
+		return false;
+	}
 
+	public void IncreaseAbility(){
+
+	}
 }

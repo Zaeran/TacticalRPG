@@ -44,8 +44,10 @@ public class PlayerControlsScript : MonoBehaviour {
 	MovementScript Move;
 	TurnController Controller;	
 	ProjectileScript Projectile;
-	MagicScript Magic;
+	MagicList Magic;
 	WeaponList Weapons;
+	SkillList Skills;
+	CharacterKnownAbilities KnownAbilities;
 	
 	//weapon
 	TextAsset weaponData;
@@ -68,8 +70,11 @@ public class PlayerControlsScript : MonoBehaviour {
 		Stats = GetComponent<AttributesScript>();
 		Move = GetComponent<MovementScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
-		Magic = GetComponent<MagicScript>();
-		Weapons = GameObject.FindGameObjectWithTag("GameData").GetComponent<WeaponList>();
+		Magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
+		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
+		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
+		KnownAbilities = GetComponent<CharacterKnownAbilities>();
+
 		spellList.Add("DestroyBlock", 7);
 	}	
 	
@@ -120,6 +125,10 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 		Time.timeScale = 1.0f;
 	}
+
+	public void LoseAP(int amount){
+		remainingAP -= amount;
+	}
 	
 	//movement is over. remove AP and reset everything
 	public void StopMovingConfirmation(){
@@ -134,7 +143,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	//an action has been performed. allow new action to occur and remove all marker squares
-	private void ActionComplete(){
+	public void ActionComplete(int apCost = 0){
+		remainingAP -= apCost;
 		optionType = 0;
 		actionOccuring = false;
 		isReacting = false;
@@ -233,6 +243,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		Collider[] col;
 		switch(optionType){
 		case 1: //movement
+			Skills.PerformSkill("Move", clickPosition, gameObject, wpnName);
 			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
 			if(movePath.Length > 0){
 				Draw.DestroyValidSquares();
@@ -241,6 +252,7 @@ public class PlayerControlsScript : MonoBehaviour {
 			actionOccuring = true;
 			break;
 		case 2: //melee attack
+			/**
 			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
 			foreach(Collider c in col){
 				if(c.tag == "NPC" || c.tag == "Player"){
@@ -249,9 +261,13 @@ public class PlayerControlsScript : MonoBehaviour {
 					break;
 				}
 			}
+			**/
+			Draw.DestroyValidSquares();
+			Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
 			break;
 		case 3: //ranged attack
-			StartCoroutine(RangedAttack(clickPosition));
+			Draw.DestroyValidSquares();
+			Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
 			break;
 		case 4:
 			col = Physics.OverlapSphere(clickPosition, 0.3f);
@@ -339,21 +355,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		yield return new WaitForSeconds(1.0f); //replace with animation
 		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
 		targetObject.SendMessage("TakeDamage", wpnDamage);
-		remainingAP -= 3;
-		ActionComplete();
-	}
-	
-	//ranged attack coroutine
-	IEnumerator RangedAttack(Vector3 aimPosition){
-		const float projectileHeight = 0.4f;
-		yield return new WaitForSeconds(1); //replace with animation
-		int wpnDamage = Weapons.GetWeaponCombatStats(wpnName)[1];
-		//create 'arrow', and fire it at the selected square
-		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
-		Projectile = proj.GetComponent<ProjectileScript>();
-		Projectile.Initialise(60, aimPosition, projectileHeight, wpnDamage);
-		
-		yield return new WaitForSeconds(1); //allow time for arrow to hit
 		remainingAP -= 3;
 		ActionComplete();
 	}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MagicScript : MonoBehaviour {
+public class MagicList : MonoBehaviour {
 	
 	public int apCost;
 	

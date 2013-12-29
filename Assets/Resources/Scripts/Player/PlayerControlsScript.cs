@@ -12,10 +12,11 @@ public class PlayerControlsScript : MonoBehaviour {
 	GameObject attackedFromTarget;
 	GameObject targetObject;
 	RaycastHit rayhit;
-	int optionType = 0;
 	int groundOnlyLayer = 1 << 8;
 	public int remainingAP = 0;
 	int reactionNo = 0;
+
+	string skillSelected;
 	
 	int damageReduction = 0;
 	int evadeChance = 0;
@@ -74,8 +75,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
 		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
 		KnownAbilities = GetComponent<CharacterKnownAbilities>();
-
-		spellList.Add("DestroyBlock", 7);
+		skillSelected = "";
 	}	
 	
 	void Update () {
@@ -85,10 +85,6 @@ public class PlayerControlsScript : MonoBehaviour {
 				if(!actionOccuring){
 					LeftClick();
 				}
-			}
-			//no option selected, so check for inputs
-			if(optionType == 0){
-				GetInputs();				
 			}
 			//cancel action
 			if(Input.GetKeyDown(cancelButton)){
@@ -145,7 +141,7 @@ public class PlayerControlsScript : MonoBehaviour {
 	//an action has been performed. allow new action to occur and remove all marker squares
 	public void ActionComplete(int apCost = 0){
 		remainingAP -= apCost;
-		optionType = 0;
+		skillSelected = "";
 		actionOccuring = false;
 		isReacting = false;
 		Draw.DestroyValidSquares();
@@ -158,8 +154,7 @@ public class PlayerControlsScript : MonoBehaviour {
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
 		reactionNo = 0;
-		Debug.Log(optionType);
-		
+
 		if(longAction){
 			StartCoroutine(MagicAttack(longActionTarget));
 		}
@@ -181,43 +176,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		Debug.Log("END BATTLE");
 		ActionComplete();
 		remainingAP = 0;
-	}
-	//keyboard inputs
-	private void GetInputs(){
-		if(Input.GetKeyDown(moveButton)){
-			optionType = 1;	
-			validPoints = findValid.GetPoints(optionType,remainingAP,Stats.maxJump);
-			Draw.DrawValidSquares(validPoints);
-		}
-		
-		if(Input.GetKeyDown(meleeButton)){
-			if(remainingAP >= 3){
-				optionType = 2;
-				validPoints = findValid.GetPoints(optionType, 1,Stats.maxJump);
-				Draw.DrawValidSquares(validPoints);
-			}
-		}
-		
-		if(Input.GetKeyDown(rangedButton)){
-			if(remainingAP >= 3){
-				optionType = 3;
-				validPoints = findValid.GetPoints(optionType, 4, 2);
-				Draw.DrawValidSquares(validPoints);
-			}
-		}
-		
-		if(Input.GetKeyDown(spellButton)){
-			optionType = 4;
-			validPoints = findValid.GetPoints(optionType, 10,1);
-			Draw.DrawValidSquares(validPoints);
-		}
-		
-		if(Input.GetKeyDown(passButton)){
-			ActionComplete();
-			isMyTurn = false;
-			Controller.TurnOver();
-		}
-		
 	}
 	//left mouse click
 	private void LeftClick(){
@@ -241,8 +199,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	//possibilities of left-click
 	private void LeftClickOptions(){
 		Collider[] col;
-		switch(optionType){
-		case 1: //movement
+		switch(skillSelected){
+		case "Move": //movement
 			Skills.PerformSkill("Move", clickPosition, gameObject, wpnName);
 			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump);
 			if(movePath.Length > 0){
@@ -251,25 +209,11 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 			actionOccuring = true;
 			break;
-		case 2: //melee attack
-			/**
-			col = Physics.OverlapSphere(clickPosition, 0.3f, ~groundOnlyLayer);
-			foreach(Collider c in col){
-				if(c.tag == "NPC" || c.tag == "Player"){
-					targetObject = c.gameObject;
-					StartCoroutine(MeleeAttack());
-					break;
-				}
-			}
-			**/
+		case "Attack": //melee attack
 			Draw.DestroyValidSquares();
 			Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
 			break;
-		case 3: //ranged attack
-			Draw.DestroyValidSquares();
-			Skills.PerformSkill("Attack", clickPosition, gameObject, wpnName);
-			break;
-		case 4:
+		case "Magic":
 			col = Physics.OverlapSphere(clickPosition, 0.3f);
 			foreach(Collider c in col){
 				targetObject = c.gameObject;
@@ -285,32 +229,28 @@ public class PlayerControlsScript : MonoBehaviour {
 	#region Actions
 	
 	void MoveAction(){
-		optionType = 1;
-		validPoints = findValid.GetPoints(optionType,remainingAP,Stats.maxJump);
+		skillSelected = "Move";
+		validPoints = findValid.GetPoints("Move",remainingAP,Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 	}
-	
-	void MeleeAction(){
-		if(remainingAP >= 3){
-			optionType = 2;
+
+	void Attack(){
+		skillSelected = "Attack";
+		if(remainingAP >= Skills.getSkillCost(skillSelected)){
+			int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
 			int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
-			validPoints = findValid.GetPoints(optionType, wpnRange,Stats.maxJump);
-			Draw.DrawValidSquares(validPoints);
-		}
-	}
-	
-	void RangedAction(){
-		if(remainingAP >= 3){
-			optionType = 3;
-			int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
-			validPoints = findValid.GetPoints(optionType, wpnRange, 2);
+			if(wpnType == 1 || wpnType == 2){
+				validPoints = findValid.GetPoints("Melee", wpnRange,Stats.maxJump);
+			}
+			else{
+				validPoints = findValid.GetPoints("Ranged", wpnRange,Stats.maxJump);
+			}
 			Draw.DrawValidSquares(validPoints);
 		}
 	}
 	
 	void MagicAction(){
-		optionType = 4;
-		validPoints = findValid.GetPoints(optionType, 10,1);
+		validPoints = findValid.GetPoints("Magic", 10,1);
 		Draw.DrawValidSquares(validPoints);
 		currentSpell = "DestroyBlock";
 	}	
@@ -328,8 +268,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	void Dodge(){
 		if(remainingAP > 2){
-			optionType = 1;
-			validPoints = findValid.GetPoints(optionType,1,Stats.maxJump);
+			skillSelected = "Move";
+			validPoints = findValid.GetPoints("Move",1,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
 		}
 		else{
@@ -398,49 +338,45 @@ public class PlayerControlsScript : MonoBehaviour {
 	#endregion
 	
 	void OnGUI(){
-		if(isMyTurn && !targetReactionOccuring){
-			if(optionType == 0){
-				if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
-					MoveAction();
-				}
-				
-				if(GUI.Button(new Rect(0,50,100,40), "ATTACK")){
-					int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
-					if(wpnType == 1 || wpnType == 2){
-						MeleeAction();
+		if(!actionOccuring){
+			if(isMyTurn && !targetReactionOccuring){
+				if(skillSelected == ""){
+					if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
+						MoveAction();
 					}
-					else{
-						RangedAction();
-					}
-				}
-				
-				if(GUI.Button(new Rect(0,100,100,40), "MAGIC")){
-					MagicAction();
-				}
-				
-				if(GUI.Button(new Rect(0,200,100,40), "PASS")){
-					ActionComplete();
-					isMyTurn = false;
-					if(!isReacting){
-						Controller.TurnOver();
-					}
-				}
-			}
-			if(GUI.Button(new Rect(0,150,100,40), "CANCEL")){
-				ActionComplete();
-				if(isReacting){
 					
+					if(GUI.Button(new Rect(0,50,100,40), "ATTACK")){
+						Attack();
+					}
+					
+					if(GUI.Button(new Rect(0,100,100,40), "MAGIC")){
+						MagicAction();
+					}
+					
+					if(GUI.Button(new Rect(0,200,100,40), "PASS")){
+						ActionComplete();
+						isMyTurn = false;
+						if(!isReacting){
+							Controller.TurnOver();
+						}
+					}
 				}
+				if(GUI.Button(new Rect(0,150,100,40), "CANCEL")){
+					ActionComplete();
+					if(isReacting){
+						
+					}
+				}
+				GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
 			}
-			GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
-		}
-		else if(isReacting){
-			if(GUI.Button(new Rect(0,0,100,40), "DODGE")){
-				Dodge();
-			}
-			
-			if(GUI.Button(new Rect(0,50,100,40), "BLOCK")){
-				BlockReaction();
+			else if(isReacting){
+				if(GUI.Button(new Rect(0,0,100,40), "DODGE")){
+					Dodge();
+				}
+				
+				if(GUI.Button(new Rect(0,50,100,40), "BLOCK")){
+					BlockReaction();
+				}
 			}
 		}
 	}

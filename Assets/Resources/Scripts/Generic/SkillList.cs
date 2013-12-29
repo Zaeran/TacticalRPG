@@ -16,6 +16,11 @@ public class SkillList : MonoBehaviour {
 		skills = new Dictionary<string, int>();
 		Move = GetComponent<MovementScript>();
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
+		skills.Add("Attack", 3);
+	}
+
+	public int getSkillCost(string skillName){
+		return skills[skillName];
 	}
 
 	//used to initialise a skill
@@ -57,10 +62,23 @@ public class SkillList : MonoBehaviour {
 				break;
 			}
 		}
+		//allow character to react
 		if(character != null){
 			character.SendMessage("Reaction", origin);
 		}
 		yield return new WaitForSeconds(1.5f); //animation
+		//test that character is still in square
+		col = Physics.OverlapSphere(target, 0.3f, ~groundOnlyLayer);
+		character = null;
+		foreach(Collider c in col){
+			if(c.tag == "NPC" || c.tag == "Player"){
+				character = c.gameObject;
+				break;
+			}
+		}
+		if(character != null){
+			character.SendMessage("TakeDamage", damage);
+		}
 		origin.SendMessage("ActionComplete", 3); //replace with skill cost
 	}
 

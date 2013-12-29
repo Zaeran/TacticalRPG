@@ -97,8 +97,8 @@ public class AIScript : MonoBehaviour {
 		startPosition = transform.position;
 		actionOccuring = true;
 		//find valid points
-		validPoints = findValid.GetPoints(1, remainingAP, Stats.maxJump);
-		allPoints = findValid.GetPoints(1, 50, 1);
+		validPoints = findValid.GetPoints("Move", remainingAP, Stats.maxJump);
+		allPoints = findValid.GetPoints("Move", 50, 1);
 		int distanceToPlayer = 100;
 		int heightToPlayer;
 		Vector4 endPoint = Vector4.zero;
@@ -174,7 +174,7 @@ public class AIScript : MonoBehaviour {
 	
 	private void AIMeleeAttack(){
 		actionOccuring = true;
-		validPoints = findValid.GetPoints(2, 2, Stats.maxJump);
+		validPoints = findValid.GetPoints("Attack", 2, Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 		StartCoroutine(MeleeAttackStart(enemyList[playerSelected]));		
 	}
@@ -195,7 +195,7 @@ public class AIScript : MonoBehaviour {
 	
 	private void AIRangedAttack(){
 		actionOccuring = true;
-		validPoints = findValid.GetPoints(4, 3, Stats.maxJump);
+		validPoints = findValid.GetPoints("Attack", 3, Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 		StartCoroutine(RangedAttack(enemyList[playerSelected]));	
 	}

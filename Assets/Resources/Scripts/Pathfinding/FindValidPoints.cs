@@ -8,18 +8,18 @@ public class FindValidPoints : MonoBehaviour {
 	Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
 	List<Vector4> validPoints;
 		
-	public List<Vector4> GetPoints(int type, int maxRange = 0, int maxJump = 0){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
+	public List<Vector4> GetPoints(string type, int maxRange = 0, int maxJump = 0){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
 		switch(type){
-		case 1: //move
+		case "Move":
 			validPoints = GetValidMovePoints(maxRange, maxJump);
 			return validPoints;
-		case 2: // melee
+		case "Melee": // melee
 			validPoints = GetValidMeleePoints(maxRange, maxJump);
 			return validPoints;
-		case 3: // ranged
+		case "Ranged": // ranged
 			validPoints = GetValidRangedPoints(maxRange, maxJump);
 			return validPoints;
-		case 4:
+		case "Magic":
 			validPoints = GetValidMagicPoints(30, 30);
 			return validPoints;
 		default:

@@ -29,15 +29,7 @@ public class RotateCamera : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.LeftControl)){
 			freeLook = !freeLook;
 		}
-		
-		if(freeLook){
-			transform.position += new Vector3(transform.forward.x, 0, transform.forward.z) * Input.GetAxis("Mouse Y");
-			transform.position += new Vector3(transform.right.x, 0, transform.right.z) * Input.GetAxis("Mouse X");
-		}
-		else if(followObject != null){
-			transform.position = followObject.transform.position;
-		}
-		
+
 		if(!rotating){
 			if(Input.GetKeyDown(KeyCode.A)){
 				rotating = true;
@@ -63,6 +55,16 @@ public class RotateCamera : MonoBehaviour {
 		else if(rotating){
 			transform.eulerAngles = endRot.eulerAngles;
 			rotating = false;
+		}
+	}
+
+	void LateUpdate(){
+		if(freeLook){
+			transform.position += new Vector3(transform.forward.x, 0, transform.forward.z) * Input.GetAxis("Mouse Y");
+			transform.position += new Vector3(transform.right.x, 0, transform.right.z) * Input.GetAxis("Mouse X");
+		}
+		else if(followObject != null){
+			transform.position = followObject.transform.position;
 		}
 	}
 }

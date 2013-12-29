@@ -291,11 +291,7 @@ public class PlayerControlsScript : MonoBehaviour {
 						Skill ();
 					}
 					
-					if(GUI.Button(new Rect(0,100,100,40), "MAGIC")){
-						MagicAction();
-					}
-					
-					if(GUI.Button(new Rect(0,200,100,40), "PASS")){
+					if(GUI.Button(new Rect(0,150,100,40), "PASS")){
 						Draw.DestroyValidSquares();
 						ActionComplete();
 						isMyTurn = false;
@@ -304,10 +300,11 @@ public class PlayerControlsScript : MonoBehaviour {
 						}
 					}
 				}
-				if(GUI.Button(new Rect(0,150,100,40), "CANCEL")){
+				if(GUI.Button(new Rect(0,100,100,40), "CANCEL")){
 					ActionComplete();
 				}
-				GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "AP: " + remainingAP);
+				GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "HP: " + Stats.CurrentHealth + "/" + Stats.MaxHealth);
+				GUI.Box(new Rect(Screen.width - 80, 50, 80, 40), "AP: " + remainingAP + "/" + Stats.maxActions);
 			}
 			else if(isReacting){
 				if(GUI.Button(new Rect(0,0,100,40), "DODGE")){

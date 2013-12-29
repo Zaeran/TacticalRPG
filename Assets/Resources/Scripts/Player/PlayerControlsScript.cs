@@ -17,12 +17,6 @@ public class PlayerControlsScript : MonoBehaviour {
 	int reactionNo = 0;
 
 	string skillSelected;
-
-	//longAction stuff
-	bool longAction = false;
-	int longActionAP = 0;
-	int longActionPerformed = 0;
-	GameObject longActionTarget = null;
 	
 	Vector3 clickPosition = Vector3.zero;
 	Vector4 clickPosition4D = Vector4.zero;
@@ -122,10 +116,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		isMyTurn = true;
 		remainingAP = Stats.maxActions;
 		reactionNo = 0;
-
-		if(longAction){
-			StartCoroutine(MagicAttack(longActionTarget));
-		}
 	}
 	//enable reaction
 	public void Reaction(GameObject target){
@@ -218,12 +208,6 @@ public class PlayerControlsScript : MonoBehaviour {
 			ActionComplete();
 		}
 	}
-	
-	void MagicAction(){
-		validPoints = findValid.GetPoints("Magic", gameObject, 10,1);
-		Draw.DrawValidSquares(validPoints);
-		currentSpell = "DestroyBlock";
-	}	
 	#endregion
 	
 	#region Reactions
@@ -236,44 +220,6 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 		else{
 			ActionComplete();
-		}
-	}
-	void Manoeuvre(){
-		
-	}
-	void CounterAttack(){
-		
-	}
-	void Evade(){
-		
-	}
-	#endregion
-	
-	#region ActionCoroutines
-	
-	IEnumerator MagicAttack(GameObject target){
-		yield return new WaitForSeconds(1); //animation delay
-		if(!longAction){
-			longActionTarget = target;
-			longAction = true;
-			longActionAP = spellList["DestroyBlock"];
-			longActionPerformed = 1;
-		}
-		int tempLongAP = longActionAP;
-		longActionAP -= remainingAP;
-		remainingAP -= tempLongAP;		
-		if(longActionAP <= 0){
-			longAction = false;
-			longActionAP = 0;
-			longActionTarget = null;
-			longActionPerformed = 0;
-			MethodInfo spell = Magic.GetType().GetMethod("Teleport");
-			Debug.Log(spell.Name);
-			spell.Invoke(Magic, new object[]{target, clickPosition});
-		}
-		ActionComplete();
-		if(remainingAP < 0){
-			remainingAP = 0;
 		}
 	}
 	#endregion

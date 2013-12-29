@@ -1,12 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Player\MovementScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Generic\SkillList.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" Line="313" Column="27" />
-      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="26" Column="33" />
-      <File FileName="Assets\Resources\Scripts\Generic\SkillList.cs" Line="40" Column="17" />
-      <File FileName="Assets\Resources\Scripts\Player\AttributesScript.cs" Line="24" Column="20" />
-      <File FileName="Assets\Resources\Scripts\Player\MovementScript.cs" Line="42" Column="16" />
+      <File FileName="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" Line="307" Column="101" />
+      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="35" Column="4" />
+      <File FileName="Assets\Resources\Scripts\Generic\SkillList.cs" Line="93" Column="46" />
+      <File FileName="Assets\Resources\Scripts\Player\AttributesScript.cs" Line="30" Column="84" />
+      <File FileName="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" Line="22" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

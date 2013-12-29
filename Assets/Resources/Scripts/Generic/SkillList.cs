@@ -90,7 +90,12 @@ public class SkillList : MonoBehaviour {
 		//create 'arrow', and fire it at the selected square
 		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
+		if(origin.transform.position.y > target.y){
 		Projectile.Initialise(60, target, projectileHeight, damage, origin, skillCost);
+		}
+		else{
+			Projectile.Initialise(75, target, projectileHeight, damage, origin, skillCost);
+		}
 	}
 	#endregion
 

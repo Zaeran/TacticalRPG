@@ -52,13 +52,16 @@
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\MagicList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\MovementScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Generic\PersistentObject.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\SkillList.cs" />
+     <Compile Include="Assets\Resources\Scripts\Generic\StatusEffectList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\WeaponList.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\FindValidPoints.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\PersistentObject.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\CharacterBuffsDebuffs.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\ReactionDamageReduction.cs" />
      <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class SkillList : MonoBehaviour {
 	Dictionary<string, int> skills; //skill + AP cost
+	Dictionary<string, bool> isSkillTargeted;
 
 
 	int groundOnlyLayer = 1 << 8;
@@ -14,13 +15,21 @@ public class SkillList : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		skills = new Dictionary<string, int>();
+		isSkillTargeted = new Dictionary<string, bool>();
 		Move = GetComponent<MovementScript>();
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
 		skills.Add("Attack", 3);
+		isSkillTargeted.Add("Attack", true);
+		skills.Add("Block", 3);
+		isSkillTargeted.Add("Block", false);
 	}
 
 	public int getSkillCost(string skillName){
 		return skills[skillName];
+	}
+
+	public bool getIsSkillTargeted(string skillName){
+		return isSkillTargeted[skillName];
 	}
 
 	//used to initialise a skill
@@ -28,7 +37,6 @@ public class SkillList : MonoBehaviour {
 	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost, string weaponName = ""){
 		int wpnDamage = Weapons.GetWeaponCombatStats(weaponName)[1];
 		int wpnType = Weapons.GetWeaponCombatStats(weaponName)[0];
-		Debug.Log(wpnType);
 
 		switch(skillName){
 		case "Attack":
@@ -39,18 +47,14 @@ public class SkillList : MonoBehaviour {
 				StartCoroutine(RangedAttack(target, wpnDamage, origin, skillCost));
 			}
 			break;
-		case "Move":
-			MoveAction(target);
+		case "Block":
+			StartCoroutine(Block(2, origin));
 			break;
 		default: break;
 		}
 	}
 
-	//skills
-	void MoveAction(Vector3 position){
-
-	}
-	
+	#region regular skills
 	IEnumerator MeleeAttack(Vector3 target, int damage, GameObject origin, int skillCost){
 		Collider[] col;
 		GameObject character = null;
@@ -90,4 +94,13 @@ public class SkillList : MonoBehaviour {
 		ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
 		Projectile.Initialise(60, target, projectileHeight, damage, origin, skillCost);
 	}
+	#endregion
+
+	#region reaction skills
+	IEnumerator Block(int blockValue, GameObject origin){
+		yield return new WaitForSeconds(0.2f); //block animation
+		ReactionDamageReduction block = origin.AddComponent<ReactionDamageReduction>();
+		block.Initialize(blockValue);
+	}
+	#endregion
 }

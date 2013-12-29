@@ -23,6 +23,7 @@ public class CharacterKnownAbilities : MonoBehaviour {
 		skillsKnown = new Dictionary<string, int>();
 		magicKnown = new Dictionary<string, int>();
 		skillsKnown.Add("Attack", 100);
+		skillsKnown.Add("Block", 100);
 	}
 
 	//checks that the skill succeeds
@@ -38,7 +39,10 @@ public class CharacterKnownAbilities : MonoBehaviour {
 		return false;
 	}
 
-	public void IncreaseAbility(){
-
+	public void IncreaseAbility(string skillName, int amount){
+		skillsKnown[skillName] += amount;
+		if(skillsKnown[skillName] > 100){
+			skillsKnown[skillName] = 100;
+		}
 	}
 }

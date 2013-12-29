@@ -61,7 +61,6 @@ public class FindValidPoints : MonoBehaviour {
 		}
 		//run for each tile
 		for(int i = 0; i < moveTiles; i++){
-			
 			for(int moveDir = 0; moveDir < MoveDirections.Length; moveDir++){
 				//set next point to test as adjacent
 				nextPoint = testPoint + MoveDirections[moveDir];

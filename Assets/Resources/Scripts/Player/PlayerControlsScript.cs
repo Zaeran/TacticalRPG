@@ -104,22 +104,18 @@ public class PlayerControlsScript : MonoBehaviour {
 
 	//called by other objects when damage is inflicted
 	public void TakeDamage(int damage){
-		int damageTaken = damage - damageReduction;
-		if(damageTaken < 0){
-			damageTaken = 0;
-		}
-		if(Stats.Damage(damageTaken)){
+		if(Stats.Damage(damage)){
 			Controller.DeadCharacter(gameObject);
 			Destroy(gameObject);
 		}
 		if(isReacting){
 			ReactionComplete();
 		}
+		try{
+			gameObject.SendMessage("ReactionComplete");
+		}
+		catch{}
 		Time.timeScale = 1.0f;
-	}
-
-	public void LoseAP(int amount){
-		remainingAP -= amount;
 	}
 	
 	//movement is over. remove AP and reset everything
@@ -201,14 +197,14 @@ public class PlayerControlsScript : MonoBehaviour {
 			}
 			actionOccuring = true;
 		}
-		else if(skillSelected != ""){
+		else if(skillSelected != "" && Skills.getIsSkillTargeted(skillSelected)){
 			actionOccuring = true;
 			Draw.DestroyValidSquares();
 			if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
 				Skills.PerformSkill(skillSelected, clickPosition, gameObject, Skills.getSkillCost(skillSelected), wpnName);
 			}
 			else{
-				Skills.getSkillCost(skillSelected);
+				ActionComplete(Skills.getSkillCost(skillSelected));
 				Debug.Log("Skill Failed");
 			}
 		}
@@ -222,18 +218,29 @@ public class PlayerControlsScript : MonoBehaviour {
 		Draw.DrawValidSquares(validPoints);
 	}
 
-	void Attack(){
-		skillSelected = "Attack";
+	void Skill(){
 		if(remainingAP >= Skills.getSkillCost(skillSelected)){
-			int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
-			int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
-			if(wpnType == 1 || wpnType == 2){
-				validPoints = findValid.GetPoints("Melee", wpnRange,Stats.maxJump);
+			if(Skills.getIsSkillTargeted(skillSelected)){
+				int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
+				int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
+				if(wpnType == 1 || wpnType == 2){
+					validPoints = findValid.GetPoints("Melee", wpnRange,Stats.maxJump);
+				}
+				else{
+					validPoints = findValid.GetPoints("Ranged", wpnRange,Stats.maxJump);
+				}
+				Draw.DrawValidSquares(validPoints);
 			}
 			else{
-				validPoints = findValid.GetPoints("Ranged", wpnRange,Stats.maxJump);
+				actionOccuring = true;
+				if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
+					Skills.PerformSkill(skillSelected, Vector3.zero, gameObject, Skills.getSkillCost(skillSelected), wpnName);
+				}
+				else{
+					ActionComplete(Skills.getSkillCost(skillSelected));
+					Debug.Log("Skill Failed");
+				}
 			}
-			Draw.DrawValidSquares(validPoints);
 		}
 	}
 	
@@ -325,7 +332,8 @@ public class PlayerControlsScript : MonoBehaviour {
 					}
 					
 					if(GUI.Button(new Rect(0,50,100,40), "ATTACK")){
-						Attack();
+						skillSelected = "Attack";
+						Skill ();
 					}
 					
 					if(GUI.Button(new Rect(0,100,100,40), "MAGIC")){

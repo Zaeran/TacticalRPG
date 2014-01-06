@@ -57,7 +57,7 @@ public class FindValidPoints : MonoBehaviour {
 		//determine the maximum amount of possible tiles that can be moved to
 		int moveTiles = 0;
 		for(int i = maxMove; i > 0; i--){
-			moveTiles += maxMove * 4;
+			moveTiles += (maxMove * 4) + 1;
 		}
 		//run for each tile
 		for(int i = 0; i < moveTiles; i++){
@@ -103,6 +103,7 @@ public class FindValidPoints : MonoBehaviour {
 				pointList.Remove(pointList[0]);				
 			}				
 		}
+		Debug.Log(finalPointList.Count);
 		return finalPointList;
 	}
 	

@@ -20,6 +20,7 @@ public class SkillList : MonoBehaviour {
 		isSkillTargeted.Add("Attack", true);
 		skills.Add("Block", 3);
 		isSkillTargeted.Add("Block", false);
+		skills.Add("Move", 1);
 	}
 
 	public int getSkillCost(string skillName){

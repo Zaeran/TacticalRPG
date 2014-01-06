@@ -3,30 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-public class PlayerControlsScript : MonoBehaviour {
+public class GenericControlsScript : MonoBehaviour {
 	//variables and such
-	bool actionOccuring = false;
-	bool isMyTurn = false;
-	bool isReacting = false;
-	bool targetReactionOccuring = false;
+	bool isPlayer = false;
 	GameObject attackedFromTarget;
 	GameObject targetObject;
-	RaycastHit rayhit;
-	int groundOnlyLayer = 1 << 8;
-	public int remainingAP = 0;
+	public int Stats.remainingAP = 0;
 	int reactionNo = 0;
 
-	string skillSelected;
-	
-	Vector3 clickPosition = Vector3.zero;
-	Vector4 clickPosition4D = Vector4.zero;
-			
+	public string skillSelected;
+
+	//pathfind
 	List<Vector4> validPoints = new List<Vector4>();
 	Vector3[] movePath = new Vector3[0];
-	
-	//casting
-	Dictionary<string, int> spellList = new Dictionary<string, int>();
-	string currentSpell = null;
 	
 	//components
 	FindValidPoints findValid;
@@ -40,6 +29,8 @@ public class PlayerControlsScript : MonoBehaviour {
 	WeaponList Weapons;
 	SkillList Skills;
 	CharacterKnownAbilities KnownAbilities;
+	CharacterStatus Status;
+	MouseControlScript Mouse;
 	
 	//weapon
 	TextAsset weaponData;
@@ -48,9 +39,10 @@ public class PlayerControlsScript : MonoBehaviour {
 	void Awake () {
 		//initialize all component variables
 		Stats = GetComponent<AttributesScript>();
-		Move = GetComponent<MovementScript>();
 		KnownAbilities = GetComponent<CharacterKnownAbilities>();
+		Status = GetComponent<CharacterStatus>();
 
+		Move = GameObject.FindGameObjectWithTag("Controller").GetComponent<MovementScript>();
 		pathFind = GameObject.FindGameObjectWithTag("Controller").GetComponent<PathfindingScript>();
 		findValid = GameObject.FindGameObjectWithTag("Controller").GetComponent<FindValidPoints>();
 		Draw = GameObject.FindGameObjectWithTag("Controller").GetComponent<DrawSquaresScript>();
@@ -58,22 +50,19 @@ public class PlayerControlsScript : MonoBehaviour {
 		Magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
 		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
 		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
+		if(GetComponent<MouseControlScript>()){
+			Mouse = GetComponent<MouseControlScript>();
+			isPlayer = true;
+		}
 
 		skillSelected = "";
 	}	
 	
 	void Update () {
-		if((isMyTurn || isReacting) && !targetReactionOccuring){ //can only act on your turn or if reacting
-			//left mouse click
-			if(Input.GetMouseButtonDown(0)){
-				if(!actionOccuring){
-					LeftClick();
-				}
-			}
-
+		if((Status.isMyTurn || Status.isReacting) && !Status.targetReactionOccuring){ //can only act on your turn or if reacting
 		    //end turn when AP is 0
-			if(remainingAP == 0 && isMyTurn){
-				isMyTurn = false;
+			if(Stats.remainingAP == 0 && Status.isMyTurn){
+				Status.isMyTurn = false;
 				Controller.TurnOver();
 			}
 		}
@@ -94,76 +83,62 @@ public class PlayerControlsScript : MonoBehaviour {
 	}
 	
 	//movement is over. remove AP and reset everything
-	public void StopMovingConfirmation(){
-		if(!isReacting){
-			ActionComplete(movePath.Length - 1);
+	public void MovementOver(int distanceTravelled){
+		if(!Status.isReacting){
+			ActionComplete(distanceTravelled);
 		}
 		else{
-			ActionComplete((movePath.Length - 1) * 2);
+			ActionComplete(distanceTravelled * 2);
 		}
 	}
 	
 	//an action has been performed. allow new action to occur and remove all marker squares
 	public void ActionComplete(int apCost = 0){
-		remainingAP -= apCost;
+		Stats.remainingAP -= apCost;
 		skillSelected = "";
-		actionOccuring = false;
-		isReacting = false;
+		Status.actionOccuring = false;
+		Status.isReacting = false;
+		Mouse.PositionSelected();
 		Draw.DestroyValidSquares();
 	}
 	//called when turn starts
 	public void nextTurn(){
-		isMyTurn = true;
-		remainingAP = Stats.maxActions;
+		Status.isMyTurn = true;
+		Stats.remainingAP = Stats.maxActions;
 		reactionNo = 0;
 	}
 	//enable reaction
 	public void Reaction(GameObject target){
 		reactionNo++;
 		attackedFromTarget = target;
-		isReacting = true;
+		Status.isReacting = true;
 	}
 	
 	//no opposition left. disable character
 	public void BattleOver(){
 		Debug.Log("END BATTLE");
 		ActionComplete();
-		remainingAP = 0;
+		Stats.remainingAP = 0;
 	}
-	//left mouse click
-	private void LeftClick(){
-		clickPosition4D = Vector4.zero;
-		//gets the in-game position of mouse, ensures that only flat ground is clicked, then uses that value for input
-		if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rayhit, 100, groundOnlyLayer)){ //click on ground
-			if(rayhit.normal == new Vector3(0,1,0)){ //ensures that only flat ground can be clicked on
-				clickPosition = new Vector3(Mathf.Floor(rayhit.point.x + 0.5f), rayhit.point.y, Mathf.Floor(rayhit.point.z + 0.5f));
-				for(int i = 0; i < 20; i++){
-					if(validPoints.Contains(new Vector4(clickPosition.x, clickPosition.y, clickPosition.z, i))){
-						clickPosition4D = new Vector4(clickPosition.x, clickPosition.y, clickPosition.z,i);
-						break;
-					}
-				}
-				if(clickPosition4D != Vector4.zero){ //the position clicked was a valid position
-					LeftClickOptions();
-				}
-			}
-		}
+	
+	#region Actions
+	public void SelectAction(string skill){
+		skillSelected = skill;
 	}
-	//possibilities of left-click
-	private void LeftClickOptions(){
+	public void SelectPosition(Vector4 position){
 		if(skillSelected == "Move"){
-			movePath = pathFind.StartPathFinding(clickPosition4D, validPoints,Stats.maxJump, gameObject);
+			movePath = pathFind.StartPathFinding(position, validPoints,Stats.maxJump, gameObject);
 			if(movePath.Length > 0){
 				Draw.DestroyValidSquares();
-				Move.MoveToPoint(movePath, remainingAP);
+				Move.MoveToPoint(gameObject, movePath, Stats.remainingAP);
 			}
-			actionOccuring = true;
+			Status.actionOccuring = true;
 		}
 		else if(skillSelected != "" && Skills.getIsSkillTargeted(skillSelected)){
-			actionOccuring = true;
+			Status.actionOccuring = true;
 			Draw.DestroyValidSquares();
 			if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
-				Skills.PerformSkill(skillSelected, clickPosition, gameObject, Skills.getSkillCost(skillSelected), wpnName);
+				Skills.PerformSkill(skillSelected, position, gameObject, Skills.getSkillCost(skillSelected), wpnName);
 			}
 			else{
 				ActionComplete(Skills.getSkillCost(skillSelected));
@@ -172,16 +147,15 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	
-	#region Actions
-	
-	void MoveAction(){
+	public void MoveAction(){
 		skillSelected = "Move";
-		validPoints = findValid.GetPoints("Move", gameObject,remainingAP,Stats.maxJump);
+		validPoints = findValid.GetPoints("Move", gameObject,Stats.remainingAP,Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
+		Mouse.SelectPosition(validPoints);
 	}
 
-	void Skill(){
-		if(remainingAP >= Skills.getSkillCost(skillSelected)){
+	public void Skill(){
+		if(Stats.remainingAP >= Skills.getSkillCost(skillSelected)){
 			if(Skills.getIsSkillTargeted(skillSelected)){
 				int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
 				int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
@@ -192,9 +166,13 @@ public class PlayerControlsScript : MonoBehaviour {
 					validPoints = findValid.GetPoints("Ranged", gameObject, wpnRange,Stats.maxJump);
 				}
 				Draw.DrawValidSquares(validPoints);
+				if(isPlayer){
+					Mouse.SelectPosition(validPoints);
+				}
+
 			}
 			else{
-				actionOccuring = true;
+				Status.actionOccuring = true;
 				if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
 					Skills.PerformSkill(skillSelected, Vector3.zero, gameObject, Skills.getSkillCost(skillSelected), wpnName);
 				}
@@ -208,12 +186,21 @@ public class PlayerControlsScript : MonoBehaviour {
 			ActionComplete();
 		}
 	}
+
+	public void Pass(){
+		Draw.DestroyValidSquares();
+		ActionComplete();
+		Status.isMyTurn = false;
+		if(!Status.isReacting){
+			Controller.TurnOver();
+		}
+	}
 	#endregion
 	
 	#region Reactions
 	//these will be added to SkillList
-	void Dodge(){
-		if(remainingAP > 2){
+	public void Dodge(){
+		if(Stats.remainingAP > 2){
 			skillSelected = "Move";
 			validPoints = findValid.GetPoints("Move", gameObject,1,Stats.maxJump);
 			Draw.DrawValidSquares(validPoints);
@@ -223,45 +210,4 @@ public class PlayerControlsScript : MonoBehaviour {
 		}
 	}
 	#endregion
-	
-	void OnGUI(){
-		if(!actionOccuring){
-			if(isMyTurn && !targetReactionOccuring){
-				if(skillSelected == ""){
-					if(GUI.Button(new Rect(0,0,100,40), "MOVE")){
-						MoveAction();
-					}
-					
-					if(GUI.Button(new Rect(0,50,100,40), "ATTACK")){
-						skillSelected = "Attack";
-						Skill ();
-					}
-					
-					if(GUI.Button(new Rect(0,150,100,40), "PASS")){
-						Draw.DestroyValidSquares();
-						ActionComplete();
-						isMyTurn = false;
-						if(!isReacting){
-							Controller.TurnOver();
-						}
-					}
-				}
-				if(GUI.Button(new Rect(0,100,100,40), "CANCEL")){
-					ActionComplete();
-				}
-				GUI.Box(new Rect(Screen.width - 80, 0, 80, 40), "HP: " + Stats.CurrentHealth + "/" + Stats.MaxHealth);
-				GUI.Box(new Rect(Screen.width - 80, 50, 80, 40), "AP: " + remainingAP + "/" + Stats.maxActions);
-			}
-			else if(isReacting){
-				if(GUI.Button(new Rect(0,0,100,40), "DODGE")){
-					Dodge();
-				}
-				
-				if(GUI.Button(new Rect(0,50,100,40), "BLOCK")){
-					skillSelected = "Block";
-					Skill ();
-				}
-			}
-		}
-	}
 }

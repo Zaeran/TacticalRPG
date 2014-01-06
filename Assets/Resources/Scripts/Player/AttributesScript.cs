@@ -2,23 +2,23 @@ using UnityEngine;
 using System.Collections;
 
 public class AttributesScript : MonoBehaviour {
-
-	CharacterBuffsDebuffs statusEffects;
-
-	public int speedStat;
-	public int maxJump;
-	public int maxActions;
-
+	
 	//base stats
 	public int MaxHealth;
-	public int CurrentHealth;	
+	public int CurrentHealth;
+	public int maxActions;
+	public int remainingAP;
+	public int speedStat;
+	public int maxJump;
 
+	//Components
+	CharacterStatus statusEffects;
 	FloatingNumbersScript floatingDisplay;
 	
 	private void Start(){
 		CurrentHealth = MaxHealth;
-		statusEffects = GetComponent<CharacterBuffsDebuffs>();
-		floatingDisplay = GameObject.FindGameObjectWithTag("GameData").GetComponent<FloatingNumbersScript>();
+		statusEffects = GetComponent<CharacterStatus>();
+		floatingDisplay = GameObject.FindGameObjectWithTag("GUIData").GetComponent<FloatingNumbersScript>();
 	}
 	
 	public bool Damage(int damage){

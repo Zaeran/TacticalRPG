@@ -39,13 +39,14 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\CameraGUI\CharacterGUI.cs" />
      <Compile Include="Assets\Resources\Scripts\CameraGUI\FloatingNumbersScript.cs" />
      <Compile Include="Assets\Resources\Scripts\CameraGUI\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
@@ -57,10 +58,11 @@
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
      <Compile Include="Assets\Resources\Scripts\PersistentObject.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\AttributesScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Player\CharacterBuffsDebuffs.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\CharacterStatus.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\GenericControlsScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\MouseControlScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\MovementScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Player\PlayerControlsScript.cs" />
      <Compile Include="Assets\Resources\Scripts\StatusEffects\ReactionDamageReduction.cs" />
      <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />

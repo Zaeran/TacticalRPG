@@ -3,17 +3,17 @@ using System.Collections;
 
 public class ReactionDamageReduction : MonoBehaviour {
 
-	CharacterBuffsDebuffs status;
+	CharacterStatus Status;
 	int reduction;
 
 	public void Initialize(int value){
 		reduction = value;
-		status = GetComponent<CharacterBuffsDebuffs>();
-		status.damageReductionPhysical += reduction;
+		Status = GetComponent<CharacterStatus>();
+		Status.damageReductionPhysical += reduction;
 	}
 
 	public void ReactionComplete(){
-		status.damageReductionPhysical -= reduction;
+		Status.damageReductionPhysical -= reduction;
 		Destroy(this);
 	}
 }

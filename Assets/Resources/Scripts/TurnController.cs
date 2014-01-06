@@ -9,16 +9,18 @@ public class TurnController : MonoBehaviour {
 	int currentTurn = 0;
 	int currentRound;
 	bool battleOver = false;
-	
+
+	//components
 	AttributesScript Stats;
-	PlayerControlsScript charScript;
-	//AIScript aiScript;
+	GenericControlsScript charScript;
 	RotateCamera cameraScript;
+	CharacterGUI guiScript;
 	
 	void Start(){
 		StartBattle();
 		currentRound = 0;
 		cameraScript = GameObject.FindGameObjectWithTag("MainCamPoint").GetComponent<RotateCamera>();
+		guiScript = GameObject.FindGameObjectWithTag("GUIData").GetComponent<CharacterGUI>();
 	}
 	
 	void StartBattle(){
@@ -34,15 +36,10 @@ public class TurnController : MonoBehaviour {
 	IEnumerator NextTurn(){
 		yield return new WaitForSeconds(1);
 		Debug.Log(currentRound + ": " + orderedCharacters[currentTurn].name);
-		if(orderedCharacters[currentTurn].tag == ("Player")){
-			charScript = orderedCharacters[currentTurn].GetComponent<PlayerControlsScript>();
-			charScript.nextTurn();
-		}
-		else if(orderedCharacters[currentTurn].tag == ("NPC")){
-			//aiScript = orderedCharacters[currentTurn].GetComponent<AIScript>();
-			//aiScript.NextTurn();
-		}
+		charScript = orderedCharacters[currentTurn].GetComponent<GenericControlsScript>();
+		charScript.nextTurn();
 		cameraScript.SetFollow(orderedCharacters[currentTurn]);
+		guiScript.UpdateTurn(orderedCharacters[currentTurn]);
 	}
 	void GetAllCharacters(){
 		foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player")){

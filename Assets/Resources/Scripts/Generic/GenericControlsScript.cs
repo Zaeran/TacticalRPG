@@ -65,6 +65,12 @@ public class GenericControlsScript : MonoBehaviour {
 				Status.isMyTurn = false;
 				Controller.TurnOver();
 			}
+			if(Input.GetKeyDown(KeyCode.Space)){
+				if(!gameObject.GetComponent<StatusPoison>()){
+					gameObject.AddComponent<StatusPoison>();
+				}
+				gameObject.GetComponent<StatusPoison>().AddDuration(1);
+			}
 		}
 	}
 
@@ -102,7 +108,7 @@ public class GenericControlsScript : MonoBehaviour {
 		Draw.DestroyValidSquares();
 	}
 	//called when turn starts
-	public void nextTurn(){
+	public void NextTurn(){
 		Status.isMyTurn = true;
 		Stats.remainingAP = Stats.maxActions;
 		reactionNo = 0;

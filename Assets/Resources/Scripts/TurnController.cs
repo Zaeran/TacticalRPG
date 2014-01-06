@@ -12,7 +12,6 @@ public class TurnController : MonoBehaviour {
 
 	//components
 	AttributesScript Stats;
-	GenericControlsScript charScript;
 	RotateCamera cameraScript;
 	CharacterGUI guiScript;
 	
@@ -36,8 +35,7 @@ public class TurnController : MonoBehaviour {
 	IEnumerator NextTurn(){
 		yield return new WaitForSeconds(1);
 		Debug.Log(currentRound + ": " + orderedCharacters[currentTurn].name);
-		charScript = orderedCharacters[currentTurn].GetComponent<GenericControlsScript>();
-		charScript.nextTurn();
+		orderedCharacters[currentTurn].SendMessage("NextTurn");
 		cameraScript.SetFollow(orderedCharacters[currentTurn]);
 		guiScript.UpdateTurn(orderedCharacters[currentTurn]);
 	}
@@ -106,12 +104,12 @@ public class TurnController : MonoBehaviour {
 		if(!enemyExists){
 			battleOver = true;
 			Debug.Log("YOU WIN!");
-			charScript.BattleOver();
+			orderedCharacters[currentTurn].SendMessage("BattleOver");
 		}
 		else if(!playerExists){
 			battleOver = true;
 			Debug.Log("YOU LOSE");
-			//aiScript.BattleOver();
+			orderedCharacters[currentTurn].SendMessage("BattleOver");
 		}
 		else{
 			OrderCharacters();

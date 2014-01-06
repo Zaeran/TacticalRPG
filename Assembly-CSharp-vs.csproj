@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +50,9 @@
      <Compile Include="Assets\Resources\Scripts\CameraGUI\FloatingNumbersScript.cs" />
      <Compile Include="Assets\Resources\Scripts\CameraGUI\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Generic\GenericControlsScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\MagicList.cs" />
+     <Compile Include="Assets\Resources\Scripts\Generic\MovementScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\SkillList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\StatusEffectList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\WeaponList.cs" />
@@ -60,10 +62,19 @@
      <Compile Include="Assets\Resources\Scripts\Player\AttributesScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterStatus.cs" />
-     <Compile Include="Assets\Resources\Scripts\Player\GenericControlsScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\MouseControlScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Player\MovementScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\StatusEffects\ReactionDamageReduction.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusBlind.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusConfuse.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusDisable.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusEnchanted.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusImmobilize.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusPoison.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusSilence.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusSleep.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusSlow.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusStun.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Negative\StatusWeak.cs" />
+     <Compile Include="Assets\Resources\Scripts\StatusEffects\Positive\ReactionDamageReduction.cs" />
      <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />

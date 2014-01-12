@@ -55,11 +55,13 @@
      <Compile Include="Assets\Resources\Scripts\Generic\MovementScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\SkillList.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\StatusEffectList.cs" />
-     <Compile Include="Assets\Resources\Scripts\Generic\WeaponList.cs" />
+     <Compile Include="Assets\Resources\Scripts\OutOfBattle\AllItemsList.cs" />
+     <Compile Include="Assets\Resources\Scripts\OutOfBattle\Inventory.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\FindValidPoints.cs" />
      <Compile Include="Assets\Resources\Scripts\Pathfinding\PathfindingScript.cs" />
      <Compile Include="Assets\Resources\Scripts\PersistentObject.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\AttributesScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\Player\CharacterEquipment.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\CharacterStatus.cs" />
      <Compile Include="Assets\Resources\Scripts\Player\MouseControlScript.cs" />
@@ -79,6 +81,9 @@
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />
      <None Include="Assets\Resources\Data\Weapons.txt" />
+     <None Include="Assets\Resources\Data\Armour.txt" />
+     <None Include="Assets\Resources\Data\Accessories.txt" />
+     <None Include="Assets\Resources\Data\Items.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

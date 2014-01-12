@@ -13,13 +13,15 @@ public class CharacterKnownAbilities : MonoBehaviour {
 
 	SkillList skills;
 	MagicList magic;
-	WeaponList Weapons;
+	AllItemsList Items;
+	CharacterEquipment Equipment;
 
 	// Use this for initialization
 	void Start () {
 		skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
 		magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
-		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
+		Items = GameObject.FindGameObjectWithTag("Controller").GetComponent<AllItemsList>();
+		Equipment = GetComponent<CharacterEquipment>();
 		skillsKnown = new Dictionary<string, int>();
 		magicKnown = new Dictionary<string, int>();
 		skillsKnown.Add("Attack", 100);
@@ -29,7 +31,7 @@ public class CharacterKnownAbilities : MonoBehaviour {
 	//checks that the skill succeeds
 	public bool SkillSucceeds(string skillName, string weaponName){
 		int modifier = 0;
-		string weaponSkill = Weapons.GetWeaponSkill(weaponName);
+		string weaponSkill = "Attack";
 		if(weaponSkill == skillName){
 			modifier += 40;
 		}

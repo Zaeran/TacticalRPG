@@ -9,13 +9,13 @@ public class SkillList : MonoBehaviour {
 
 	int groundOnlyLayer = 1 << 8;
 
-	WeaponList Weapons;
+	AllItemsList Items;
 
 	// Use this for initialization
 	void Start () {
 		skills = new Dictionary<string, int>();
 		isSkillTargeted = new Dictionary<string, bool>();
-		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
+		Items = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItemsList>();
 		skills.Add("Attack", 3);
 		isSkillTargeted.Add("Attack", true);
 		skills.Add("Block", 3);
@@ -34,8 +34,8 @@ public class SkillList : MonoBehaviour {
 	//used to initialise a skill
 	//required info: name of skill, target of skill, character skill originating from, and name of weapon (replace with equipment list later)
 	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost, string weaponName = ""){
-		int wpnDamage = Weapons.GetWeaponCombatStats(weaponName)[1];
-		int wpnType = Weapons.GetWeaponCombatStats(weaponName)[0];
+		int wpnDamage = int.Parse(Items.GetWpnData(weaponName)[2]);
+		int wpnType = int.Parse(Items.GetWpnData(weaponName)[1]);
 
 		switch(skillName){
 		case "Attack":
@@ -89,7 +89,7 @@ public class SkillList : MonoBehaviour {
 		const float projectileHeight = 0.4f;
 		yield return new WaitForSeconds(1); //replace with animation
 		//create 'arrow', and fire it at the selected square
-		GameObject proj = Instantiate(Resources.Load("Objects/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
+		GameObject proj = Instantiate(Resources.Load("Objects/Weapons/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
 		ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
 		if(origin.transform.position.y > target.y){
 		Projectile.Initialise(60, target, projectileHeight, damage, origin, skillCost);

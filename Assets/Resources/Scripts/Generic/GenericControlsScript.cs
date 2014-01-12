@@ -26,7 +26,7 @@ public class GenericControlsScript : MonoBehaviour {
 	TurnController Controller;	
 	ProjectileScript Projectile;
 	MagicList Magic;
-	WeaponList Weapons;
+	AllItemsList Items;
 	SkillList Skills;
 	CharacterKnownAbilities KnownAbilities;
 	CharacterStatus Status;
@@ -48,7 +48,7 @@ public class GenericControlsScript : MonoBehaviour {
 		Draw = GameObject.FindGameObjectWithTag("Controller").GetComponent<DrawSquaresScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		Magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
-		Weapons = GameObject.FindGameObjectWithTag("Controller").GetComponent<WeaponList>();
+		Items = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItemsList>();
 		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
 		if(GetComponent<MouseControlScript>()){
 			Mouse = GetComponent<MouseControlScript>();
@@ -163,8 +163,8 @@ public class GenericControlsScript : MonoBehaviour {
 	public void Skill(){
 		if(Stats.remainingAP >= Skills.getSkillCost(skillSelected)){
 			if(Skills.getIsSkillTargeted(skillSelected)){
-				int wpnType = Weapons.GetWeaponCombatStats(wpnName)[0];
-				int wpnRange = Weapons.GetWeaponCombatStats(wpnName)[2];
+				int wpnType = int.Parse(Items.GetWpnData(wpnName)[1]);
+				int wpnRange = int.Parse(Items.GetWpnData(wpnName)[3]);
 				if(wpnType == 1 || wpnType == 2){
 					validPoints = findValid.GetPoints("Melee", gameObject, wpnRange,Stats.maxJump);
 				}

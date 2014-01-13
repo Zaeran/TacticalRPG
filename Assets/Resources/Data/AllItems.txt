@@ -1,0 +1,21 @@
+//name/type/hands/wpnTtype/damage/range/skill/cost/other-effects
+//WEAPONS
+//1H-Melee
+
+Sword Weapon 1 Melee 2 1 none 50 none
+
+
+//2H-Melee
+
+
+
+//1H-Ranged
+
+
+
+//2HRanged
+
+Bow Weapon 2 Ranged 1 4 none 50 none
+
+
+//ARMOUR

@@ -80,10 +80,8 @@
      <Compile Include="Assets\Resources\Scripts\Terrain\TerrainGeneration.cs" />
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />
-     <None Include="Assets\Resources\Data\Weapons.txt" />
-     <None Include="Assets\Resources\Data\Armour.txt" />
-     <None Include="Assets\Resources\Data\Accessories.txt" />
-     <None Include="Assets\Resources\Data\Items.txt" />
+     <None Include="Assets\Resources\Data\AllSkills.txt" />
+     <None Include="Assets\Resources\Data\AllItems.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

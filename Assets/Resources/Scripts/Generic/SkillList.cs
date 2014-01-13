@@ -3,47 +3,76 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SkillList : MonoBehaviour {
-	Dictionary<string, int> skills; //skill + AP cost
-	Dictionary<string, bool> isSkillTargeted;
-
+	Dictionary<string, string[]> skillInfo; //AP Cost. Is targeted (1,0). SkillType. SkillRange. SkillDifficulty
 
 	int groundOnlyLayer = 1 << 8;
 
 	AllItemsList Items;
+	CharacterEquipment Equipment;
+
+	TextAsset SkillData;
 
 	// Use this for initialization
-	void Start () {
-		skills = new Dictionary<string, int>();
-		isSkillTargeted = new Dictionary<string, bool>();
+	void Awake () {
+		skillInfo = new Dictionary<string, string[]>();
 		Items = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItemsList>();
-		skills.Add("Attack", 3);
-		isSkillTargeted.Add("Attack", true);
-		skills.Add("Block", 3);
-		isSkillTargeted.Add("Block", false);
-		skills.Add("Move", 1);
+
+		SkillData = Resources.Load("Data/AllSkills") as TextAsset;
+		LoadSkillData();
+	}
+
+	void LoadSkillData(){
+		string[] lineData = SkillData.text.Split('\n');
+		foreach(string skillData in lineData){
+			string[] skill = skillData.Split(' ');
+			if(skill.Length > 2){
+				string[] data = new string[skill.Length - 1];
+				for(int i = 0; i < data.Length; i++){
+					data[i] = skill[i+1];
+				}
+				skillInfo.Add(skill[0], data);
+			}
+		}
 	}
 
 	public int getSkillCost(string skillName){
-		return skills[skillName];
+		return int.Parse(skillInfo[skillName][0]);
+	}
+	public string getSkillRange(string skillName){
+		return skillInfo[skillName][3];
 	}
 
 	public bool getIsSkillTargeted(string skillName){
-		return isSkillTargeted[skillName];
+		if(skillInfo[skillName][1] == "0"){
+			return false;
+		}
+		return true;
 	}
 
 	//used to initialise a skill
 	//required info: name of skill, target of skill, character skill originating from, and name of weapon (replace with equipment list later)
-	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost, string weaponName = ""){
-		int wpnDamage = int.Parse(Items.GetWpnData(weaponName)[2]);
-		int wpnType = int.Parse(Items.GetWpnData(weaponName)[1]);
-
-		switch(skillName){
+	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost){
+		Equipment = origin.GetComponent<CharacterEquipment>();
+		int wpnDamage1 = 0;
+		string wpnType1 = "";
+		int wpnDamage2 = 0;
+		string wpnType2 = "";
+		string[] allEquipment = Equipment.GetAllEquipment();
+		if(Items.GetItemType(allEquipment[0]) == "Weapon"){
+			wpnType1 = Items.GetWpnType(allEquipment[0]);
+			wpnDamage1 = Items.GetWpnDamage(allEquipment[0]);
+		}
+		if(Items.GetItemType(allEquipment[1]) == "Weapon"){
+			wpnType2 = Items.GetWpnType(allEquipment[1]);
+			wpnDamage2 = Items.GetWpnDamage(allEquipment[1]);
+		}
+		switch(skillName){ //ADD: Proper skill use when different weapon types in each hand
 		case "Attack":
-			if(wpnType == 1 || wpnType == 2){
-				StartCoroutine(MeleeAttack(target, wpnDamage, origin, skillCost));
+			if(wpnType1 == "Melee"){
+				StartCoroutine(MeleeAttack(target, wpnDamage1, origin, skillCost));
 			}
-			else if(wpnType == 3 || wpnType == 4){
-				StartCoroutine(RangedAttack(target, wpnDamage, origin, skillCost));
+			else if(wpnType1 == "Ranged"){
+				StartCoroutine(RangedAttack(target, wpnDamage1, origin, skillCost));
 			}
 			break;
 		case "Block":

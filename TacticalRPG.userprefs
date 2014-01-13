@@ -1,14 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\OutOfBattle\AllItemsList.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Generic\SkillList.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\Player\CharacterEquipment.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Scripts\OutOfBattle\Inventory.cs" Line="41" Column="51" />
-      <File FileName="Assets\Resources\Scripts\OutOfBattle\AllItemsList.cs" Line="24" Column="18" />
-      <File FileName="Assets\Resources\Scripts\Generic\SkillList.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Scripts\Player\CharacterEquipment.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Scripts\CameraGUI\CharacterGUI.cs" Line="7" Column="36" />
+      <File FileName="Assets\Resources\Scripts\Player\CharacterEquipment.cs" Line="37" Column="36" />
+      <File FileName="Assets\Resources\Scripts\OutOfBattle\Inventory.cs" Line="52" Column="34" />
+      <File FileName="Assets\Resources\Scripts\OutOfBattle\AllItemsList.cs" Line="16" Column="59" />
+      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="38" Column="4" />
+      <File FileName="Assets\Resources\Scripts\CameraGUI\CharacterGUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Scripts\Generic\GenericControlsScript.cs" Line="147" Column="96" />
+      <File FileName="Assets\Resources\Scripts\Generic\SkillList.cs" Line="21" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -11,9 +11,12 @@ public class Inventory : MonoBehaviour {
 	Dictionary<string, string> itemType;
 	Dictionary<string, List<string>> categorisedItems;
 
+	AllItemsList AllItems;
 
 	// Use this for initialization
 	void Start () {
+		AllItems = GetComponent<AllItemsList>();
+
 		items = new List<string>();
 		itemQuantity = new Dictionary<string, int>();
 		itemsEquipped = new Dictionary<string, int>();
@@ -28,21 +31,21 @@ public class Inventory : MonoBehaviour {
 	}
 
 	//add an item to the inventory
-	public void AddItem(string type, string name, int quantity = 1){
+	public void AddItem(string name, int quantity = 1){
 		//item exists
 		if(items.Contains(name)){
 			itemQuantity[name] += quantity;
 		}
-		//item doesn;t exist
+		//item doesn't exist
 		else{
 			items.Add(name);
 			itemQuantity.Add(name, quantity);
-			itemsEquipped.Add(name, quantity);
-			itemType.Add(name, type);
-			categorisedItems[type].Add(name);
+			itemsEquipped.Add(name, 0);
+			itemType.Add(name, GetItemType(name));
+			categorisedItems[GetItemType(name)].Add(name);
 		}
 	}
-
+	//return items and quantity of each item in a specific category
 	public Dictionary<string, int> GetItemsByCategory(string category){
 		Dictionary<string, int> items = new Dictionary<string, int>();
 		foreach(string s in categorisedItems[category]){
@@ -56,6 +59,9 @@ public class Inventory : MonoBehaviour {
 	}
 	public int GetItemEquipped(string item){
 		return itemsEquipped[item];
+	}
+	public string GetItemType(string item){
+		return AllItems.GetItemType(item);
 	}
 
 	public void EquipItem(string item){

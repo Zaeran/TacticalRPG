@@ -29,11 +29,12 @@ public class CharacterKnownAbilities : MonoBehaviour {
 	}
 
 	//checks that the skill succeeds
-	public bool SkillSucceeds(string skillName, string weaponName){
+	public bool SkillSucceeds(string skillName){
 		int modifier = 0;
-		string weaponSkill = "Attack";
-		if(weaponSkill == skillName){
-			modifier += 40;
+		foreach(string skill in Equipment.GetAllEquipmentSkills()){
+			if(skill == skillName){
+				modifier += 40;
+			}
 		}
 		if(Random.Range(0,101) < skillsKnown[skillName] + modifier){
 			return true;

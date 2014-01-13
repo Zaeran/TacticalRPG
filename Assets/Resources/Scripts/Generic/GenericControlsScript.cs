@@ -26,11 +26,12 @@ public class GenericControlsScript : MonoBehaviour {
 	TurnController Controller;	
 	ProjectileScript Projectile;
 	MagicList Magic;
-	AllItemsList Items;
+	CharacterEquipment Equipment;
 	SkillList Skills;
 	CharacterKnownAbilities KnownAbilities;
 	CharacterStatus Status;
 	MouseControlScript Mouse;
+	AllItemsList Items;
 	
 	//weapon
 	TextAsset weaponData;
@@ -41,6 +42,7 @@ public class GenericControlsScript : MonoBehaviour {
 		Stats = GetComponent<AttributesScript>();
 		KnownAbilities = GetComponent<CharacterKnownAbilities>();
 		Status = GetComponent<CharacterStatus>();
+		Equipment = GetComponent<CharacterEquipment>();
 
 		Move = GameObject.FindGameObjectWithTag("Controller").GetComponent<MovementScript>();
 		pathFind = GameObject.FindGameObjectWithTag("Controller").GetComponent<PathfindingScript>();
@@ -48,8 +50,9 @@ public class GenericControlsScript : MonoBehaviour {
 		Draw = GameObject.FindGameObjectWithTag("Controller").GetComponent<DrawSquaresScript>();
 		Controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<TurnController>();
 		Magic = GameObject.FindGameObjectWithTag("Controller").GetComponent<MagicList>();
-		Items = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItemsList>();
 		Skills = GameObject.FindGameObjectWithTag("Controller").GetComponent<SkillList>();
+
+		Items = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<AllItemsList>();
 		if(GetComponent<MouseControlScript>()){
 			Mouse = GetComponent<MouseControlScript>();
 			isPlayer = true;
@@ -143,8 +146,8 @@ public class GenericControlsScript : MonoBehaviour {
 		else if(skillSelected != "" && Skills.getIsSkillTargeted(skillSelected)){
 			Status.actionOccuring = true;
 			Draw.DestroyValidSquares();
-			if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
-				Skills.PerformSkill(skillSelected, position, gameObject, Skills.getSkillCost(skillSelected), wpnName);
+			if(KnownAbilities.SkillSucceeds(skillSelected)){
+				Skills.PerformSkill(skillSelected, position, gameObject, Skills.getSkillCost(skillSelected));
 			}
 			else{
 				ActionComplete(Skills.getSkillCost(skillSelected));
@@ -163,13 +166,37 @@ public class GenericControlsScript : MonoBehaviour {
 	public void Skill(){
 		if(Stats.remainingAP >= Skills.getSkillCost(skillSelected)){
 			if(Skills.getIsSkillTargeted(skillSelected)){
-				int wpnType = int.Parse(Items.GetWpnData(wpnName)[1]);
-				int wpnRange = int.Parse(Items.GetWpnData(wpnName)[3]);
-				if(wpnType == 1 || wpnType == 2){
-					validPoints = findValid.GetPoints("Melee", gameObject, wpnRange,Stats.maxJump);
+				if(Skills.getSkillRange(skillSelected) == "Weapon"){
+					string wpnType1 = "";
+					int wpnRange1 = 0;
+					string wpnType2 = "";
+					int wpnRange2 = 0;
+					string[] allEquipment = Equipment.GetAllEquipment();
+					if(allEquipment[0] != ""){ //ADD: Proper support for dual weapon wielding
+						if(Items.GetItemType(allEquipment[0]) == "Weapon"){
+							wpnType1 = Items.GetWpnType(allEquipment[0]);
+							wpnRange1 = Items.GetWpnRange(allEquipment[0]);
+						}
+					}
+					else{
+						wpnType1 = "Melee";
+						wpnRange1 = 1;
+					}
+					if(allEquipment[1] != ""){
+						if(Items.GetItemType(allEquipment[1]) == "Weapon"){
+							wpnType2 = Items.GetWpnType(allEquipment[1]);
+							wpnRange2 = Items.GetWpnRange(allEquipment[1]);
+						}
+					}
+					else{
+						wpnType2 = "Melee";
+						wpnRange2 = 0;
+					}
+
+					validPoints = findValid.GetPoints(wpnType1, gameObject, wpnRange1,Stats.maxJump);
 				}
 				else{
-					validPoints = findValid.GetPoints("Ranged", gameObject, wpnRange,Stats.maxJump);
+					validPoints = findValid.GetPoints("Magic", gameObject, int.Parse(Skills.getSkillRange(skillSelected)));
 				}
 				Draw.DrawValidSquares(validPoints);
 				if(isPlayer){
@@ -179,8 +206,8 @@ public class GenericControlsScript : MonoBehaviour {
 			}
 			else{
 				Status.actionOccuring = true;
-				if(KnownAbilities.SkillSucceeds(skillSelected, wpnName)){
-					Skills.PerformSkill(skillSelected, Vector3.zero, gameObject, Skills.getSkillCost(skillSelected), wpnName);
+				if(KnownAbilities.SkillSucceeds(skillSelected)){
+					Skills.PerformSkill(skillSelected, Vector3.zero, gameObject, Skills.getSkillCost(skillSelected)); //ADD: Skil cost modfiers
 				}
 				else{
 					ActionComplete(Skills.getSkillCost(skillSelected));

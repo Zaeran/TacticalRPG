@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Resources\Scripts\CameraGUI\CharacterGUI.cs" />
+     <Compile Include="Assets\Resources\Scripts\CameraGUI\EquipmentGUI.cs" />
      <Compile Include="Assets\Resources\Scripts\CameraGUI\FloatingNumbersScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\CameraGUI\InventoryGUI.cs" />
      <Compile Include="Assets\Resources\Scripts\CameraGUI\RotateCamera.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\DrawSquaresScript.cs" />
      <Compile Include="Assets\Resources\Scripts\Generic\GenericControlsScript.cs" />
@@ -81,6 +83,7 @@
      <Compile Include="Assets\Resources\Scripts\TurnController.cs" />
      <Compile Include="Assets\Resources\Scripts\Weapons\ProjectileScript.cs" />
      <None Include="Assets\Resources\Data\AllSkills.txt" />
+     <None Include="Assets\Resources\Data\AllMagic.txt" />
      <None Include="Assets\Resources\Data\AllItems.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

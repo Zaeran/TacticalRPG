@@ -37,7 +37,8 @@ public class GenericControlsScript : MonoBehaviour {
 	//weapon
 	TextAsset weaponData;
 	public string wpnName;
-	
+
+	//ADD: Magic
 	void Awake () {
 		//initialize all component variables
 		Stats = GetComponent<AttributesScript>();

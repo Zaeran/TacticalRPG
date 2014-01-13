@@ -1,16 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Generic\GenericControlsScript.cs">
-    <Files>
-      <File FileName="Assets\Resources\Scripts\Player\CharacterEquipment.cs" Line="27" Column="4" />
-      <File FileName="Assets\Resources\Scripts\OutOfBattle\Inventory.cs" Line="52" Column="34" />
-      <File FileName="Assets\Resources\Scripts\OutOfBattle\AllItemsList.cs" Line="69" Column="13" />
-      <File FileName="Assets\Resources\Scripts\Player\CharacterKnownAbilities.cs" Line="43" Column="3" />
-      <File FileName="Assets\Resources\Scripts\Generic\GenericControlsScript.cs" Line="120" Column="19" />
-      <File FileName="Assets\Resources\Scripts\Generic\SkillList.cs" Line="115" Column="81" />
-      <File FileName="Assets\Resources\Scripts\CameraGUI\CharacterGUI.cs" Line="18" Column="3" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

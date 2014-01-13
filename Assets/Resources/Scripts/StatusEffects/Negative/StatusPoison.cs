@@ -18,7 +18,7 @@ public class StatusPoison : MonoBehaviour {
 	
 	public void NextTurn(){
 		duration--;
-		gameObject.SendMessage("TakeDamage", 1);
+		gameObject.SendMessage("TakeDamage", damage);
 		if(duration <= 0){
 			Status.poison = false;
 			Destroy(this);

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CharacterGUI : MonoBehaviour {
 	GameObject currentCharacter;
+	GameObject tempChar;
 	AttributesScript Stats;
 	CharacterKnownAbilities Abilities;
 	CharacterStatus Status;

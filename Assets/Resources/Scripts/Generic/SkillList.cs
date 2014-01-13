@@ -96,7 +96,7 @@ public class SkillList : MonoBehaviour {
 		}
 		//allow character to react
 		if(character != null){
-			character.SendMessage("Reaction", origin);
+			character.SendMessage("Reaction", character);
 		}
 		yield return new WaitForSeconds(1.5f); //animation
 		//test that character is still in square
@@ -111,7 +111,8 @@ public class SkillList : MonoBehaviour {
 		if(character != null){
 			character.SendMessage("TakeDamage", damage);
 		}
-		origin.SendMessage("ActionComplete", skillCost); //replace with skill cost
+		origin.SendMessage("ActionComplete", skillCost); //ADD: replace with skill cost
+		GameObject.FindGameObjectWithTag("GUIData").SendMessage("UpdateTurn", origin);
 	}
 
 	IEnumerator RangedAttack(Vector3 target, int damage, GameObject origin, int skillCost){

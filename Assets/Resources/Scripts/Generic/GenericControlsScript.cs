@@ -32,6 +32,7 @@ public class GenericControlsScript : MonoBehaviour {
 	CharacterStatus Status;
 	MouseControlScript Mouse;
 	AllItemsList Items;
+	CharacterGUI BattleGUI;
 	
 	//weapon
 	TextAsset weaponData;
@@ -118,6 +119,7 @@ public class GenericControlsScript : MonoBehaviour {
 	}
 	//enable reaction
 	public void Reaction(GameObject target){
+		GameObject.FindGameObjectWithTag("GUIData").SendMessage("UpdateTurn", gameObject);
 		reactionNo++;
 		attackedFromTarget = target;
 		Status.isReacting = true;

@@ -33,10 +33,10 @@ public class CharacterKnownAbilities : MonoBehaviour {
 		int modifier = 0;
 		foreach(string skill in Equipment.GetAllEquipmentSkills()){
 			if(skill == skillName){
-				modifier += 40;
+				modifier += 40 / int.Parse(skills.GetSkillDifficulty(skillName));  //ADD: Different Skill Modifiers
 			}
 		}
-		if(Random.Range(0,101) < skillsKnown[skillName] + modifier){
+		if(Random.Range(0,100) < skillsKnown[skillName] + modifier){
 			return true;
 		}
 		return false;

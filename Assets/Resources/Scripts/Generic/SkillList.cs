@@ -38,8 +38,11 @@ public class SkillList : MonoBehaviour {
 	public int getSkillCost(string skillName){
 		return int.Parse(skillInfo[skillName][0]);
 	}
-	public string getSkillRange(string skillName){
+	public string GetSkillRange(string skillName){
 		return skillInfo[skillName][3];
+	}
+	public string GetSkillDifficulty(string skillName){
+		return skillInfo[skillName][4];
 	}
 
 	public bool getIsSkillTargeted(string skillName){
@@ -67,6 +70,9 @@ public class SkillList : MonoBehaviour {
 			wpnDamage2 = Items.GetWpnDamage(allEquipment[1]);
 		}
 		switch(skillName){ //ADD: Proper skill use when different weapon types in each hand
+		case "Move":
+			origin.SendMessage("MoveAction");
+			break;
 		case "Attack":
 			if(wpnType1 == "Melee"){
 				StartCoroutine(MeleeAttack(target, wpnDamage1, origin, skillCost));

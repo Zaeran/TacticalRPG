@@ -158,9 +158,12 @@ public class GenericControlsScript : MonoBehaviour {
 		}
 	}
 	
-	public void MoveAction(){
+	public void MoveAction(int distance = 0){
 		skillSelected = "Move";
-		validPoints = findValid.GetPoints("Move", gameObject,Stats.remainingAP,Stats.maxJump);
+		if(distance == 0){ 
+			distance = Stats.remainingAP;
+		}
+		validPoints = findValid.GetPoints("Move", gameObject,distance,Stats.maxJump);
 		Draw.DrawValidSquares(validPoints);
 		Mouse.SelectPosition(validPoints);
 	}
@@ -168,7 +171,7 @@ public class GenericControlsScript : MonoBehaviour {
 	public void Skill(){
 		if(Stats.remainingAP >= Skills.getSkillCost(skillSelected)){
 			if(Skills.getIsSkillTargeted(skillSelected)){
-				if(Skills.getSkillRange(skillSelected) == "Weapon"){
+				if(Skills.GetSkillRange(skillSelected) == "Weapon"){
 					string wpnType1 = "";
 					int wpnRange1 = 0;
 					string wpnType2 = "";
@@ -198,7 +201,7 @@ public class GenericControlsScript : MonoBehaviour {
 					validPoints = findValid.GetPoints(wpnType1, gameObject, wpnRange1,Stats.maxJump);
 				}
 				else{
-					validPoints = findValid.GetPoints("Magic", gameObject, int.Parse(Skills.getSkillRange(skillSelected)));
+					validPoints = findValid.GetPoints("Magic", gameObject, int.Parse(Skills.GetSkillRange(skillSelected)));
 				}
 				Draw.DrawValidSquares(validPoints);
 				if(isPlayer){
@@ -236,9 +239,7 @@ public class GenericControlsScript : MonoBehaviour {
 	//these will be added to SkillList
 	public void Dodge(){
 		if(Stats.remainingAP > 2){
-			skillSelected = "Move";
-			validPoints = findValid.GetPoints("Move", gameObject,1,Stats.maxJump);
-			Draw.DrawValidSquares(validPoints);
+			MoveAction(1);
 		}
 		else{
 			ActionComplete();

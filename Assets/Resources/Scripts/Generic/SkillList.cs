@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class SkillList : MonoBehaviour {
 	Dictionary<string, string[]> skillInfo; //AP Cost. Is targeted (1,0). SkillType. SkillRange. SkillDifficulty
+	//using skills variables
+	string skillName;
+	int skillCost;
+	Vector3 target;
+	GameObject origin;
+	string weaponType;
+	int baseDamage;
 
 	int groundOnlyLayer = 1 << 8;
 
@@ -54,85 +61,85 @@ public class SkillList : MonoBehaviour {
 
 	//used to initialise a skill
 	//required info: name of skill, target of skill, character skill originating from, and name of weapon (replace with equipment list later)
-	public void PerformSkill(string skillName, Vector3 target, GameObject origin, int skillCost){
+	public void PerformSkill(string name, Vector3 targt, GameObject orgn, int cost){
+		skillName = name;
+		target = targt;
+		origin = orgn;
+		skillCost = cost;
+
 		Equipment = origin.GetComponent<CharacterEquipment>();
-		int wpnDamage1 = 0;
-		string wpnType1 = "";
-		int wpnDamage2 = 0;
-		string wpnType2 = "";
 		string[] allEquipment = Equipment.GetAllEquipment();
+
 		if(Items.GetItemType(allEquipment[0]) == "Weapon"){
-			wpnType1 = Items.GetWpnType(allEquipment[0]);
-			wpnDamage1 = Items.GetWpnDamage(allEquipment[0]);
+			weaponType = Items.GetWpnType(allEquipment[0]);
+			baseDamage = Items.GetWpnDamage(allEquipment[0]);
 		}
-		if(Items.GetItemType(allEquipment[1]) == "Weapon"){
-			wpnType2 = Items.GetWpnType(allEquipment[1]);
-			wpnDamage2 = Items.GetWpnDamage(allEquipment[1]);
-		}
-		switch(skillName){ //ADD: Proper skill use when different weapon types in each hand
-		case "Move":
-			origin.SendMessage("MoveAction");
-			break;
-		case "Attack":
-			if(wpnType1 == "Melee"){
-				StartCoroutine(MeleeAttack(target, wpnDamage1, origin, skillCost));
-			}
-			else if(wpnType1 == "Ranged"){
-				StartCoroutine(RangedAttack(target, wpnDamage1, origin, skillCost));
-			}
-			break;
-		case "Block":
-			StartCoroutine(Block(2, origin, skillCost));
-			break;
-		default: break;
-		}
+
+		StartCoroutine(skillName);
+	}
+
+	void SkillComplete(){
+		skillName = "";
+		skillCost = 0;
+		target = new Vector3();
+		origin = null;
+		weaponType = "";
+		baseDamage = 0;
 	}
 
 	#region regular skills
-	IEnumerator MeleeAttack(Vector3 target, int damage, GameObject origin, int skillCost){
-		Collider[] col;
-		GameObject character = null;
-		//test that the square contains a character
-		col = Physics.OverlapSphere(target, 0.3f, ~groundOnlyLayer);
-		foreach(Collider c in col){
-			if(c.tag == "NPC" || c.tag == "Player"){
-				character = c.gameObject;
-				break;
-			}
-		}
-		//allow character to react
-		if(character != null){
-			character.SendMessage("Reaction", character);
-		}
-		yield return new WaitForSeconds(1.5f); //animation
-		//test that character is still in square
-		col = Physics.OverlapSphere(target, 0.3f, ~groundOnlyLayer);
-		character = null;
-		foreach(Collider c in col){
-			if(c.tag == "NPC" || c.tag == "Player"){
-				character = c.gameObject;
-				break;
-			}
-		}
-		if(character != null){
-			character.SendMessage("TakeDamage", damage);
-		}
-		origin.SendMessage("ActionComplete", skillCost); //ADD: replace with skill cost
-		GameObject.FindGameObjectWithTag("GUIData").SendMessage("UpdateTurn", origin);
+	IEnumerator Move(){
+		origin.SendMessage("MoveAction");
+		SkillComplete();
+		yield return null;
 	}
-
-	IEnumerator RangedAttack(Vector3 target, int damage, GameObject origin, int skillCost){
-		const float projectileHeight = 0.4f;
-		yield return new WaitForSeconds(1); //replace with animation
-		//create 'arrow', and fire it at the selected square
-		GameObject proj = Instantiate(Resources.Load("Objects/Weapons/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
-		ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
-		if(origin.transform.position.y > target.y){
-		Projectile.Initialise(60, target, projectileHeight, damage, origin, skillCost);
+	IEnumerator Attack(){
+		if(weaponType == "Melee"){
+			Collider[] col;
+			GameObject character = null;
+			//test that the square contains a character
+			col = Physics.OverlapSphere(target, 0.3f, ~groundOnlyLayer);
+			foreach(Collider c in col){
+				if(c.tag == "NPC" || c.tag == "Player"){
+					character = c.gameObject;
+					break;
+				}
+			}
+			//allow character to react
+			if(character != null){
+				character.SendMessage("Reaction", character);
+			}
+			yield return new WaitForSeconds(1.5f); //ADD: animation
+			//test that character is still in square
+			col = Physics.OverlapSphere(target, 0.3f, ~groundOnlyLayer);
+			character = null;
+			foreach(Collider c in col){
+				if(c.tag == "NPC" || c.tag == "Player"){
+					character = c.gameObject;
+					break;
+				}
+			}
+			if(character != null){
+				character.SendMessage("TakeDamage", baseDamage); //ADD: Damage modifiers
+			}
+			origin.SendMessage("ActionComplete", skillCost); //ADD: replace with skill cost
+			GameObject.FindGameObjectWithTag("GUIData").SendMessage("UpdateTurn", origin);
 		}
 		else{
-			Projectile.Initialise(75, target, projectileHeight, damage, origin, skillCost);
+			const float projectileHeight = 0.4f;
+			yield return new WaitForSeconds(1); //ADD: animation
+			//create 'arrow', and fire it at the selected square
+			GameObject proj = Instantiate(Resources.Load("Objects/Weapons/Arrow"), origin.transform.position + new Vector3(0,projectileHeight,0), Quaternion.identity) as GameObject;
+			ProjectileScript Projectile = proj.GetComponent<ProjectileScript>();
+			if(origin.transform.position.y > target.y){
+				Projectile.Initialise(60, target, projectileHeight, baseDamage, origin, skillCost);//ADD: Damage modifiers
+			}
+			else{
+				Projectile.Initialise(75, target, projectileHeight, baseDamage, origin, skillCost);//ADD: Damage modifiers
+			}
 		}
+		SkillComplete();
+		yield return null;
 	}
 	#endregion
 
@@ -142,6 +149,8 @@ public class SkillList : MonoBehaviour {
 		ReactionDamageReduction block = origin.AddComponent<ReactionDamageReduction>();
 		block.Initialize(blockValue);
 		origin.SendMessage("ActionComplete", skillCost);
+		SkillComplete();
+		yield return null;
 	}
 	#endregion
 }

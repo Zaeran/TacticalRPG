@@ -27,7 +27,15 @@ public class BattleUI : MonoBehaviour
 
     public void AttackAction()
     {
-        TurnController.CurrentCharacterTurn.SetAction("Attack");
+        if(TurnController.CurrentCharacterTurn.characterName == "Char 1")
+        {
+            TurnController.CurrentCharacterTurn.SetAction("Attack");
+        }
+        else
+        {
+            TurnController.CurrentCharacterTurn.SetAction("Ranged attack");
+        }
+        
     }
 
     public void CancelAction()

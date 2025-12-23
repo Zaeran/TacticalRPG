@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Character\CharacterSkill.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMelee.cs" />
     <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectAttack.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetRangedAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

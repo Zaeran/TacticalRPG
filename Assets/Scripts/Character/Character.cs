@@ -24,6 +24,9 @@ public class Character
 
         Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetMelee(), new SkillEffectAttack());
         _skills.Add(attackSkill);
+
+        Skill rangeAttackSkill = new Skill("Ranged attack", Skill.SkillTag.Attack, new SkillTargetRangedAttack(), new SkillEffectAttack());
+        _skills.Add(rangeAttackSkill);
     }
 
     public string CharacterName

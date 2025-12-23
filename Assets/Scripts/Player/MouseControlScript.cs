@@ -3,36 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class MouseControlScript : MonoBehaviour {
-	public bool selectPosition = false;
-	RaycastHit rayhit;
-	int groundOnlyLayer = 1 << 8;
+		public static bool selectPosition = false;
+		static RaycastHit rayhit;
+		static int groundOnlyLayer = 1 << 8;
 
-	Vector3 clickPosition = Vector3.zero;
-	Vector4 clickPosition4D = Vector4.zero;
+		static Vector3 clickPosition = Vector3.zero;
+		static Vector4 clickPosition4D = Vector4.zero;
 
-	List<Vector4> validPoints = new List<Vector4>();
+		static List<Vector4> validPoints = new List<Vector4>();
 
 	public static event Vector4Event OnTileClicked;
 
 	void Update(){
-		if(selectPosition){
-			if(Input.GetMouseButtonDown(0)){
-				LeftClick();
-			}
+		if(Input.GetMouseButtonDown(0)){
+		LeftClick();
 		}
 	}
 
-	public void SelectPosition(List<Vector4> valid){
-		selectPosition = true;
+	public static void SelectPosition(List<Vector4> valid){
 		validPoints = valid;
 	}
 
-	public void PositionSelected(){
+	public static void PositionSelected(){
 		selectPosition = false;
 	}
 
 	//left mouse click
-	private void LeftClick(){
+	private static void LeftClick(){
+				Debug.Log ("Left clicked");
 		clickPosition4D = Vector4.zero;
 		//gets the in-game position of mouse, ensures that only flat ground is clicked, then uses that value for input
 		if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rayhit, 100, groundOnlyLayer)){ //click on ground
@@ -45,12 +43,12 @@ public class MouseControlScript : MonoBehaviour {
 					}
 				}
 				if(clickPosition4D != Vector4.zero){ //the position clicked was a valid position
-					selectPosition = false;
 					Debug.Log("LOL");
 					if(OnTileClicked != null)
                     {
 						OnTileClicked(clickPosition4D); //4D because different elevation can exist for a given position
                     }
+										validPoints = new List<Vector4> ();
 				}
 			}
 		}

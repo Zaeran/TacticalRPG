@@ -1,0 +1,46 @@
+﻿<Properties StartupConfiguration="{EE646792-0CE0-F56E-88C0-CFC74806661D}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Skills/TargetingScripts/ISkillTargeting.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Generic/GenericControlsScript.cs" Line="142" Column="21" />
+      <File FileName="Assets/Scripts/Character/Character.cs" />
+      <File FileName="Assets/Todo.txt" />
+      <File FileName="Assets/Scripts/Character/CharacterObject.cs" />
+      <File FileName="Assets/Scripts/Player/MouseControlScript.cs" />
+      <File FileName="Assets/Scripts/Generic/MovementScript.cs" />
+      <File FileName="Assets/Scripts/Pathfinding/Pathfinding.cs" />
+      <File FileName="Assets/Scripts/Skills/Skill.cs" Line="10" Column="1" />
+      <File FileName="Assets/Scripts/Skills/TargetingScripts/ISkillTargeting.cs" Line="5" Column="17" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TacticalRPG" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Character" expanded="True" />
+                <Node name="Generic" expanded="True" />
+                <Node name="Managers" expanded="True" />
+                <Node name="Pathfinding" expanded="True" />
+                <Node name="Player" expanded="True" />
+                <Node name="Skills" expanded="True">
+                  <Node name="TargetingScripts" expanded="True">
+                    <Node name="ISkillTargeting.cs" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="UI" expanded="True" />
+                <Node name="Utilities" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="23f4ee05-e6d2-4d41-a480-a683a078bb7e" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

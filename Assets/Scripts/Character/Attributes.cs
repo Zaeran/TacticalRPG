@@ -17,6 +17,8 @@ public class Attributes
     private int _hitPointsCurrent;
     private int _actionPointsCurrent;
 
+    public event VoidEvent OnRemainingAPChanged;
+
     public Attributes()
     {
         _hitPointsMax = 5;
@@ -79,6 +81,10 @@ public class Attributes
     public void RefillAP()
     {
         _actionPointsCurrent = MaxAP;
+        if (OnRemainingAPChanged != null)
+        {
+            OnRemainingAPChanged ();
+        }
     }
 
     public void ModifyAP(int val)
@@ -90,6 +96,10 @@ public class Attributes
         }
         _actionPointsCurrent += val;
         Debug.Log("Remaining AP: " + CurrentAP);
+        if (OnRemainingAPChanged != null)
+                        {
+            OnRemainingAPChanged ();
+        }
     }
 
     public int MaxJump

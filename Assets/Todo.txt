@@ -6,12 +6,21 @@
 + Drawing squares/indicators is done by generic manager, not each object
 + Clicking is done by generic click manager, not each object
 + Redo the UI
-- Show character AP on UI
++ Show character AP on UI
 - Character movement
-- Character AP
+  + Select a point after selecting 'Move'
+  - Store lists of available paths somewhere
+  - Remove 1 AP per movement
+  - Each square moved is its own 'action'
+  - List of actions to undertake?
++ Character AP
 - Character attack
 - Dealing damage
 - Skills - attack and move as skills
+  - Skill tags (Movement, Attack, Magic, Physical, Elements, 
+  - Skill targeting
+  - Skill types (move, attack, break)
+  - Skill timing windows (targeting, skill start, skill end, etc.)
 - Floating text script - generic -> instantiates numbers at given screen position
 - Melee attack - no projectile fired
 - Status effects -> dictionary string/int of active status effects

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public delegate void VoidEevent();
+public delegate void VoidEvent();
 public delegate void IntEvent(int val);
 public delegate void StringEvent(string val);
 public delegate void FloatEvent(float val);

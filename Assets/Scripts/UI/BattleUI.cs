@@ -7,10 +7,12 @@ public class BattleUI : MonoBehaviour
 {
 
     public TextMeshProUGUI characterNameText;
+    public TextMeshProUGUI characteAPText;
 
     private void Start()
     {
-        TurnController.OnNextCharacterTurn += SetCurrentTurnName;
+        TurnController.OnCharacterTurnEnding += CharacterTurnStarted;
+        TurnController.OnNextCharacterTurn += CharacterTurnStarted;
     }
 
     public void PassTurn()
@@ -23,8 +25,19 @@ public class BattleUI : MonoBehaviour
         TurnController.CurrentCharacterTurn.MoveAction();
     }
 
-    void SetCurrentTurnName(Character c)
+    void CharacterTurnStarted(Character c)
     {
         characterNameText.text = c.CharacterName;
+        c.Attributes.OnRemainingAPChanged += CharacterAPChanged;
+    }
+
+    void CharacterTurnEnding(Character c)
+    {
+        c.Attributes.OnRemainingAPChanged -= CharacterAPChanged;
+    }
+
+    void CharacterAPChanged()
+    {
+        characteAPText.text = TurnController.CurrentCharacterTurn.MyCharacter.Attributes.CurrentAP + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.MaxAP; 
     }
 }

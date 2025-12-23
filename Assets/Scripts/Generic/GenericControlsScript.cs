@@ -26,7 +26,7 @@ public class GenericControlsScript : MonoBehaviour {
 	TextAsset weaponData;
 	public string wpnName;
 
-	public event VoidEevent OnClearSquares;
+	public event VoidEvent OnClearSquares;
 
 	//ADD: Magic
 	void Awake () {
@@ -139,7 +139,7 @@ public class GenericControlsScript : MonoBehaviour {
 		}
 		validPoints = FindValidPoints.GetPoints("Move", gameObject,distance,Stats.maxJump);
 		DrawSquaresScript.DrawValidSquares(validPoints);
-		Mouse.SelectPosition(validPoints);
+		MouseControlScript.SelectPosition(validPoints);
 	}
 
 	public void Skill(){

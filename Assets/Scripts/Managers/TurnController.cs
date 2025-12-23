@@ -13,6 +13,7 @@ public class TurnController {
 	static CharacterGUI guiScript;
 
 	public static event CharacterEvent OnNextCharacterTurn;
+	public static event CharacterEvent OnCharacterTurnEnding;
 	
 	void Start(){
 		StartBattle();
@@ -59,6 +60,10 @@ public class TurnController {
     }
 	
 	public static void TurnOver(){
+		if(OnCharacterTurnEnding != null)
+        {
+            OnCharacterTurnEnding(CurrentCharacterTurn.MyCharacter);
+        }
 		currentCharacterTurn++;
 		if(currentCharacterTurn == characters.Count){
 			currentCharacterTurn = 0;

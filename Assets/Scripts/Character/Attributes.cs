@@ -57,6 +57,28 @@ public class Attributes
         }
     }
 
+    public void StartBattle()
+    {
+        _hitPointsCurrent = _hitPointsMax;
+        RefillAP();
+    }
+
+    public void ApplyDamage(int val)
+    {
+        AdjustHitPoints(-val);
+    }
+
+    public void ApplyHealing(int val)
+    {
+        AdjustHitPoints(val);
+    }
+
+    public void AdjustHitPoints(int val)
+    {
+        _hitPointsCurrent += val;
+        Debug.Log("HP After: " + _hitPointsCurrent);
+    }
+
     public int Reaction
     {
         get

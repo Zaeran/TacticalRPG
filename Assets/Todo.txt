@@ -1,32 +1,24 @@
-- Rewrite most code for consolidation
-+ Remove all the individual components in GenericControlsScript
-+ Character turns use CharacterObject instead of GameObject
-+ Pass button
-+ Current character name on UI
-+ Drawing squares/indicators is done by generic manager, not each object
-+ Clicking is done by generic click manager, not each object
-+ Redo the UI
-+ Show character AP on UI
-+ Character movement
-  + Select a point after selecting 'Move'
-  + Remove 1 AP per movement
-+ Character AP
-- Character attack
-- Dealing damage
 + Skills - attack and move as skills
   + Skill tags (Movement, Attack, Magic, Physical, Elements, 
   + Skill targeting
   - Skill types (move, attack, break)
   + Skill timing windows (targeting, skill start, skill end, etc.)
-- Getting skill list
-- Floating text script - generic -> instantiates numbers at given screen position
++ Character attack
+  + Basic attack skill
+  + Range of 1
+  + Damage of 1
+  + AP cost 2
 - Melee attack - no projectile fired
-- Status effects -> dictionary string/int of active status effects
-- AOE attacks
++ No chance to hit - all attacks hit and deal damage, but status effects can add a guaranteed evasion or block in a given direction
+- Dealing damage
+- Floating text script - generic -> instantiates numbers at given screen position
+- Ranged attack - fire projectile
 - Equipment
-- Attack status depends on inventory
+  - Damage depends on weapon
+  - Damage resistance depends on armour
 - Inventory
-- No chance to hit - all attacks hit and deal damage, but status effects can add a guaranteed evasion or block in a given direction
+- AOE attacks
+- Status effects -> dictionary string/int of active status effects
 - Terrain manipulation
 - Auto-pass turn toggle
 - XP and levelling up

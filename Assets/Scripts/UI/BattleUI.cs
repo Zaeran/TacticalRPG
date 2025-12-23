@@ -22,7 +22,12 @@ public class BattleUI : MonoBehaviour
 
     public void MoveAction()
     {
-        TurnController.CurrentCharacterTurn.MoveAction();
+        TurnController.CurrentCharacterTurn.SetAction("Move");
+    }
+
+    public void AttackAction()
+    {
+        TurnController.CurrentCharacterTurn.SetAction("Attack");
     }
 
     public void CancelAction()

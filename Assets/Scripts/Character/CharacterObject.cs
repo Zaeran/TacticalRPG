@@ -9,15 +9,12 @@ public class CharacterObject : MonoBehaviour
 
     Skill _activeSkill;
 
-    MovementScript movement;
-
 
     private void Awake()
     {
         _myCharacter = new Character(characterName);
         TurnController.AddCharacter(this);
-
-        movement = GetComponent<MovementScript>();
+        MyCharacter.Attributes.StartBattle();
     }
 
     public void StartMyTurn()
@@ -51,17 +48,24 @@ public class CharacterObject : MonoBehaviour
 
     void SkillTargeted(Vector4 point)
     {
-        _activeSkill.OnSkillTargeted -= SkillTargeted;
-        _activeSkill.ProcessSkillEffect(this, point);
-        _activeSkill = null;
+        if(_activeSkill.ProcessSkillEffect(this, point)) //skill succeeded
+        {
+            _activeSkill.OnSkillTargeted -= SkillTargeted;
+            _activeSkill = null;
+        }
+        else
+        { //skill failed. Go back to targeting
+            _activeSkill.StartSkillTargeting(this);
+        }
+        
     }
 
-    //Actions -- change this to be a separate script
-    public void MoveAction(int distance = 0)
+    public void SetAction(string actionName)
     {
+        CancelSkill();
         if (_activeSkill == null)
         {
-            _activeSkill = MyCharacter.GetSkillByName("Move");
+            _activeSkill = MyCharacter.GetSkillByName(actionName);
             _activeSkill.StartSkillTargeting(this);
             _activeSkill.OnSkillTargeted += SkillTargeted;
         }

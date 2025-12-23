@@ -48,9 +48,9 @@ public class Skill
         }
     }
 
-    public void ProcessSkillEffect(CharacterObject c, Vector4 point)
+    public bool ProcessSkillEffect(CharacterObject c, Vector4 point)
     {
-        _effect.ProcessEffect(c, point);
+        return _effect.ProcessEffect(c, point);
     }
 
 }

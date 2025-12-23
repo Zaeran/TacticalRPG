@@ -36,7 +36,6 @@ public class MouseControlScript : MonoBehaviour
 	//left mouse click
 	private static void LeftClick()
 	{
-		Debug.Log("Left clicked");
 		clickPosition4D = Vector4.zero;
 		//gets the in-game position of mouse, ensures that only flat ground is clicked, then uses that value for input
 		if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rayhit, 100, groundOnlyLayer))
@@ -54,12 +53,11 @@ public class MouseControlScript : MonoBehaviour
 				}
 				if (clickPosition4D != Vector4.zero)
 				{ //the position clicked was a valid position
-					Debug.Log("LOL");
+					validPoints = new List<Vector4>();
 					if (OnTileClicked != null)
 					{
 						OnTileClicked(clickPosition4D); //4D because different elevation can exist for a given position
 					}
-					validPoints = new List<Vector4>();
 				}
 			}
 		}

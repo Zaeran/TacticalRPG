@@ -21,6 +21,9 @@ public class Character
     {
         Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new SkillEffectMove());
         _skills.Add(moveSkill);
+
+        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetMelee(), new SkillEffectAttack());
+        _skills.Add(attackSkill);
     }
 
     public string CharacterName

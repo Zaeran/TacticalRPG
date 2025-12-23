@@ -3,24 +3,16 @@
   + Skill targeting
   - Skill types (move, attack, break)
   + Skill timing windows (targeting, skill start, skill end, etc.)
-+ Character attack
-  + Basic attack skill
-  + Range of 1
-  + Damage of 1
-  + AP cost 2
-+ Melee attack - no projectile fired
-+ No chance to hit - all attacks hit and deal damage, but status effects can add a guaranteed evasion or block in a given direction
-+ Dealing damage
-+ Ranged attack
-+ Floating text script - generic -> instantiates numbers at given screen position
 - Equipment
   - Damage depends on weapon
   - Damage resistance depends on armour
+  - Weapon has a base targeting type + range. Attack skill uses weapon values
 - Inventory
 - AOE attacks
 - Status effects -> dictionary string/int of active status effects
+- Animations for attacks
+  - Testing that projectiles hit before applying damage
 - Terrain manipulation
-- Auto-pass turn toggle
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)

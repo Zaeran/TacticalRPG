@@ -1,0 +1,27 @@
+- Rewrite most code for consolidation
++ Remove all the individual components in GenericControlsScript
++ Character turns use CharacterObject instead of GameObject
++ Pass button
++ Current character name on UI
++ Drawing squares/indicators is done by generic manager, not each object
++ Clicking is done by generic click manager, not each object
++ Redo the UI
+- Show character AP on UI
+- Character movement
+- Character AP
+- Character attack
+- Dealing damage
+- Skills - attack and move as skills
+- Floating text script - generic -> instantiates numbers at given screen position
+- Melee attack - no projectile fired
+- Status effects -> dictionary string/int of active status effects
+- AOE attacks
+- Equipment
+- Attack status depends on inventory
+- Inventory
+- No chance to hit - all attacks hit and deal damage, but status effects can add a guaranteed evasion or block in a given direction
+- Terrain manipulation
+- Auto-pass turn toggle
+- XP and levelling up
+- Levelling skills independently
+- Learning new skills (how?)

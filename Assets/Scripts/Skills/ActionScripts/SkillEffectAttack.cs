@@ -37,6 +37,7 @@ public class SkillEffectAttack : ISkillEffect
        
         DrawSquaresScript.DestroyValidSquares();
         hitCharacter.MyCharacter.Attributes.ApplyDamage(1);
+        FloatingNumbersScript.CreateFloatingNumber(hitCharacter.transform.position, "1", Color.red);
         return true;
     }
 }

@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMelee.cs" />
     <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectAttack.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetRangedAttack.cs" />
+    <Compile Include="Assets\Scripts\UI\FloatingNumber.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -8,11 +8,11 @@
   + Range of 1
   + Damage of 1
   + AP cost 2
-- Melee attack - no projectile fired
++ Melee attack - no projectile fired
 + No chance to hit - all attacks hit and deal damage, but status effects can add a guaranteed evasion or block in a given direction
-- Dealing damage
-- Floating text script - generic -> instantiates numbers at given screen position
-- Ranged attack - fire projectile
++ Dealing damage
++ Ranged attack
++ Floating text script - generic -> instantiates numbers at given screen position
 - Equipment
   - Damage depends on weapon
   - Damage resistance depends on armour

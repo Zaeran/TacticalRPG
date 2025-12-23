@@ -11,7 +11,7 @@ public class TerrainGeneration : MonoBehaviour {
 		for(int xPos = 0; xPos < 10; xPos++){
 			for(int zPos = 0; zPos < 10; zPos++){
 				int rand = Random.Range(1,3);
-                if (xPos == 8 && zPos == 7)
+                if (xPos == 7 && zPos == 3)
                 {
                     Instantiate(Resources.Load(string.Format("{0}2", TerrainBlockFilePath, rand)), new Vector3(xPos, 1, zPos), Quaternion.identity);
                 }

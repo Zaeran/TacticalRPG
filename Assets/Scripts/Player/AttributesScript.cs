@@ -25,7 +25,7 @@ public class AttributesScript : MonoBehaviour {
 			damageTaken = 0;
 		}
 		CurrentHealth -= damageTaken;
-		floatingDisplay.SetText(damageTaken.ToString(), transform.position + Vector3.up);
+		//floatingDisplay.SetText(damageTaken.ToString(), transform.position + Vector3.up);
 		if(CurrentHealth <= 0){
 			return true;
 		}

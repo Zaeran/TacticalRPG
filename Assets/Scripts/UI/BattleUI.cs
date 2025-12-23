@@ -25,6 +25,11 @@ public class BattleUI : MonoBehaviour
         TurnController.CurrentCharacterTurn.MoveAction();
     }
 
+    public void CancelAction()
+    {
+        TurnController.CurrentCharacterTurn.CancelSkill();
+    }
+
     void CharacterTurnStarted(Character c)
     {
         characterNameText.text = c.CharacterName;

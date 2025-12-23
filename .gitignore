@@ -16,3 +16,4 @@ Library/*
 Temp
 *.pidb
 build
+/Logs

@@ -4,64 +4,66 @@ using UnityEngine;
 
 public class CharacterObject : MonoBehaviour
 {
-        public string characterName;
-        Character _myCharacter;
+    public string characterName;
+    Character _myCharacter;
 
-        MovementScript movement;
+    Skill _activeSkill;
+
+    MovementScript movement;
 
 
-        private void Awake ()
+    private void Awake()
+    {
+        _myCharacter = new Character(characterName);
+        TurnController.AddCharacter(this);
+
+        movement = GetComponent<MovementScript>();
+    }
+
+    public void StartMyTurn()
+    {
+        _myCharacter.Attributes.RefillAP();
+    }
+
+    public void UseAP(int amount)
+    {
+        _myCharacter.Attributes.ModifyAP(amount);
+        if (_myCharacter.Attributes.CurrentAP == 0 && GameOptions.autoEndTurn)
         {
-                _myCharacter = new Character (characterName);
-                TurnController.AddCharacter (this);
-
-                movement = GetComponent<MovementScript> ();
+            TurnController.TurnOver();
         }
+    }
 
-        public void StartMyTurn ()
+    public Character MyCharacter
+    {
+        get { return _myCharacter; }
+    }
+
+    public void CancelSkill()
+    {
+        if (_activeSkill != null)
         {
-                _myCharacter.Attributes.RefillAP ();
+            _activeSkill.OnSkillTargeted -= SkillTargeted;
+            _activeSkill = null;
         }
+        DrawSquaresScript.DestroyValidSquares();
+    }
 
-        public void UseAP (int amount)
+    void SkillTargeted(Vector4 point)
+    {
+        _activeSkill.OnSkillTargeted -= SkillTargeted;
+        _activeSkill.ProcessSkillEffect(this, point);
+        _activeSkill = null;
+    }
+
+    //Actions -- change this to be a separate script
+    public void MoveAction(int distance = 0)
+    {
+        if (_activeSkill == null)
         {
-                _myCharacter.Attributes.ModifyAP (amount);
-                Debug.Log (_myCharacter.CharacterName + " remaining AP: " + _myCharacter.Attributes.CurrentAP);
-
-                if (_myCharacter.Attributes.CurrentAP == 0 && GameOptions.autoEndTurn) {
-                        TurnController.TurnOver ();
-                }
+            _activeSkill = MyCharacter.GetSkillByName("Move");
+            _activeSkill.StartSkillTargeting(this);
+            _activeSkill.OnSkillTargeted += SkillTargeted;
         }
-
-        public Character MyCharacter {
-                get { return _myCharacter; }
-        }
-
-        //Actions -- change this to be a separate script
-        public void MoveAction (int distance = 0)
-        {
-                //skillSelected = "Move";
-                if (distance == 0) {
-                        distance = _myCharacter.Attributes.CurrentAP;
-                }
-                Debug.Log ("Current AP: " + distance);
-                List<Vector4> validPoints = FindValidPoints.GetPoints ("Move", gameObject, distance, _myCharacter.Attributes.MaxJump);
-                DrawSquaresScript.DrawValidSquares (validPoints);
-                MouseControlScript.SelectPosition (validPoints);
-                MouseControlScript.OnTileClicked += MovePositionSelected;
-                //  Mouse.SelectPosition(validPoints);
-        }
-
-        void MovePositionSelected (Vector4 v)
-        {
-                Debug.Log ("Point selected: " + v);
-                MouseControlScript.OnTileClicked -= MovePositionSelected;
-                List<Vector4> validPoints = FindValidPoints.GetPoints ("Move", gameObject, _myCharacter.Attributes.CurrentAP, _myCharacter.Attributes.MaxJump);
-                Vector3 [] movePath = Pathfinding.StartPathFinding (v, validPoints, _myCharacter.Attributes.MaxJump, gameObject);
-                if (movePath.Length > 0) {
-                        DrawSquaresScript.DestroyValidSquares ();
-                        movement.MoveToPoint (gameObject, movePath, _myCharacter.Attributes.CurrentAP);
-                }
-        }
-
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISkillTargeting
+public class CharacterSkill
 {
-    void SelectTarget(CharacterObject c);
+    
 }

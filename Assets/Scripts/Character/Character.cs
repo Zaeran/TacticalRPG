@@ -8,12 +8,23 @@ public class Character
     bool _isNPC;
     Attributes _attributes;
     List<Skill> _skills;
+    EquipmentWeapon _weapon;
 
     public Character(string cName)
     {
         _characterName = cName;
         _attributes = new Attributes();
         _skills = new List<Skill>();
+        if(cName == "Char 1")
+        {
+            //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Spear", EquipmentType.Weapon, 2, 2, WeaponTargetingType.Line);
+        }
+        else
+        {
+            _weapon = new EquipmentWeapon("Bow", EquipmentType.Weapon, 1, 4, WeaponTargetingType.Range);
+        }
+        
         SetupSkills();
     }
 
@@ -22,11 +33,8 @@ public class Character
         Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new SkillEffectMove());
         _skills.Add(moveSkill);
 
-        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetMelee(), new SkillEffectAttack());
+        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack(), new SkillEffectWeaponAttack());
         _skills.Add(attackSkill);
-
-        Skill rangeAttackSkill = new Skill("Ranged attack", Skill.SkillTag.Attack, new SkillTargetRangedAttack(), new SkillEffectAttack());
-        _skills.Add(rangeAttackSkill);
     }
 
     public string CharacterName
@@ -67,5 +75,17 @@ public class Character
             }
         }
         return null;
+    }
+
+    public EquipmentWeapon Weapon
+    {
+        get
+        {
+            if(_weapon == null)
+            {
+                return new EquipmentWeapon("Unarmed", EquipmentType.Weapon, 1, 1, WeaponTargetingType.Line);
+            }
+            return _weapon;
+        }
     }
 }

@@ -14,4 +14,19 @@ public class EquipmentWeapon : Equipment
         _range = range;
         _targetingType = targetType;
     }
+
+    public int Damage
+    {
+        get { return _damage; }
+    }
+
+    public int Range
+    {
+        get { return _range; }
+    }
+
+    public WeaponTargetingType TargetingType
+    {
+        get { return _targetingType; }
+    }
 }

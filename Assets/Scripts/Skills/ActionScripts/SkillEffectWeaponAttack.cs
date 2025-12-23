@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillEffectAttack : ISkillEffect
+public class SkillEffectWeaponAttack : ISkillEffect
 {
     public bool PayCost(CharacterObject c, int apCost)
     {
@@ -36,8 +36,8 @@ public class SkillEffectAttack : ISkillEffect
         }
        
         DrawSquaresScript.DestroyValidSquares();
-        hitCharacter.MyCharacter.Attributes.ApplyDamage(1);
-        FloatingNumbersScript.CreateFloatingNumber(hitCharacter.transform.position, "1", Color.red);
+        hitCharacter.MyCharacter.Attributes.ApplyDamage(c.MyCharacter.Weapon.Damage);
+        FloatingNumbersScript.CreateFloatingNumber(hitCharacter.transform.position, c.MyCharacter.Weapon.Damage.ToString(), Color.red);
         return true;
     }
 }

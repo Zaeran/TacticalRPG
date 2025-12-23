@@ -90,13 +90,12 @@
     <Compile Include="Assets\Scripts\Skills\ActionScripts\ISkillEffect.cs" />
     <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectMove.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterSkill.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMelee.cs" />
-    <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectAttack.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetRangedAttack.cs" />
+    <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectWeaponAttack.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingNumber.cs" />
     <Compile Include="Assets\Scripts\Equipment\Equipment.cs" />
     <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
     <Compile Include="Assets\Scripts\Equipment\EquipmentWeapon.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetWeaponAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

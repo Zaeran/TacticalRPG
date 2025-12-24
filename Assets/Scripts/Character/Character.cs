@@ -35,8 +35,7 @@ public class Character
     {
         CreateMoveSkill();
         CreateAttackSkill();
-
-
+        CreateRaiseTerrainSkill();
     }
 
     void CreateMoveSkill()
@@ -59,7 +58,21 @@ public class Character
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
-        //skill.SetSkillTargetRadius (new SkillTargetSingle ());
+        SkillTargetAOE skillTarget = new SkillTargetAOE();
+        skillTarget.SetAOE(0);
+        skill.SetSkillTargetRadius(skillTarget);
+        _skills.Add(skill);
+    }
+
+    void CreateRaiseTerrainSkill()
+    {
+        Skill skill = new Skill("Raise Terrain", Skill.SkillTag.Attack, new SkillTargetMoveRange(), new List<ISkillEffect>() { new SkillEffectRaiseTerrain() });
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+        prereq.SetPrereqProperty(1);
+        skill.AddPrerequisite(prereq);
+        SkillCostAP cost = new SkillCostAP();
+        cost.SetCostValue(1);
+        skill.AddSkillCost(cost);
         SkillTargetAOE skillTarget = new SkillTargetAOE();
         skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);

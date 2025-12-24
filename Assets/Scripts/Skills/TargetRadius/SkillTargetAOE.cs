@@ -11,24 +11,27 @@ public class SkillTargetAOE : ISkillTargetRadius
         aoeDistance = distance;
     }
 
-   public List<CharacterObject> GetTargets(CharacterObject c, Vector4 point)
+   public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)
     {
         List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, aoeDistance, 1);
-        Debug.Log("No of points: " + points.Count);
-        List<CharacterObject> hitCharacters = new List<CharacterObject>();
+        List<ClickableTarget> hitCharacters = new List<ClickableTarget>();
         foreach (Vector4 square in points)
         {
             //Ensure a valid target
-            RaycastHit hit;
-            if (!Physics.Raycast(new Vector3(square.x, square.y + 1, square.z), Vector3.down, out hit))
+            RaycastHit[] hits = Physics.RaycastAll(new Vector3(square.x, square.y + 1, square.z), Vector3.down);
+            if(hits.Length == 0)
             {
                 continue;
             }
-            CharacterObject hitCharacter = hit.collider.GetComponent<CharacterObject>();
-            if (hitCharacter != null)
+            for(int i = 0; i < hits.Length; i++)
             {
-                hitCharacters.Add(hitCharacter);
+                ClickableTarget hitObject = hits[i].collider.GetComponent<ClickableTarget>();
+                if (hitObject != null)
+                {
+                    hitCharacters.Add(hitObject);
+                }
             }
+            
         }
 
         if(hitCharacters.Count == 0)

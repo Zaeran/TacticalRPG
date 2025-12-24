@@ -93,7 +93,7 @@ public class Skill
         }
 
         //Figure out valid targets before costs are paid
-        List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
+        List<ClickableTarget> hitCharacters = _targetRadius.GetTargets(c, point);
         if (hitCharacters == null) //No valid character found
         {
             return false;

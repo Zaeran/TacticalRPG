@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ISkillTargetRadius
 {
-		List<CharacterObject> GetTargets(CharacterObject c, Vector4 point);
+		List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point);
 }

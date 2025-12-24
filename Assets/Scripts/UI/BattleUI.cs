@@ -38,6 +38,7 @@ public class BattleUI : MonoBehaviour
     void CharacterTurnStarted(Character c)
     {
         characterNameText.text = c.CharacterName;
+        CharacterAPChanged();
         c.Attributes.OnRemainingAPChanged += CharacterAPChanged;
     }
 

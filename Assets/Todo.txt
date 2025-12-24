@@ -3,10 +3,15 @@
   + Skill targeting
   - Skill types (move, attack, break)
   + Skill timing windows (targeting, skill start, skill end, etc.)
-- Equipment
-  - Damage depends on weapon
-  - Damage resistance depends on armour
-  - Weapon has a base targeting type + range. Attack skill uses weapon values
+  + Make sure you can't start targeting a skill if the AP isn't there
+  + Skill prerequisites. Certain equipment, amount of AP, etc.
++ Equipment
+  + Damage depends on weapon
+  + Damage resistance depends on armour
+  + Weapon has a base targeting type + range. Attack skill uses weapon values
+  + armour affects maximum jump height
++ remove squares when passing
+- implement character facing direction at end of turn
 - Inventory
 - AOE attacks
 - Status effects -> dictionary string/int of active status effects
@@ -16,9 +21,23 @@
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)
+- Prepared skills - can have a prep state and manual trigger state. I.e. Mighty Swing: spend AP to prepare. Move slower while prepared. Deal lots of damage when triggered. 
+- Special weapon/armour triggers for magical effects. 
+- Critical hits. Deal X extra damage when version conditions are met. I.e. backstab skill, etc.
+- Interrupts that can reduce AP, causing the skill cost to fail
 
 
 MOVEMENT FUTURE:
 - Each square moved is its own 'action'?
 - List of actions to undertake?
 - Store lists of available paths somewhere?
+
+
+
+
+
+Magic types:
+Geomancy - terrain manipulation, create weapons and armour, throw rocks
+Aeromancy - illusion, levitating and movement, fake versions of other spells.
+Hydromancy - healing, physical buffs and wards, control
+Pyromancy - damage, magical buffs and wards 

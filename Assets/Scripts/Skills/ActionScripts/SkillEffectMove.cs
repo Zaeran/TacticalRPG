@@ -18,8 +18,8 @@ public class SkillEffectMove : ISkillEffect
 
     public bool ProcessEffect(CharacterObject c, Vector4 point)
     {
-        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.Attributes.MaxJump);
-        Vector3[] movePath = Pathfinding.StartPathFinding(point, validPoints, c.MyCharacter.Attributes.MaxJump, c.gameObject);
+        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
+        Vector3[] movePath = Pathfinding.StartPathFinding(point, validPoints, c.MyCharacter.JumpStat, c.gameObject);
 
         int apCost = movePath.Length - 1;
 

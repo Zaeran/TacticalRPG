@@ -98,6 +98,7 @@
     <Compile Include="Assets/Scripts/Skills/ActionScripts/ISkillEffect.cs" />
     <Compile Include="Assets/Scripts/Skills/PrereqScripts/ISkillPrerequisite.cs" />
     <Compile Include="Assets/Scripts/Skills/PrereqScripts/SkillPrereqAPCost.cs" />
+    <Compile Include="Assets/Scripts/Equipment/EquipmentArmour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

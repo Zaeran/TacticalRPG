@@ -9,6 +9,7 @@ public class Character
     Attributes _attributes;
     List<Skill> _skills;
     EquipmentWeapon _weapon;
+        EquipmentArmour _armour;
 
     public Character(string cName)
     {
@@ -24,6 +25,7 @@ public class Character
         {
             _weapon = new EquipmentWeapon("Bow", EquipmentType.Weapon, 1, 4, WeaponTargetingType.Range);
         }
+        _armour = new EquipmentArmour("Light", EquipmentType.Armour, 1, 1);
         
         SetupSkills();
     }
@@ -63,6 +65,10 @@ public class Character
         get { return _attributes; }
     }
 
+        public int JumpStat {
+        get { return Mathf.Clamp(Attributes.MaxJump - _armour.JumpReduction, 0, int.MaxValue);}
+    }
+
     public List<Skill> Skills
     {
         get
@@ -94,4 +100,23 @@ public class Character
             return _weapon;
         }
     }
+
+        #region Things that happen to a character
+        public void ApplyDamage (int val)
+        {
+                int adjustedDamage = Mathf.Clamp(val - _armour.DamageReduction, 0, int.MaxValue);
+                AdjustHitPoints (-adjustedDamage);
+        }
+
+        public void ApplyHealing (int val)
+        {
+                AdjustHitPoints (val);
+        }
+
+        public void AdjustHitPoints (int val)
+        {
+                _attributes.HealthCurrent += val;
+                Debug.Log ("HP After: " + _attributes.HealthCurrent);
+        }
+        #endregion
 }

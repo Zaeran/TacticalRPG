@@ -5,87 +5,106 @@ using UnityEngine;
 
 public class Skill
 {
-        [System.Flags] public enum SkillTag { Movement, Attack, Physical, Magical, Buff, Debuff, Fire, Water, Earth, Air };
-        string _name;
-        SkillTag _tags;
+    [System.Flags] public enum SkillTag { Movement, Attack, Physical, Magical, Buff, Debuff, Fire, Water, Earth, Air };
+    string _name;
+    SkillTag _tags;
 
-        List<ISkillPrerequisite> _prereqs;
-        ISkillTargeting _targeting;
-        ISkillTargetRadius _targetRadius;
-        List<ISkillCost> _skillCost;
-        List<ISkillEffect> _effects;
+    List<ISkillPrerequisite> _prereqs;
+    ISkillTargeting _targeting;
+    ISkillTargetRadius _targetRadius;
+    List<ISkillCost> _skillCost;
+    List<ISkillEffect> _effects;
 
-        public event Vector4Event OnSkillTargeted;
+    public event Vector4Event OnSkillTargeted;
 
-        public Skill (string sName, SkillTag tags, ISkillTargeting targeting, List<ISkillEffect> effects)
-        {
-                _name = sName;
-                _tags = tags;
-                _prereqs = new List<ISkillPrerequisite>();
-                _targeting = targeting;
-                _effects = effects;
-                _skillCost = new List<ISkillCost>();
-
-        }
-
-        public string Name
-                {
-                get { return _name; }
-        }
-
-        public void AddPrerequisite(ISkillPrerequisite prereq)
+    public Skill(string sName, SkillTag tags, ISkillTargeting targeting, List<ISkillEffect> effects)
     {
-                _prereqs.Add(prereq);
+        _name = sName;
+        _tags = tags;
+        _prereqs = new List<ISkillPrerequisite>();
+        _targeting = targeting;
+        _effects = effects;
+        _skillCost = new List<ISkillCost>();
+
     }
 
-        public bool TestPrerequisites(CharacterObject c)
+    public string Name
     {
-                for(int i = 0; i < _prereqs.Count; i++) {
-            if(!_prereqs[i].MeetsPrerequisite(c)) {
-                                return false;
+        get { return _name; }
+    }
+
+    public void AddPrerequisite(ISkillPrerequisite prereq)
+    {
+        _prereqs.Add(prereq);
+    }
+
+    public bool TestPrerequisites(CharacterObject c)
+    {
+        for (int i = 0; i < _prereqs.Count; i++)
+        {
+            if (!_prereqs[i].MeetsPrerequisite(c))
+            {
+                return false;
             }
         }
-                return true;
+        return true;
     }
 
-        public void AddSkillCost(ISkillCost cost)
+    public void AddSkillCost(ISkillCost cost)
     {
-                _skillCost.Add(cost);
+        _skillCost.Add(cost);
     }
 
-        public void SetSkillTargetRadius(ISkillTargetRadius targetRadius)
+    public void SetSkillTargetRadius(ISkillTargetRadius targetRadius)
     {
-                _targetRadius = targetRadius;
+        _targetRadius = targetRadius;
     }
 
-        public void StartSkillTargeting (CharacterObject c)
+    public void StartSkillTargeting(CharacterObject c)
+    {
+        _targeting.SelectTarget(c);
+        MouseControlScript.OnTileClicked += TargetSelected;
+    }
+
+    public void TargetSelected(Vector4 position)
+    {
+        MouseControlScript.OnTileClicked -= TargetSelected;
+        if (OnSkillTargeted != null)
         {
-                _targeting.SelectTarget (c);
-                MouseControlScript.OnTileClicked += TargetSelected;
+            OnSkillTargeted(position);
+        }
+    }
+
+    public bool ProcessSkillEffect(CharacterObject c, Vector4 point)
+    {
+        bool canPayCost = true;
+        for (int i = 0; i < _skillCost.Count; i++)
+        {
+            if (!_skillCost[i].CanPayCost(c, point)) //If any costs can't be paid, skill can't activate
+            {
+                canPayCost = false;
+                break;
+            }
         }
 
-        public void TargetSelected (Vector4 position)
+        if (!canPayCost) //Can't pay the cost. Skill can't activate
         {
-                MouseControlScript.OnTileClicked -= TargetSelected;
-                if (OnSkillTargeted != null) {
-                        OnSkillTargeted (position);
-                }
+            return false;
         }
-
-        public bool ProcessSkillEffect (CharacterObject c, Vector4 point)
+        for (int i = 0; i < _skillCost.Count; i++) //Pay the associated costs
         {
-                bool canPayCost = false;
-                for(int i = 0; i < _skillCost.Count; i++) {
-                        canPayCost = canPayCost && _skillCost[i].CanPayCost(c, point);
+            if(!_skillCost[i].PayCost(c, point)) //If can't actually pay the cost (due to interrupt or other), skill fails
+            {
+                return false;
+            }
         }
-        if (!canPayCost) {
-                        return false;
+        List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
+        Debug.Log("No. of targets: " + hitCharacters.Count);
+        for (int i = 0; i < _effects.Count; i++)
+        {
+            _effects[i].ProcessEffect(c, hitCharacters, point);
         }
-                List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
-                for (int i = 0; i < _effects.Count; i++) {
-                        _effects [i].ProcessEffect (c, hitCharacters, point);
-                }
-                return true;
-        }
+        return true;
+    }
 
 }

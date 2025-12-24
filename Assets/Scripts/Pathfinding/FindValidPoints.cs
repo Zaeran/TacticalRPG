@@ -103,7 +103,6 @@ public class FindValidPoints : MonoBehaviour {
 				pointList.Remove(pointList[0]);				
 			}				
 		}
-		Debug.Log(finalPointList.Count);
 		return finalPointList;
 	}
 	

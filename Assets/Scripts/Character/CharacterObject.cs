@@ -92,6 +92,7 @@ public class CharacterObject : MonoBehaviour
 
         void SkillTargeted (Vector4 point)
         {
+        Debug.Log("Skill targeted!");
                 if (_activeSkill.ProcessSkillEffect (this, point)) //skill succeeded
                 {
                         _activeSkill.OnSkillTargeted -= SkillTargeted;

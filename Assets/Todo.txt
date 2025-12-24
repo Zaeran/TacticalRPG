@@ -1,4 +1,11 @@
 - Face correct direction when attacking
+- create a variety of skills
+- assign different skills to each character
+- next UI additions 
+  - health current/max 
+  - skill selection
+  - indicator for selecting facing direction
+  - 
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage
@@ -21,3 +28,21 @@
 - Special weapon/armour triggers for magical effects. 
 - Critical hits. Deal X extra damage when version conditions are met. I.e. backstab skill, etc.
 - Interrupts that can reduce AP, causing the skill cost to fail
+
+SKILL TREES AND UNLOCKS
+- Equipment unlocks the base skill in a skill tree. I.e. Swords unlock Slice, shields unlock Block 
+- Using a skill gives XP towards skill level, and XP towards skill tree. 
+- Number of points in skill tree determines skills that can be unlocked 
+- Cross-tree skills are hidden until prerequisites are met 
+- Skills can be leveled up further to provide more bonuses to that skill.
+- Magic skill trees can eventually unlock 'Attune X item type', which can unlock the skill tree without needing a weapon or focus. 
+- potions skill tree requires a potion making kit - 2 handed. 
+- Enchanter tree?
+- Skill use outside of combat TBD
+- trap skills?
+
+
+- Relevant equipment needs to be equipped for a tree to be active.
+- equipment can be weapons, shields, focuses, accessories, etc. For example, a sword could unlock Blade, a shield can unlock Shield, and a water-attuned ring could unlock Hydromancy
+
+- Aeromancy skill: wind direction on entire battlefield. Affects movement and arrows 

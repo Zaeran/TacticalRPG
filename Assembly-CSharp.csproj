@@ -102,6 +102,7 @@
     <Compile Include="Assets/Scripts/Skills/TargetRadius/SkillTargetSingle.cs" />
     <Compile Include="Assets/Scripts/Skills/SkillCostScripts/ISkillCost.cs" />
     <Compile Include="Assets/Scripts/Skills/SkillCostScripts/SkillCostAP.cs" />
+    <Compile Include="Assets/Scripts/Skills/SkillCostScripts/SkillCostSquareDistance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

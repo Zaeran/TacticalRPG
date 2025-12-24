@@ -24,6 +24,8 @@ public class Skill
                 _prereqs = new List<ISkillPrerequisite>();
                 _targeting = targeting;
                 _effects = effects;
+                _skillCost = new List<ISkillCost>();
+
         }
 
         public string Name
@@ -44,6 +46,16 @@ public class Skill
             }
         }
                 return true;
+    }
+
+        public void AddSkillCost(ISkillCost cost)
+    {
+                _skillCost.Add(cost);
+    }
+
+        public void SetSkillTargetRadius(ISkillTargetRadius targetRadius)
+    {
+                _targetRadius = targetRadius;
     }
 
         public void StartSkillTargeting (CharacterObject c)

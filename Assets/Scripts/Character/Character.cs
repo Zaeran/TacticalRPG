@@ -33,18 +33,35 @@ public class Character
 
     void SetupSkills()
     {
-        Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new List<ISkillEffect> () { new SkillEffectMove () });
-        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
-                prereq.SetPrereqProperty(1);
-                moveSkill.AddPrerequisite(prereq);
-                _skills.Add(moveSkill);
+        CreateMoveSkill();
+                CreateAttackSkill();
 
-        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack(), new List<ISkillEffect> () { new SkillEffectWeaponAttack () });
-                SkillPrereqAPCost prereq2 = new SkillPrereqAPCost ();
-                prereq2.SetPrereqProperty (2);
-                attackSkill.AddPrerequisite (prereq2);
-                _skills.Add(attackSkill);
+        
     }
+
+        void CreateMoveSkill ()
+    {
+                Skill skill = new Skill ("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange (), new List<ISkillEffect> () { new SkillEffectMove () });
+                SkillPrereqAPCost prereq = new SkillPrereqAPCost ();
+                prereq.SetPrereqProperty (1);
+                skill.AddPrerequisite (prereq);
+                skill.AddSkillCost(new SkillCostSquareDistance());
+                skill.SetSkillTargetRadius (new SkillTargetSingle());
+                _skills.Add (skill);
+        }
+
+        void CreateAttackSkill ()
+    {
+                Skill skill = new Skill ("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack (), new List<ISkillEffect> () { new SkillEffectWeaponAttack () });
+                SkillPrereqAPCost prereq = new SkillPrereqAPCost ();
+                prereq.SetPrereqProperty (2);
+                skill.AddPrerequisite (prereq);
+                SkillCostAP cost = new SkillCostAP();
+                cost.SetCostValue(2);
+                skill.AddSkillCost (cost);
+                skill.SetSkillTargetRadius (new SkillTargetSingle ());
+                _skills.Add (skill);
+        }
 
     public string CharacterName
     {

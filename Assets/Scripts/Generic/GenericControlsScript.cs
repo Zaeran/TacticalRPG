@@ -137,7 +137,7 @@ public class GenericControlsScript : MonoBehaviour {
 		if(distance == 0){ 
 			distance = Stats.remainingAP;
 		}
-		validPoints = FindValidPoints.GetPoints("Move", gameObject,distance,Stats.maxJump);
+		validPoints = FindValidPoints.GetPoints("Move", gameObject.transform.position,distance,Stats.maxJump);
 		DrawSquaresScript.DrawValidSquares(validPoints);
 		MouseControlScript.SelectPosition(validPoints);
 	}

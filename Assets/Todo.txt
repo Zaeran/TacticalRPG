@@ -1,4 +1,5 @@
 - AOE attacks
+- Face correct direction when attacking
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage

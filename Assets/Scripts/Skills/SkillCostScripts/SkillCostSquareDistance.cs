@@ -12,7 +12,7 @@ public class SkillCostSquareDistance : ISkillCost
 
     public bool CanPayCost(CharacterObject c, Vector4 point)
     {
-        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
+        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject.transform.position, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
         Vector3[] movePath = Pathfinding.StartPathFinding(point, validPoints, c.MyCharacter.JumpStat, c.gameObject);
 
         int apCost = movePath.Length - 1;
@@ -21,7 +21,7 @@ public class SkillCostSquareDistance : ISkillCost
 
     public bool PayCost(CharacterObject c, Vector4 point)
     {
-        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
+        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject.transform.position, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
         Vector3[] movePath = Pathfinding.StartPathFinding(point, validPoints, c.MyCharacter.JumpStat, c.gameObject);
 
         int apCost = movePath.Length - 1;

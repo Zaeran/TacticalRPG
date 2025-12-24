@@ -91,6 +91,14 @@ public class Skill
         {
             return false;
         }
+
+        //Figure out valid targets before costs are paid
+        List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
+        if (hitCharacters == null) //No valid character found
+        {
+            return false;
+        }
+
         for (int i = 0; i < _skillCost.Count; i++) //Pay the associated costs
         {
             if(!_skillCost[i].PayCost(c, point)) //If can't actually pay the cost (due to interrupt or other), skill fails
@@ -98,8 +106,8 @@ public class Skill
                 return false;
             }
         }
-        List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
-        Debug.Log("No. of targets: " + hitCharacters.Count);
+
+        //Do the thing
         for (int i = 0; i < _effects.Count; i++)
         {
             _effects[i].ProcessEffect(c, hitCharacters, point);

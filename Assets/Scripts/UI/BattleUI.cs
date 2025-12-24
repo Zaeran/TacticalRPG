@@ -15,6 +15,13 @@ public class BattleUI : MonoBehaviour
         TurnController.OnNextCharacterTurn += CharacterTurnStarted;
     }
 
+    private void Update ()
+    {
+        if (Input.GetKeyDown (KeyCode.M)) {
+                        MoveAction();
+        }
+    }
+
     public void PassTurn()
     {
         //TurnController.TurnOver();

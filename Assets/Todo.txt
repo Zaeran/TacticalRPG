@@ -1,17 +1,5 @@
-+ Skills - attack and move as skills
-  + Skill tags (Movement, Attack, Magic, Physical, Elements, 
-  + Skill targeting
-  - Skill types (move, attack, break)
-  + Skill timing windows (targeting, skill start, skill end, etc.)
-  + Make sure you can't start targeting a skill if the AP isn't there
-  + Skill prerequisites. Certain equipment, amount of AP, etc.
-+ Equipment
-  + Damage depends on weapon
-  + Damage resistance depends on armour
-  + Weapon has a base targeting type + range. Attack skill uses weapon values
-  + armour affects maximum jump height
-+ remove squares when passing
-- implement character facing direction at end of turn
++ implement character facing direction at end of turn
++ Facing changes when moving
 - Inventory
 - AOE attacks
 - Status effects -> dictionary string/int of active status effects

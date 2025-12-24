@@ -30,10 +30,10 @@ public class Character
 
     void SetupSkills()
     {
-        Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new SkillEffectMove());
+        Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new List<ISkillEffect> () { new SkillEffectMove () });
         _skills.Add(moveSkill);
 
-        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack(), new SkillEffectWeaponAttack());
+        Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack(), new List<ISkillEffect> () { new SkillEffectWeaponAttack () });
         _skills.Add(attackSkill);
     }
 

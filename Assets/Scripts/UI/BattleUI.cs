@@ -17,7 +17,8 @@ public class BattleUI : MonoBehaviour
 
     public void PassTurn()
     {
-        TurnController.TurnOver();
+        //TurnController.TurnOver();
+        TurnController.CurrentCharacterTurn.StartSetFacingDirection();
     }
 
     public void MoveAction()

@@ -9,18 +9,62 @@ public class CharacterObject : MonoBehaviour
 
     Skill _activeSkill;
 
+        bool selectingFacing = false;
 
     private void Awake()
     {
         _myCharacter = new Character(characterName);
         TurnController.AddCharacter(this);
         MyCharacter.Attributes.StartBattle();
+                transform.eulerAngles = new Vector3(0, MyCharacter.Facing, 0);
+        
     }
+
+    private void Update ()
+    {
+        if (selectingFacing) {
+            if (Input.GetKeyDown (KeyCode.UpArrow)) {
+                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45, 0);
+            }
+                        if (Input.GetKeyDown (KeyCode.RightArrow)) {
+                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 135, 0);
+                        }
+
+                        if (Input.GetKeyDown (KeyCode.DownArrow)) {
+                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 215, 0);
+                        }
+
+                        if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 305, 0);
+                        }
+            if (Input.GetKeyDown (KeyCode.Return)) {
+                               selectingFacing = false;
+                                TurnController.TurnOver();
+            }
+                }
+        }
 
     public void StartMyTurn()
     {
         _myCharacter.Attributes.RefillAP();
     }
+
+        public void StartSetFacingDirection ()
+    {
+                selectingFacing = true;
+    }
+
+
+        void FinaliseFacingDirection ()
+        {
+                if (transform.eulerAngles.y < 0) {
+                        transform.eulerAngles += new Vector3 (0, 360, 0);
+                }
+                if(transform.eulerAngles.y >= 360) {
+                        transform.eulerAngles -= new Vector3(0,360,0);
+        }
+                MyCharacter.SetFacing (Mathf.FloorToInt (transform.eulerAngles.y / 90));
+        }
 
     public void UseAP(int amount)
     {
@@ -63,7 +107,7 @@ public class CharacterObject : MonoBehaviour
     public void SetAction(string actionName)
     {
         CancelSkill();
-        if (_activeSkill == null)
+        if (_activeSkill == null && !selectingFacing)
         {
                         Skill s = MyCharacter.GetSkillByName(actionName);
             if (!s.TestPrerequisites (this)) {

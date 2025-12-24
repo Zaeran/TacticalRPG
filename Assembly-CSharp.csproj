@@ -92,7 +92,6 @@
     <Compile Include="Assets/Scripts/Skills/TargetRadius/ISkillTargetRadius.cs" />
     <Compile Include="Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack.cs" />
     <Compile Include="Assets/Scripts/Skills/ActionScripts/SkillEffectWeaponAttack.cs" />
-    <Compile Include="Assets/Scripts/Character/CharacterSkill.cs" />
     <Compile Include="Assets/Scripts/Utilities/Enums.cs" />
     <Compile Include="Assets/Scripts/Skills/ActionScripts/SkillEffectMove.cs" />
     <Compile Include="Assets/Scripts/Skills/ActionScripts/ISkillEffect.cs" />

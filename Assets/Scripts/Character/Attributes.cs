@@ -100,11 +100,9 @@ public class Attributes
     {
         if(_actionPointsCurrent + val < 0)
         {
-            Debug.Log("Not enough AP remaining: " + _actionPointsCurrent);
             return;
         }
         _actionPointsCurrent += val;
-        Debug.Log("Remaining AP: " + CurrentAP);
         if (OnRemainingAPChanged != null)
                         {
             OnRemainingAPChanged ();

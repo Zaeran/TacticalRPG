@@ -6,6 +6,7 @@ public class Character
 {
     string _characterName;
     bool _isNPC;
+        int _facing = 0;
     Attributes _attributes;
     List<Skill> _skills;
     EquipmentWeapon _weapon;
@@ -58,6 +59,15 @@ public class Character
     public bool IsPlayable
     {
         get { return !_isNPC; }
+    }
+
+        public int Facing {
+        get { return _facing;}
+    }
+
+        public void SetFacing(int val)
+    {
+                _facing = val;
     }
 
     public Attributes Attributes

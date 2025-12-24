@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{EE646792-0CE0-F56E-88C0-CFC74806661D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Character/Attributes.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/BattleUI.cs">
     <Files>
-      <File FileName="Assets/Todo.txt" Line="13" Column="2" IsPinned="True" />
-      <File FileName="Assets/Scripts/Managers/TurnController.cs" Line="30" Column="43" />
-      <File FileName="Assets/Scripts/UI/BattleUI.cs" Line="41" Column="8" />
-      <File FileName="Assets/Scripts/Character/Attributes.cs" Line="116" Column="53" />
+      <File FileName="Assets/Todo.txt" Line="1" Column="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Character/CharacterObject.cs" Line="42" Column="59" />
+      <File FileName="Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack.cs" Line="12" Column="128" />
+      <File FileName="Assets/Scripts/Managers/TurnController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/BattleUI.cs" Line="21" Column="68" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,9 +13,7 @@
           <Node name="TacticalRPG" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Character" expanded="True">
-                  <Node name="Attributes.cs" selected="True" />
-                </Node>
+                <Node name="Character" expanded="True" />
                 <Node name="Equipment" expanded="True" />
                 <Node name="Generic" expanded="True" />
                 <Node name="Managers" expanded="True" />
@@ -24,7 +23,9 @@
                   <Node name="ActionScripts" expanded="True" />
                   <Node name="TargetingScripts" expanded="True" />
                 </Node>
-                <Node name="UI" expanded="True" />
+                <Node name="UI" expanded="True">
+                  <Node name="BattleUI.cs" selected="True" />
+                </Node>
                 <Node name="Utilities" expanded="True" />
               </Node>
             </Node>

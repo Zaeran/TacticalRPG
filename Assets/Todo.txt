@@ -1,4 +1,5 @@
-- AOE attacks
+- Floating numbers show correct value after damage reduction
+- Single target is actually 0 AOE target
 - Face correct direction when attacking
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks

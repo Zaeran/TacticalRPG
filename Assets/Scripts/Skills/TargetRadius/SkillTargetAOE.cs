@@ -14,7 +14,7 @@ public class SkillTargetAOE : ISkillTargetRadius
    public List<CharacterObject> GetTargets(CharacterObject c, Vector4 point)
     {
         List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, aoeDistance, 1);
-
+        Debug.Log("No of points: " + points.Count);
         List<CharacterObject> hitCharacters = new List<CharacterObject>();
         foreach (Vector4 square in points)
         {

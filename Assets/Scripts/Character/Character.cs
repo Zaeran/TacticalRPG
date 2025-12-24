@@ -61,7 +61,7 @@ public class Character
         skill.AddSkillCost(cost);
         //skill.SetSkillTargetRadius (new SkillTargetSingle ());
         SkillTargetAOE skillTarget = new SkillTargetAOE();
-        skillTarget.SetAOE(1);
+        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _skills.Add(skill);
     }
@@ -134,10 +134,11 @@ public class Character
     }
 
     #region Things that happen to a character
-    public void ApplyDamage(int val)
+    public int ApplyDamage(int val)
     {
         int adjustedDamage = Mathf.Clamp(val - _armour.DamageReduction, 0, int.MaxValue);
         AdjustHitPoints(-adjustedDamage);
+        return adjustedDamage;
     }
 
     public void ApplyHealing(int val)

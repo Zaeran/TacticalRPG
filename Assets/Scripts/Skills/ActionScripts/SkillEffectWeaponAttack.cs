@@ -9,8 +9,8 @@ public class SkillEffectWeaponAttack : ISkillEffect
     {
         DrawSquaresScript.DestroyValidSquares();
                 foreach(CharacterObject hitCharacter in hitCharacters) {
-                        hitCharacter.MyCharacter.ApplyDamage (c.MyCharacter.Weapon.Damage);
-                        FloatingNumbersScript.CreateFloatingNumber (hitCharacter.transform.position, c.MyCharacter.Weapon.Damage.ToString (), Color.red);
-                }
+                        int totalDamage = hitCharacter.MyCharacter.ApplyDamage (c.MyCharacter.Weapon.Damage);
+            FloatingNumbersScript.CreateFloatingNumber(hitCharacter.transform.position, totalDamage.ToString(), Color.red);
+        }
     }
 }

@@ -10,7 +10,7 @@ public class SkillEffectRaiseTerrain : ISkillEffect
         DrawSquaresScript.DestroyValidSquares();
         foreach (ClickableTarget hitObject in hitCharacters)
         {
-            if(hitObject is TerrainObject)
+            //if(hitObject is TerrainObject)
             {
                 hitObject.transform.position += new Vector3(0, 1, 0);
             }

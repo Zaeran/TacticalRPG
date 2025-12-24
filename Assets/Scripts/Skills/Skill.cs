@@ -9,6 +9,8 @@ public class Skill
     string _name;
     SkillTag _tags;
 
+    int _mastery;
+
     List<ISkillPrerequisite> _prereqs;
     ISkillTargeting _targeting;
     ISkillTargetRadius _targetRadius;

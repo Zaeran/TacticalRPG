@@ -106,6 +106,13 @@
     <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectRaiseTerrain.cs" />
     <Compile Include="Assets\Scripts\MapContent\ClickableTarget.cs" />
     <Compile Include="Assets\Scripts\MapContent\TerrainObject.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeGeomancy.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeAeromancy.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreePyromancy.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeHydromancy.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SKillTreeBlade.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeBlunt.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreePotions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

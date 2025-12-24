@@ -1,23 +1,23 @@
-- Terrain object class
-- Clickable base class
 - Face correct direction when attacking
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage
-- Terrain manipulation
 - Inventory
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)
+- Levelling skills
+  - Skill trees
+    - Armour (better armour mobility, higher tier armour, armour enchantments)
+    - Shield (shield defence, shield offence, shield enchantment)
+    - Blunt (clubs and whatnot. Can manipulate terrain a little)
+    - Potions (healing + poisons)
+    - Mobility (movement, charging, stealth?)
+
+  - Individual skill XP
+  - Skill tree XP
+  - Combined skill tree abilities
 - Prepared skills - can have a prep state and manual trigger state. I.e. Mighty Swing: spend AP to prepare. Move slower while prepared. Deal lots of damage when triggered. 
 - Special weapon/armour triggers for magical effects. 
 - Critical hits. Deal X extra damage when version conditions are met. I.e. backstab skill, etc.
 - Interrupts that can reduce AP, causing the skill cost to fail
-
-
-
-Magic types:
-Geomancy - terrain manipulation, create weapons and armour, throw rocks
-Aeromancy - illusion, levitating and movement, fake versions of other spells.
-Hydromancy - healing, physical buffs and wards, control
-Pyromancy - damage, magical buffs and wards 

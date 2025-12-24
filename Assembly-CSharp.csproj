@@ -98,6 +98,10 @@
     <Compile Include="Assets/Scripts/Skills/PrereqScripts/ISkillPrerequisite.cs" />
     <Compile Include="Assets/Scripts/Skills/PrereqScripts/SkillPrereqAPCost.cs" />
     <Compile Include="Assets/Scripts/Equipment/EquipmentArmour.cs" />
+    <Compile Include="Assets/Scripts/Skills/ActionScripts/SkillEffectAOEAttack.cs" />
+    <Compile Include="Assets/Scripts/Skills/TargetRadius/SkillTargetSingle.cs" />
+    <Compile Include="Assets/Scripts/Skills/SkillCostScripts/ISkillCost.cs" />
+    <Compile Include="Assets/Scripts/Skills/SkillCostScripts/SkillCostAP.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

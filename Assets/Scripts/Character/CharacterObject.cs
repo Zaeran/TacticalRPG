@@ -90,19 +90,17 @@ public class CharacterObject : MonoBehaviour
         DrawSquaresScript.DestroyValidSquares();
     }
 
-    void SkillTargeted(Vector4 point)
-    {
-        if(_activeSkill.ProcessSkillEffect(this, point)) //skill succeeded
+        void SkillTargeted (Vector4 point)
         {
-            _activeSkill.OnSkillTargeted -= SkillTargeted;
-            _activeSkill = null;
+                if (_activeSkill.ProcessSkillEffect (this, point)) //skill succeeded
+                {
+                        _activeSkill.OnSkillTargeted -= SkillTargeted;
+                        _activeSkill = null;
+                } else { //skill failed. Go back to targeting
+                        _activeSkill.StartSkillTargeting (this);
+                }
+
         }
-        else
-        { //skill failed. Go back to targeting
-            _activeSkill.StartSkillTargeting(this);
-        }
-        
-    }
 
     public void SetAction(string actionName)
     {

@@ -11,6 +11,8 @@ public class Skill
 
         List<ISkillPrerequisite> _prereqs;
         ISkillTargeting _targeting;
+        ISkillTargetRadius _targetRadius;
+        List<ISkillCost> _skillCost;
         List<ISkillEffect> _effects;
 
         public event Vector4Event OnSkillTargeted;
@@ -60,11 +62,18 @@ public class Skill
 
         public bool ProcessSkillEffect (CharacterObject c, Vector4 point)
         {
-                bool stateChanged = false;
+                bool canPayCost = false;
+                for(int i = 0; i < _skillCost.Count; i++) {
+                        canPayCost = canPayCost && _skillCost[i].CanPayCost(c, point);
+        }
+        if (!canPayCost) {
+                        return false;
+        }
+                List<CharacterObject> hitCharacters = _targetRadius.GetTargets(c, point);
                 for (int i = 0; i < _effects.Count; i++) {
-                        stateChanged = stateChanged || _effects [i].ProcessEffect (c, point);
+                        _effects [i].ProcessEffect (c, hitCharacters, point);
                 }
-                return stateChanged;
+                return true;
         }
 
 }

@@ -2,17 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISkillTargetRadius : MonoBehaviour
+public interface ISkillTargetRadius
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		List<CharacterObject> GetTargets(CharacterObject c, Vector4 point);
 }

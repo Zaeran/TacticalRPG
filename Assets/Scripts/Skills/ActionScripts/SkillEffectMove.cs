@@ -16,7 +16,7 @@ public class SkillEffectMove : ISkillEffect
         return true;
     }
 
-    public bool ProcessEffect(CharacterObject c, Vector4 point)
+    public void ProcessEffect(CharacterObject c, List<CharacterObject> hitCharacters, Vector4 point)
     {
         List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
         Vector3[] movePath = Pathfinding.StartPathFinding(point, validPoints, c.MyCharacter.JumpStat, c.gameObject);
@@ -25,13 +25,13 @@ public class SkillEffectMove : ISkillEffect
 
         if (!PayCost(c, apCost))
         {
-            return false;
+            //return false;
         }
         if (movePath.Length > 0)
         {
             DrawSquaresScript.DestroyValidSquares();
             c.GetComponent<MovementScript>().MoveToPoint(c, movePath);
         }
-        return true;
+        //return true;
     }
 }

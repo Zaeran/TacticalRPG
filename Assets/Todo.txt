@@ -1,11 +1,9 @@
-+ implement character facing direction at end of turn
-+ Facing changes when moving
-- Inventory
 - AOE attacks
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage
 - Terrain manipulation
+- Inventory
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)
@@ -13,14 +11,6 @@
 - Special weapon/armour triggers for magical effects. 
 - Critical hits. Deal X extra damage when version conditions are met. I.e. backstab skill, etc.
 - Interrupts that can reduce AP, causing the skill cost to fail
-
-
-MOVEMENT FUTURE:
-- Each square moved is its own 'action'?
-- List of actions to undertake?
-- Store lists of available paths somewhere?
-
-
 
 
 

@@ -9,7 +9,7 @@ public class Skill
         string _name;
         SkillTag _tags;
 
-        int _apCost;
+        List<ISkillPrerequisite> _prereqs;
         ISkillTargeting _targeting;
         List<ISkillEffect> _effects;
 
@@ -19,6 +19,7 @@ public class Skill
         {
                 _name = sName;
                 _tags = tags;
+                _prereqs = new List<ISkillPrerequisite>();
                 _targeting = targeting;
                 _effects = effects;
         }
@@ -28,9 +29,20 @@ public class Skill
                 get { return _name; }
         }
 
-        public int APCost {
-                get { return _apCost; }
+        public void AddPrerequisite(ISkillPrerequisite prereq)
+    {
+                _prereqs.Add(prereq);
+    }
+
+        public bool TestPrerequisites(CharacterObject c)
+    {
+                for(int i = 0; i < _prereqs.Count; i++) {
+            if(!_prereqs[i].MeetsPrerequisite(c)) {
+                                return false;
+            }
         }
+                return true;
+    }
 
         public void StartSkillTargeting (CharacterObject c)
         {

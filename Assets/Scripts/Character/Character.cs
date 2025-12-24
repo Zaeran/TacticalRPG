@@ -31,10 +31,16 @@ public class Character
     void SetupSkills()
     {
         Skill moveSkill = new Skill("Move", Skill.SkillTag.Movement, new SkillTargetMoveRange(), new List<ISkillEffect> () { new SkillEffectMove () });
-        _skills.Add(moveSkill);
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+                prereq.SetPrereqProperty(1);
+                moveSkill.AddPrerequisite(prereq);
+                _skills.Add(moveSkill);
 
         Skill attackSkill = new Skill("Attack", Skill.SkillTag.Attack, new SkillTargetWeaponAttack(), new List<ISkillEffect> () { new SkillEffectWeaponAttack () });
-        _skills.Add(attackSkill);
+                SkillPrereqAPCost prereq2 = new SkillPrereqAPCost ();
+                prereq2.SetPrereqProperty (2);
+                attackSkill.AddPrerequisite (prereq2);
+                _skills.Add(attackSkill);
     }
 
     public string CharacterName

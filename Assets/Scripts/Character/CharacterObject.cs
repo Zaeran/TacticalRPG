@@ -65,6 +65,11 @@ public class CharacterObject : MonoBehaviour
         CancelSkill();
         if (_activeSkill == null)
         {
+                        Skill s = MyCharacter.GetSkillByName(actionName);
+            if (!s.TestPrerequisites (this)) {
+                                Debug.Log("Prerequisites not met");
+                                return;
+            }
             _activeSkill = MyCharacter.GetSkillByName(actionName);
             _activeSkill.StartSkillTargeting(this);
             _activeSkill.OnSkillTargeted += SkillTargeted;

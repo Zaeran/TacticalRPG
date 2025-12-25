@@ -130,7 +130,9 @@ public class CharacterObject : ClickableTarget
             //Deal fall damage
             if (hit.distance > MyCharacter.JumpStat)
             {
-                MyCharacter.AdjustHitPoints(Mathf.FloorToInt(hit.distance - MyCharacter.JumpStat));
+                int fallDamage = Mathf.FloorToInt(hit.distance - MyCharacter.JumpStat);
+                MyCharacter.AdjustHitPoints(-fallDamage);
+                FloatingNumbersScript.CreateFloatingNumber(transform.position, fallDamage.ToString(), Color.red);
             }
         }
     }

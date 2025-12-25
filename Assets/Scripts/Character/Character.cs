@@ -72,7 +72,7 @@ public class Character
 
     public int JumpStat
     {
-        get { return Mathf.Clamp(Attributes.MaxJump - Armour.JumpReduction, 0, int.MaxValue); }
+        get { return Mathf.Clamp(Attributes.MaxJump - Armour.JumpReduction, 1, int.MaxValue); }
     }
 
     public List<Skill> Skills

@@ -81,7 +81,7 @@ public class AllSkills
         skill.AddPrerequisite(prereq2);
         skill.AddSkillTags(SkillTag.Attack);
         skill.SetTargeting(new SkillTargetSelf());
-        skill.AddSkillEffect(new SkillEffectMoveTargetBack(2));
+        skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(2));
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
@@ -101,7 +101,7 @@ public class AllSkills
         skill.AddPrerequisite(prereq2);
         skill.AddSkillTags(SkillTag.Attack);
         skill.SetTargeting(new SkillTargetMagic(4));
-        skill.AddSkillEffect(new SkillEffectMoveTargetBack(1));
+        skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
@@ -175,7 +175,7 @@ public class AllSkills
         skill.AddSkillTags(SkillTag.Attack);
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
-        skill.AddSkillEffect(new SkillEffectMoveTargetBack(1));
+        skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(4);
         skill.AddSkillCost(cost);

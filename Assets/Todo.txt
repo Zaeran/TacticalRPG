@@ -1,4 +1,5 @@
-- If a push/move results in a diagonal, convert to nearest 90 degrees
+- Pushing character into a wall results in damage
+- Pushing character into open space results in falling
 - UI
   - Dynamically generate skills based on allowed options
   - Before battle, choose character 'class' to spawn as

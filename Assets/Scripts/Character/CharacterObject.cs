@@ -120,4 +120,18 @@ public class CharacterObject : ClickableTarget
             StatusText.SetStatusText("Action: " + _activeSkill.Name);
         }
     }
+
+    public void Fall()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
+        {
+            transform.position = hit.point;
+            //Deal fall damage
+            if (hit.distance > MyCharacter.JumpStat)
+            {
+                MyCharacter.AdjustHitPoints(Mathf.FloorToInt(hit.distance - MyCharacter.JumpStat));
+            }
+        }
+    }
 }

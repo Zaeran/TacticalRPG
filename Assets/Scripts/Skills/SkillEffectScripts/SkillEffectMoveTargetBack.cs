@@ -5,11 +5,11 @@ using UnityEngine;
 public class SkillEffectMoveTargetBack : ISkillEffect
 {
 
-    int knockbackDistance;
+    int _knockbackDistance;
 
     public SkillEffectMoveTargetBack(int distance)
     {
-        knockbackDistance = distance;
+        _knockbackDistance = distance;
     }
 
     public void ProcessEffect(CharacterObject c, List<ClickableTarget> hitCharacters, Vector4 point)
@@ -19,10 +19,14 @@ public class SkillEffectMoveTargetBack : ISkillEffect
         {
             if(hitObject is CharacterObject)
             {
+                if(hitObject == c) //can't knock yourself backwards
+                {
+                    continue;
+                }
                 //Get position away
                 Vector2 knockBackDir = new Vector2(point.x, point.z) - new Vector2(c.transform.position.x, c.transform.position.z);
-                knockBackDir = knockBackDir.normalized;
-                hitObject.transform.position += new Vector3(knockBackDir.x, 0, knockBackDir.y) * knockbackDistance;
+                knockBackDir = MathUtilities.NearestStraightLineVector(knockBackDir).normalized;
+                hitObject.transform.position += new Vector3(knockBackDir.x, 0, knockBackDir.y) * _knockbackDistance;
             }
         }
     }

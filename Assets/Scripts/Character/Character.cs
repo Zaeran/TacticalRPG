@@ -28,21 +28,16 @@ public class Character
         }
         else
         {
-            _weapon = new EquipmentWeapon("Geomancy Focus", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Aeromancy Focus", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Aeromancy }, 0, 0, WeaponTargetingType.Range);
         }
-        _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
+       // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 
         SetupSkills();
     }
 
     void SetupSkills()
     {
-        _skills.Add(AllSkills.GetSkillForName("Move"));
-        _skills.Add(AllSkills.GetSkillForName("Slice"));
-        _skills.Add(AllSkills.GetSkillForName("Shoot"));
-        _skills.Add(AllSkills.GetSkillForName("Raise Terrain"));
-        _skills.Add(AllSkills.GetSkillForName("Lower Terrain"));
-        _skills.Add(AllSkills.GetSkillForName("Throw Rock"));
+        _skills.AddRange(AllSkills.GetAllSkills);
     }
 
     public string CharacterName
@@ -77,7 +72,7 @@ public class Character
 
     public int JumpStat
     {
-        get { return Mathf.Clamp(Attributes.MaxJump - _armour.JumpReduction, 0, int.MaxValue); }
+        get { return Mathf.Clamp(Attributes.MaxJump - Armour.JumpReduction, 0, int.MaxValue); }
     }
 
     public List<Skill> Skills
@@ -112,6 +107,18 @@ public class Character
         }
     }
 
+    public EquipmentArmour Armour
+    {
+        get
+        {
+            if(_armour == null)
+            {
+                return new EquipmentArmour("Unarmoured", EquipmentType.Armour, new List<SkillTree>(), 0, 0);
+            }
+            return _armour;
+        }
+    }
+
     public List<SkillTree> ActiveSkillTrees
     {
         get
@@ -121,7 +128,7 @@ public class Character
             {
                 trees.Add(t);
             }
-            foreach(SkillTree t in _armour.AllowedSkillTrees)
+            foreach(SkillTree t in Armour.AllowedSkillTrees)
             {
                 trees.Add(t);
             }
@@ -132,7 +139,8 @@ public class Character
     #region Things that happen to a character
     public int ApplyDamage(int val)
     {
-        int adjustedDamage = Mathf.Clamp(val - _armour.DamageReduction, 0, int.MaxValue);
+        int adjustedDamage = Mathf.Clamp(val - Armour.DamageReduction, 0, int.MaxValue);
+        
         AdjustHitPoints(-adjustedDamage);
         return adjustedDamage;
     }

@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class Skill
 {
-    [System.Flags] public enum SkillTag { Movement, Attack, Physical, Magical, Buff, Debuff, Fire, Water, Earth, Air };
     string _name;
-    SkillTag _tags;
-
     int _mastery;
 
+    List<SkillTag> _tags;
     List<ISkillPrerequisite> _prereqs;
     ISkillTargeting _targeting;
     ISkillTargetRadius _targetRadius;
@@ -22,6 +20,7 @@ public class Skill
     public Skill(string sName)
     {
         _name = sName;
+        _tags = new List<SkillTag>();
         _prereqs = new List<ISkillPrerequisite>();
         _skillCost = new List<ISkillCost>();
         _effects = new List<ISkillEffect>();
@@ -37,9 +36,9 @@ public class Skill
         _prereqs.Add(prereq);
     }
 
-    public void SetTags(SkillTag tagFlag)
+    public void AddSkillTags(SkillTag skillTag)
     {
-        _tags = tagFlag;
+        _tags.Add(skillTag);
     }
 
     public void SetTargeting(ISkillTargeting targeting)
@@ -111,6 +110,8 @@ public class Skill
         List<ClickableTarget> hitCharacters = _targetRadius.GetTargets(c, point);
         if (hitCharacters == null) //No valid character found
         {
+            Debug.Log("no valid targets");
+            StatusText.SetStatusText("No valid targets", 1.0f);
             return false;
         }
 

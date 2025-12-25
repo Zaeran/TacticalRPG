@@ -120,6 +120,8 @@
     <Compile Include="Assets\Scripts\UI\ToggleObject.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectEarthDamage.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectMoveTargetBack.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetSelf.cs" />
+    <Compile Include="Assets\Scripts\Utilities\MathUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class SkillTargetRadiusAOE : ISkillTargetRadius
 {
-    int aoeDistance = 1;
+    int _aoeDistance = 1;
+    bool _canHitTerrain = false;
+    bool _canHitCharacters = false;
 
-    public SkillTargetRadiusAOE(int distance)
+    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters)
     {
-        aoeDistance = distance;
+        _aoeDistance = distance;
+        _canHitTerrain = canHitTerrain;
+        _canHitCharacters = canHitCharacters;
     }
 
     public void SetAOE(int distance)
     {
-        aoeDistance = distance;
+        _aoeDistance = distance;
     }
 
    public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)
     {
-        List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, aoeDistance, 1);
+        List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1);
         List<ClickableTarget> hitCharacters = new List<ClickableTarget>();
         foreach (Vector4 square in points)
         {
@@ -33,7 +37,10 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
                 ClickableTarget hitObject = hits[i].collider.GetComponent<ClickableTarget>();
                 if (hitObject != null)
                 {
-                    hitCharacters.Add(hitObject);
+                    if ((hitObject is TerrainObject && _canHitTerrain) || (hitObject is CharacterObject && _canHitCharacters))
+                    {
+                        hitCharacters.Add(hitObject);
+                    }
                 }
             }
             

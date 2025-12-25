@@ -58,6 +58,7 @@ public class Skill
         {
             if (!_prereqs[i].MeetsPrerequisite(c))
             {
+                StatusText.SetStatusText("Prerequisite not met: " + _prereqs[i].GetPrerequisiteFailureText(), 1.5f);
                 return false;
             }
         }

@@ -20,4 +20,9 @@ public class SkillPrereqAPCost : ISkillPrerequisite
     {
         return c.MyCharacter.Attributes.CurrentAP >= requiredAP;
     }
+
+    public string GetPrerequisiteFailureText()
+    {
+        return "Not enough AP";
+    }
 }

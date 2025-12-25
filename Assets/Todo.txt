@@ -1,15 +1,19 @@
+- next UI additions 
+  - skill selection
+  - indicator for selecting facing direction
+- Basic inventory
+  - UI for equipping things
+  - Showing what is currently equipped
+  - Basic equipment sprites?
 - Face correct direction when attacking
 - create a variety of skills
 - assign different skills to each character
-- next UI additions 
-  - health current/max 
-  - skill selection
-  - indicator for selecting facing direction
+
   - 
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage
-- Inventory
+
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)

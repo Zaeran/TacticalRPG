@@ -18,6 +18,7 @@ public class Attributes
     private int _actionPointsCurrent;
 
     public event VoidEvent OnRemainingAPChanged;
+    public event VoidEvent OnRemainingHPChanged;
 
     public Attributes()
     {
@@ -57,6 +58,10 @@ public class Attributes
         }
         set {
                         _hitPointsCurrent = value;
+                        if(OnRemainingHPChanged != null)
+            {
+                OnRemainingHPChanged();
+            }
         }
     }
 

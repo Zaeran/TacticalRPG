@@ -8,10 +8,11 @@ public class BattleUI : MonoBehaviour
 
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI characteAPText;
+        public TextMeshProUGUI characterHPText;
 
     private void Start()
     {
-        TurnController.OnCharacterTurnEnding += CharacterTurnStarted;
+        TurnController.OnCharacterTurnEnding += CharacterTurnEnding;
         TurnController.OnNextCharacterTurn += CharacterTurnStarted;
     }
 
@@ -35,16 +36,24 @@ public class BattleUI : MonoBehaviour
     {
         characterNameText.text = c.CharacterName;
         CharacterAPChanged();
+        CharacterHPCHanged();
         c.Attributes.OnRemainingAPChanged += CharacterAPChanged;
+        c.Attributes.OnRemainingHPChanged += CharacterHPCHanged;
     }
 
     void CharacterTurnEnding(Character c)
     {
         c.Attributes.OnRemainingAPChanged -= CharacterAPChanged;
+                c.Attributes.OnRemainingHPChanged -= CharacterHPCHanged;
     }
 
     void CharacterAPChanged()
     {
-        characteAPText.text = TurnController.CurrentCharacterTurn.MyCharacter.Attributes.CurrentAP + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.MaxAP; 
+        characteAPText.text = "AP: " + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.CurrentAP + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.MaxAP; 
+    }
+
+    void CharacterHPCHanged()
+    {
+        characterHPText.text = "HP: " + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.HealthCurrent + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.HealthMax;
     }
 }

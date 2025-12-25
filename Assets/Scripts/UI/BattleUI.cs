@@ -9,6 +9,8 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI characteAPText;
         public TextMeshProUGUI characterHPText;
+    public TextMeshProUGUI characterEquipmentText;
+    public GameObject skillObject;
 
     private void Awake()
     {
@@ -37,8 +39,10 @@ public class BattleUI : MonoBehaviour
         characterNameText.text = c.CharacterName;
         CharacterAPChanged();
         CharacterHPCHanged();
+        characterEquipmentText.text = "Weapon: " + c.Weapon.Name;
         c.Attributes.OnRemainingAPChanged += CharacterAPChanged;
         c.Attributes.OnRemainingHPChanged += CharacterHPCHanged;
+        skillObject.SetActive(false);
     }
 
     void CharacterTurnEnding(Character c)
@@ -49,7 +53,8 @@ public class BattleUI : MonoBehaviour
 
     void CharacterAPChanged()
     {
-        characteAPText.text = "AP: " + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.CurrentAP + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.MaxAP; 
+        characteAPText.text = "AP: " + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.CurrentAP + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.MaxAP;
+        skillObject.SetActive(false);
     }
 
     void CharacterHPCHanged()

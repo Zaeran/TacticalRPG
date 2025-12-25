@@ -1,8 +1,7 @@
-- Create some basic skills
-  - Unlocked skill tree prerequisite / weapon type prerequisite
 - next UI additions 
   - skill selection
   - indicator for selecting facing direction
+  - Cancel button only appears when something can be cancelled
 - Basic inventory
   - UI for equipping things
   - Showing what is currently equipped

@@ -228,9 +228,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: dc3ffeff
-      m_LastClickedID: -114724
-      m_ExpandedIDs: f63ffeffba72ffff2cfbffff325700008e5700009e570000c0840000dc840000e4840000
+      m_SelectedIDs: 48a8fcff
+      m_LastClickedID: -219064
+      m_ExpandedIDs: 9ed5fbff50ebfbffd8f0fbff48a8fcfff63ffeffba72ffff2cfbffff325700008e5700009e570000668400006c84000090840000dc840000e4840000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -541,9 +541,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 7, y: 2, z: 3}
+    m_Target: {x: 1.6821647, y: 4.8660088, z: -2.6461873}
     speed: 2
-    m_Value: {x: 7, y: 2, z: 3}
+    m_Value: {x: 1.6821647, y: 4.8660088, z: -2.6461873}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -590,13 +590,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.09376732, y: 0.867485, z: -0.17892931, w: -0.45460224}
+    m_Target: {x: 0.2763461, y: 0.2136718, z: -0.06315964, w: 0.93488246}
     speed: 2
-    m_Value: {x: 0.093767315, y: -0.8674849, z: 0.1789293, w: 0.45460224}
+    m_Value: {x: 0.2763437, y: 0.21366997, z: -0.06315909, w: 0.9348744}
   m_Size:
-    m_Target: 0.61237246
+    m_Target: 5.273534
     speed: 2
-    m_Value: 0.61237246
+    m_Value: 5.273534
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -614,7 +614,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.09376732, y: 0.867485, z: -0.17892931, w: -0.45460224}
+  m_LastSceneViewRotation: {x: 0.09368928, y: 0.7864355, z: -0.12321176, w: 0.59797716}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -640,14 +640,14 @@ MonoBehaviour:
     y: 940
     width: 2344.8
     height: 646.80005
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 10}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 10}
   - {fileID: 11}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -689,22 +689,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials
+    - Assets/Scripts/Skills/SkillEffectScripts
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials
+  - Assets/Scripts/Skills/SkillEffectScripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Unity Projects\Commercial\ArkenForge\TacticalRPG
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 70.19995}
-    m_SelectedIDs: 6a5b0000
-    m_LastClickedID: 23402
+    m_SelectedIDs: aa5b0000
+    m_LastClickedID: 23466
     m_ExpandedIDs: 000000003a5800003c5800003e5800004058000042580000865b000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -721,7 +721,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 9}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -733,7 +733,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003a5800003c5800003e5800004058000042580000
+    m_ExpandedIDs: 000000003a5800003c5800003e580000405800004258000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -758,8 +758,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: dc3ffeff
-    m_LastClickedInstanceID: -114724
+    m_SelectedInstanceIDs: 70d3fbff
+    m_LastClickedInstanceID: -273552
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:

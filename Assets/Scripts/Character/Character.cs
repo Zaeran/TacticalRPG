@@ -20,11 +20,15 @@ public class Character
         if (cName == "Char 1")
         {
             //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
-            _weapon = new EquipmentWeapon("Spear", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Blade }, 2, 2, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line);
+        }
+        else if(cName == "Char 2")
+        {
+            _weapon = new EquipmentWeapon("Bow", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Bow }, 1, 4, WeaponTargetingType.Range);
         }
         else
         {
-            _weapon = new EquipmentWeapon("Bow", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Bow }, 1, 4, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Geomancy Focus", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Range);
         }
         _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 
@@ -33,62 +37,12 @@ public class Character
 
     void SetupSkills()
     {
-        CreateMoveSkill();
-        CreateAttackSkill();
-        CreateRaiseTerrainSkill();
-    }
-
-    void CreateMoveSkill()
-    {
-        Skill skill = new Skill("Move");
-        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
-        prereq.SetPrereqProperty(1);
-        skill.AddPrerequisite(prereq);
-        skill.SetTags(Skill.SkillTag.Movement);
-        skill.SetTargeting(new SkillTargetMoveRange());
-        skill.AddSkillEffect(new SkillEffectMove());
-        skill.AddSkillCost(new SkillCostSquareDistance());
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0));
-        _skills.Add(skill);
-    }
-
-    void CreateAttackSkill()
-    {
-        Skill skill = new Skill("Attack");
-        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
-        prereq.SetPrereqProperty(2);
-        skill.AddPrerequisite(prereq);
-        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
-        prereq2.SetPrereqProperty(SkillTree.Blade);
-        skill.AddPrerequisite(prereq2);
-        skill.SetTags(Skill.SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetWeaponAttack());
-        skill.AddSkillEffect(new SkillEffectWeaponAttack());
-        SkillCostAP cost = new SkillCostAP();
-        cost.SetCostValue(2);
-        skill.AddSkillCost(cost);
-        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
-        skillTarget.SetAOE(0);
-        skill.SetSkillTargetRadius(skillTarget);
-        _skills.Add(skill);
-    }
-
-    void CreateRaiseTerrainSkill()
-    {
-        Skill skill = new Skill("Raise Terrain");
-        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
-        prereq.SetPrereqProperty(1);
-        skill.AddPrerequisite(prereq);
-        skill.SetTags(Skill.SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(3));
-        skill.AddSkillEffect(new SkillEffectRaiseTerrain());
-        SkillCostAP cost = new SkillCostAP();
-        cost.SetCostValue(1);
-        skill.AddSkillCost(cost);
-        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
-        skillTarget.SetAOE(0);
-        skill.SetSkillTargetRadius(skillTarget);
-        _skills.Add(skill);
+        _skills.Add(AllSkills.GetSkillForName("Move"));
+        _skills.Add(AllSkills.GetSkillForName("Slice"));
+        _skills.Add(AllSkills.GetSkillForName("Shoot"));
+        _skills.Add(AllSkills.GetSkillForName("Raise Terrain"));
+        _skills.Add(AllSkills.GetSkillForName("Lower Terrain"));
+        _skills.Add(AllSkills.GetSkillForName("Throw Rock"));
     }
 
     public string CharacterName

@@ -117,6 +117,8 @@
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqActiveSkillTree.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagic.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectLowerTerrain.cs" />
+    <Compile Include="Assets\Scripts\UI\ToggleObject.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectEarthDamage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -133,7 +135,6 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\Data\AllSkills.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Todo.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />

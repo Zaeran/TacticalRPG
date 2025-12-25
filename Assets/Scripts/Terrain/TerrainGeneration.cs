@@ -19,6 +19,10 @@ public class TerrainGeneration : MonoBehaviour {
                 {
                     Instantiate(Resources.Load(string.Format("{0}2", TerrainBlockFilePath, rand)), new Vector3(xPos, 1, zPos), Quaternion.identity);
                 }
+                else if (xPos == 4 && zPos == 7)
+                {
+                    Instantiate(Resources.Load(string.Format("{0}2", TerrainBlockFilePath, rand)), new Vector3(xPos, 1, zPos), Quaternion.identity);
+                }
                 else
                 {
                     Instantiate(Resources.Load(string.Format("{0}{1}", TerrainBlockFilePath, rand)), new Vector3(xPos, 1, zPos), Quaternion.identity);

@@ -145,7 +145,6 @@ public class Character
     public void AdjustHitPoints(int val)
     {
         _attributes.HealthCurrent += val;
-        Debug.Log("HP After: " + _attributes.HealthCurrent);
     }
     #endregion
 }

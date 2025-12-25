@@ -13,7 +13,7 @@ public class SkillTargetWeaponAttack : ISkillTargeting
         }
         else //must be ranged
         {
-            validPoints = FindValidPoints.GetPoints("Ranged", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, c.MyCharacter.JumpStat);
+            validPoints = FindValidPoints.GetPoints("Ranged", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, 5);
         }
         
         DrawSquaresScript.DrawValidSquares(validPoints);

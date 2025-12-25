@@ -9,49 +9,55 @@ public class CharacterObject : ClickableTarget
 
     Skill _activeSkill;
 
-        bool selectingFacing = false;
+    bool selectingFacing = false;
 
     private void Awake()
     {
         _myCharacter = new Character(characterName);
         TurnController.AddCharacter(this);
         MyCharacter.Attributes.StartBattle();
-                transform.eulerAngles = new Vector3(0, MyCharacter.Facing, 0);
-        
+        transform.eulerAngles = new Vector3(0, MyCharacter.Facing, 0);
+
     }
 
-    private void Update ()
+    private void Update()
     {
-        if (selectingFacing) {
-            if (Input.GetKeyDown (KeyCode.UpArrow)) {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45, 0);
+        if (selectingFacing)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45, 0);
             }
-                        if (Input.GetKeyDown (KeyCode.RightArrow)) {
-                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 135, 0);
-                        }
-
-                        if (Input.GetKeyDown (KeyCode.DownArrow)) {
-                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 215, 0);
-                        }
-
-                        if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-                                transform.eulerAngles = new Vector3 (0, Camera.main.transform.eulerAngles.y + 305, 0);
-                        }
-            if (Input.GetKeyDown (KeyCode.Return)) {
-                               selectingFacing = false;
-                                TurnController.TurnOver();
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135, 0);
             }
-                }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 215, 0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 305, 0);
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                selectingFacing = false;
+                TurnController.TurnOver();
+            }
         }
+    }
 
     public void StartMyTurn()
     {
         _myCharacter.Attributes.RefillAP();
     }
 
-        public void StartSetFacingDirection ()
+    public void StartSetFacingDirection()
     {
-                selectingFacing = true;
+        selectingFacing = true;
         DrawSquaresScript.DestroyValidSquares();
         StatusText.SetStatusText("Set facing direction");
     }
@@ -81,29 +87,31 @@ public class CharacterObject : ClickableTarget
         DrawSquaresScript.DestroyValidSquares();
     }
 
-        void SkillTargeted (Vector4 point)
+    void SkillTargeted(Vector4 point)
+    {
+        if (_activeSkill.ProcessSkillEffect(this, point)) //skill succeeded
         {
-                if (_activeSkill.ProcessSkillEffect (this, point)) //skill succeeded
-                {
-                        _activeSkill.OnSkillTargeted -= SkillTargeted;
-                        _activeSkill = null;
+            _activeSkill.OnSkillTargeted -= SkillTargeted;
+            _activeSkill = null;
             StatusText.SetStatusText("");
-        } else { //skill failed. Go back to targeting
-                        _activeSkill.StartSkillTargeting (this);
+        }
+        else
+        { //skill failed. Go back to targeting
+            _activeSkill.StartSkillTargeting(this);
             StatusText.SetStatusText("Action: " + _activeSkill.Name);
         }
 
-        }
+    }
 
     public void SetAction(string actionName)
     {
         CancelSkill();
         if (_activeSkill == null && !selectingFacing)
         {
-                        Skill s = MyCharacter.GetSkillByName(actionName);
-            if (!s.TestPrerequisites (this)) {
-                                Debug.Log("Prerequisites not met");
-                                return;
+            Skill s = MyCharacter.GetSkillByName(actionName);
+            if (!s.TestPrerequisites(this))
+            {
+                return;
             }
             _activeSkill = MyCharacter.GetSkillByName(actionName);
             _activeSkill.StartSkillTargeting(this);

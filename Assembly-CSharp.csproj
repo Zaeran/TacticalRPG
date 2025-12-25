@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectLowerTerrain.cs" />
     <Compile Include="Assets\Scripts\UI\ToggleObject.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectEarthDamage.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectMoveTargetBack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

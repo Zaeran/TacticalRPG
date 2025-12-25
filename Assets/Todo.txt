@@ -1,17 +1,12 @@
-- next UI additions 
-  - skill selection
-  - indicator for selecting facing direction
-  - Cancel button only appears when something can be cancelled
 - Basic inventory
   - UI for equipping things
   - Showing what is currently equipped
   - Basic equipment sprites?
 - Face correct direction when attacking
-- create a variety of skills
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage
-
+- Projectiles travel further when higher, less distance when lower
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)

@@ -10,12 +10,11 @@ public class AllSkills
     {
         _allSkills = new List<Skill>();
 
-        MoveSkill();
-        SliceSkill();
-        ShootSkill();
-        RaiseTerrainSkill();
-        LowerTerrainSkill();
-        ThrowRockSkill();
+        UniversalSkills();
+        BladeSkills();
+        BluntSkills();
+        BowSkills();
+        GeomancySkills();
     }
 
     public static Skill GetSkillForName(string skillName)
@@ -34,6 +33,12 @@ public class AllSkills
         return null;
     }
 
+    #region Universal
+    static void UniversalSkills()
+    {
+        MoveSkill();
+    }
+
     static void MoveSkill()
     {
         Skill skill = new Skill("Move");
@@ -46,6 +51,12 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectMove());
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0));
         _allSkills.Add(skill);
+    }
+    #endregion
+    #region Blade
+    static void BladeSkills()
+    {
+        SliceSkill();
     }
 
     static void SliceSkill()
@@ -68,7 +79,62 @@ public class AllSkills
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
+    #endregion
+    #region BluntSkills
+    static void BluntSkills()
+    {
+        WhackSkill();
+        KnockbackSkill();
+    }
 
+    static void WhackSkill()
+    {
+        Skill skill = new Skill("Whack");
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+        prereq.SetPrereqProperty(2);
+        skill.AddPrerequisite(prereq);
+        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
+        prereq2.SetPrereqProperty(SkillTree.Blunt);
+        skill.AddPrerequisite(prereq2);
+        skill.SetTags(Skill.SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        SkillCostAP cost = new SkillCostAP();
+        cost.SetCostValue(2);
+        skill.AddSkillCost(cost);
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
+        skillTarget.SetAOE(0);
+        skill.SetSkillTargetRadius(skillTarget);
+        _allSkills.Add(skill);
+    }
+
+    static void KnockbackSkill()
+    {
+        Skill skill = new Skill("Knockback");
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+        prereq.SetPrereqProperty(4);
+        skill.AddPrerequisite(prereq);
+        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
+        prereq2.SetPrereqProperty(SkillTree.Blunt);
+        skill.AddPrerequisite(prereq2);
+        skill.SetTags(Skill.SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectMoveTargetBack(1));
+        SkillCostAP cost = new SkillCostAP();
+        cost.SetCostValue(4);
+        skill.AddSkillCost(cost);
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
+        skillTarget.SetAOE(0);
+        skill.SetSkillTargetRadius(skillTarget);
+        _allSkills.Add(skill);
+    }
+    #endregion
+    #region Bow
+    public static void BowSkills()
+    {
+        ShootSkill();
+    }
     static void ShootSkill()
     {
         Skill skill = new Skill("Shoot");
@@ -88,6 +154,14 @@ public class AllSkills
         skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
+    }
+    #endregion
+    #region Geomancy
+    public static void GeomancySkills()
+    {
+        RaiseTerrainSkill();
+        LowerTerrainSkill();
+        ThrowRockSkill();
     }
 
     static void RaiseTerrainSkill()
@@ -152,5 +226,6 @@ public class AllSkills
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
+    #endregion
 
 }

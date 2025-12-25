@@ -67,6 +67,7 @@ public class AllSkills
     static void AeromancySkills()
     {
         Airburst();
+        AirPull();
         AirPush();
     }
 
@@ -86,6 +87,26 @@ public class AllSkills
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(1, false, true);
+        skill.SetSkillTargetRadius(skillTarget);
+        _allSkills.Add(skill);
+    }
+
+    public static void AirPull()
+    {
+        Skill skill = new Skill("Air Pull");
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+        prereq.SetPrereqProperty(1);
+        skill.AddPrerequisite(prereq);
+        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
+        prereq2.SetPrereqProperty(SkillTree.Aeromancy);
+        skill.AddPrerequisite(prereq2);
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetMagic(4));
+        skill.AddSkillEffect(new SkillEffectPullTowardsCharacter(1));
+        SkillCostAP cost = new SkillCostAP();
+        cost.SetCostValue(1);
+        skill.AddSkillCost(cost);
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -275,6 +296,13 @@ public class AllSkills
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
+    }
+    #endregion
+
+    #region Hydromancy
+    static void HydromancySkills()
+    {
+
     }
     #endregion
 

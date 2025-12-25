@@ -87,9 +87,9 @@
     <Compile Include="Assets\Scripts\Generic\DrawSquaresScript.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMoveRange.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetRadius\ISkillTargetRadius.cs" />
-    <Compile Include="Assets\Scripts\Skills\ActionScripts\ISkillEffect.cs" />
-    <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectMove.cs" />
-    <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectWeaponAttack.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\ISkillEffect.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectMove.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectWeaponAttack.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingNumber.cs" />
     <Compile Include="Assets\Scripts\Equipment\Equipment.cs" />
     <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
@@ -102,7 +102,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\SkillCostAP.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\ISkillCost.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetRadius\SkillTargetRadiusAOE.cs" />
-    <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectRaiseTerrain.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectRaiseTerrain.cs" />
     <Compile Include="Assets\Scripts\MapContent\ClickableTarget.cs" />
     <Compile Include="Assets\Scripts\MapContent\TerrainObject.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeGeomancy.cs" />
@@ -116,6 +116,7 @@
     <Compile Include="Assets\Scripts\UI\StatusText.cs" />
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqActiveSkillTree.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagic.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectLowerTerrain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

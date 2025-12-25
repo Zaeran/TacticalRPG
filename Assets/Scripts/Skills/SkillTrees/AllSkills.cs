@@ -17,6 +17,8 @@ public class AllSkills
         BowSkills();
         GeomancySkills();
         HydromancySkills();
+        PotionSkills();
+        ShieldSkills();
     }
 
     public static Skill GetSkillForName(string skillName)
@@ -250,14 +252,30 @@ public class AllSkills
     #region Potions
     static void PotionSkills()
     {
+        //healing potion skill
+        HealthPotion();
+        //poison skill
+    }
 
+    static void HealthPotion()
+    {
+        Skill skill = new Skill("Healing Potion");
+        skill.AddPrerequisite(new SkillPrereqAPCost(3));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Potions));
+        skill.AddSkillTags(SkillTag.Buff);
+        skill.SetTargeting(new SkillTargetMagic(1));
+        skill.AddSkillEffect(new SkillEffectHealing(2));
+        skill.AddSkillCost(new SkillCostAP(3));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
+        _allSkills.Add(skill);
     }
     #endregion
 
     #region Shield
     static void ShieldSkills()
     {
-
+        //block skill
+        //blocking is a status effect
     }
     #endregion
 }

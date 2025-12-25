@@ -30,7 +30,7 @@ public class Character
         }
         else
         {
-            _weapon = new EquipmentWeapon("Hydromancy Focus", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Hydromancy }, 0, 0, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Potion Kit", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Potions }, 0, 0, WeaponTargetingType.Range);
         }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 
@@ -156,14 +156,16 @@ public class Character
         return adjustedDamage;
     }
 
-    public void ApplyHealing(int val)
+    public int ApplyHealing(int val)
     {
         AdjustHitPoints(val);
+        return val;
     }
 
     public void AdjustHitPoints(int val)
     {
         _attributes.HealthCurrent += val;
+        _attributes.HealthCurrent = Mathf.Clamp(_attributes.HealthCurrent, 0, _attributes.HealthMax);
     }
     #endregion
 }

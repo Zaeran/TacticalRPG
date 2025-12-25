@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Utilities\MathUtilities.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectPullTowardsCharacter.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectCreateWeapon.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectHealing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

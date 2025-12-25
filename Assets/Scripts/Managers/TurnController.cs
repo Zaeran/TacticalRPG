@@ -27,6 +27,7 @@ public class TurnController {
 	}
 
 	static void TriggerNextTurn(){
+		StatusText.SetStatusText("");
 		DrawSquaresScript.DestroyValidSquares();
 		//Set turn active
 		CurrentCharacterTurn.StartMyTurn();

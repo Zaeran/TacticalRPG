@@ -52,19 +52,9 @@ public class CharacterObject : ClickableTarget
         public void StartSetFacingDirection ()
     {
                 selectingFacing = true;
+        DrawSquaresScript.DestroyValidSquares();
+        StatusText.SetStatusText("Set facing direction");
     }
-
-
-        void FinaliseFacingDirection ()
-        {
-                if (transform.eulerAngles.y < 0) {
-                        transform.eulerAngles += new Vector3 (0, 360, 0);
-                }
-                if(transform.eulerAngles.y >= 360) {
-                        transform.eulerAngles -= new Vector3(0,360,0);
-        }
-                MyCharacter.SetFacing (Mathf.FloorToInt (transform.eulerAngles.y / 90));
-        }
 
     public void UseAP(int amount)
     {
@@ -86,20 +76,22 @@ public class CharacterObject : ClickableTarget
         {
             _activeSkill.OnSkillTargeted -= SkillTargeted;
             _activeSkill = null;
+            StatusText.SetStatusText("");
         }
         DrawSquaresScript.DestroyValidSquares();
     }
 
         void SkillTargeted (Vector4 point)
         {
-        Debug.Log("Skill targeted!");
                 if (_activeSkill.ProcessSkillEffect (this, point)) //skill succeeded
                 {
                         _activeSkill.OnSkillTargeted -= SkillTargeted;
                         _activeSkill = null;
-                } else { //skill failed. Go back to targeting
+            StatusText.SetStatusText("");
+        } else { //skill failed. Go back to targeting
                         _activeSkill.StartSkillTargeting (this);
-                }
+            StatusText.SetStatusText("Action: " + _activeSkill.Name);
+        }
 
         }
 
@@ -116,6 +108,8 @@ public class CharacterObject : ClickableTarget
             _activeSkill = MyCharacter.GetSkillByName(actionName);
             _activeSkill.StartSkillTargeting(this);
             _activeSkill.OnSkillTargeted += SkillTargeted;
+
+            StatusText.SetStatusText("Action: " + _activeSkill.Name);
         }
     }
 }

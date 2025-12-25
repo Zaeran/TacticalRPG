@@ -24,6 +24,7 @@ public class Skill
         _name = sName;
         _prereqs = new List<ISkillPrerequisite>();
         _skillCost = new List<ISkillCost>();
+        _effects = new List<ISkillEffect>();
     }
 
     public string Name

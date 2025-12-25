@@ -1,4 +1,6 @@
+- Create some basic skills
 - next UI additions 
+  - descriptor UI to explain what's happening right now
   - skill selection
   - indicator for selecting facing direction
 - Basic inventory
@@ -7,9 +9,6 @@
   - Basic equipment sprites?
 - Face correct direction when attacking
 - create a variety of skills
-- assign different skills to each character
-
-  - 
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage

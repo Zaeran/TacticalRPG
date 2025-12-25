@@ -101,8 +101,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\SkillCostSquareDistance.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\SkillCostAP.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\ISkillCost.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetRadius\SkillTargetSingle.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetRadius\SkillTargetAOE.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetRadius\SkillTargetRadiusAOE.cs" />
     <Compile Include="Assets\Scripts\Skills\ActionScripts\SkillEffectRaiseTerrain.cs" />
     <Compile Include="Assets\Scripts\MapContent\ClickableTarget.cs" />
     <Compile Include="Assets\Scripts\MapContent\TerrainObject.cs" />
@@ -116,6 +115,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillTrees\AllSkills.cs" />
     <Compile Include="Assets\Scripts\UI\StatusText.cs" />
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqActiveSkillTree.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

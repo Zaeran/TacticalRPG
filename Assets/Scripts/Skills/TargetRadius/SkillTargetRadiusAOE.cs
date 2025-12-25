@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillTargetAOE : ISkillTargetRadius
+public class SkillTargetRadiusAOE : ISkillTargetRadius
 {
     int aoeDistance = 1;
+
+    public SkillTargetRadiusAOE(int distance)
+    {
+        aoeDistance = distance;
+    }
 
     public void SetAOE(int distance)
     {

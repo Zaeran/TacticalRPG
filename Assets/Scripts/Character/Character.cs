@@ -20,7 +20,7 @@ public class Character
         if (cName == "Char 1")
         {
             //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
-            _weapon = new EquipmentWeapon("Spear", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Spear }, 2, 2, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Spear", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Blade }, 2, 2, WeaponTargetingType.Line);
         }
         else
         {
@@ -48,7 +48,7 @@ public class Character
         skill.SetTargeting(new SkillTargetMoveRange());
         skill.AddSkillEffect(new SkillEffectMove());
         skill.AddSkillCost(new SkillCostSquareDistance());
-        skill.SetSkillTargetRadius(new SkillTargetSingle());
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0));
         _skills.Add(skill);
     }
 
@@ -58,13 +58,16 @@ public class Character
         SkillPrereqAPCost prereq = new SkillPrereqAPCost();
         prereq.SetPrereqProperty(2);
         skill.AddPrerequisite(prereq);
+        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
+        prereq2.SetPrereqProperty(SkillTree.Blade);
+        skill.AddPrerequisite(prereq2);
         skill.SetTags(Skill.SkillTag.Attack);
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
-        SkillTargetAOE skillTarget = new SkillTargetAOE();
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
         skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _skills.Add(skill);
@@ -77,12 +80,12 @@ public class Character
         prereq.SetPrereqProperty(1);
         skill.AddPrerequisite(prereq);
         skill.SetTags(Skill.SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMoveRange());
+        skill.SetTargeting(new SkillTargetMagic(3));
         skill.AddSkillEffect(new SkillEffectRaiseTerrain());
         SkillCostAP cost = new SkillCostAP();
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
-        SkillTargetAOE skillTarget = new SkillTargetAOE();
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0);
         skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _skills.Add(skill);

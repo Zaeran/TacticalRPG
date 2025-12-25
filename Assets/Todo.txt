@@ -49,3 +49,5 @@ SKILL TREES AND UNLOCKS
 - equipment can be weapons, shields, focuses, accessories, etc. For example, a sword could unlock Blade, a shield can unlock Shield, and a water-attuned ring could unlock Hydromancy
 
 - Aeromancy skill: wind direction on entire battlefield. Affects movement and arrows 
+
+- Raise terrain -> Only works on rock. Buildings / water / etc are unaffected

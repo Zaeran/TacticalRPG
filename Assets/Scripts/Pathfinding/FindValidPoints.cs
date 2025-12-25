@@ -168,10 +168,12 @@ public class FindValidPoints : MonoBehaviour {
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit[] initialTile;
 		int horDistanceToPoint = 0;
-		for(int x = -20; x <= 20; x++){ // x direction
-			for(int z = -20; z <= 20; z++){
-				initialTile = Physics.RaycastAll(new Vector3(x,0,z) + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-				foreach(RaycastHit rh in initialTile){
+		Debug.Log("Max range: " + maxRange);
+		for(int x = -maxRange; x <= maxRange; x++){ // x direction
+			for (int z = -(maxRange - Mathf.Abs(x)); z <= maxRange - Mathf.Abs(x); z++)
+			{
+				initialTile = Physics.RaycastAll(origin + new Vector3(x, 0, z) + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
+				foreach (RaycastHit rh in initialTile){
 					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - origin.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - origin.z))));
 					validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 				}

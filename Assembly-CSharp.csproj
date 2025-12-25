@@ -75,10 +75,8 @@
     <Compile Include="Assets\Scripts\Utilities\Delegates.cs" />
     <Compile Include="Assets\Scripts\Player\AttributesScript.cs" />
     <Compile Include="Assets\Scripts\Managers\TurnController.cs" />
-    <Compile Include="Assets\Scripts\Camera\CharacterGUI.cs" />
     <Compile Include="Assets\Scripts\Terrain\TerrainGeneration.cs" />
     <Compile Include="Assets\Scripts\Weapons\ProjectileScript.cs" />
-    <Compile Include="Assets\Scripts\Generic\GenericControlsScript.cs" />
     <Compile Include="Assets\Scripts\Character\StatusEffects.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingNumbersScript.cs" />
     <Compile Include="Assets\Scripts\Utilities\GameOptions.cs" />

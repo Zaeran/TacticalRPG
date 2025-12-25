@@ -14,14 +14,15 @@ public class DrawSquaresScript : MonoBehaviour {
 		instance = this;
     }
 
-    //draws sqares at the locations given in the list
-    public static void DrawValidSquares(List<Vector4> squares){
+	//draws sqares at the locations given in the list
+	public static void DrawValidSquares(List<Vector4> squares)
+	{
 		DestroyValidSquares();
-		foreach(Vector4 square in squares){
-			if(square.w != 0){
-				Vector3 squarePosition = square;
-				createdObject.Add(Instantiate(instance.Node, squarePosition + (Vector3.up * 0.02f), Quaternion.identity) as GameObject);
-			}
+		foreach (Vector4 square in squares)
+		{
+			Vector3 squarePosition = square;
+			createdObject.Add(Instantiate(instance.Node, squarePosition + (Vector3.up * 0.02f), Quaternion.identity) as GameObject);
+
 		}
 	}
 	

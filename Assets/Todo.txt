@@ -1,6 +1,7 @@
 - UI
   - Dynamically generate skills based on allowed options
-  - Before battle, choose character 'class' to spawn as
+- Create a list of weapons
+- Before battle, choose character weapon to equip
     - Choose up to three characters
 - Basic inventory
   - UI for equipping things

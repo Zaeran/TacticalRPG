@@ -14,4 +14,19 @@ public class Equipment
         _equipmentType = eType;
         _allowedSkillTrees = allowedSkillTrees;
     }
+
+    public string Name
+    {
+        get { return _name; }
+    }
+
+    public EquipmentType EquipmentType
+    {
+        get { return _equipmentType; }
+    }
+
+    public List<SkillTree> AllowedSkillTrees
+    {
+        get { return _allowedSkillTrees; }
+    }
 }

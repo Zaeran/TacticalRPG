@@ -1,6 +1,6 @@
 - Create some basic skills
+  - Unlocked skill tree prerequisite / weapon type prerequisite
 - next UI additions 
-  - descriptor UI to explain what's happening right now
   - skill selection
   - indicator for selecting facing direction
 - Basic inventory

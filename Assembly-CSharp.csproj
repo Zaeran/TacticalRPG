@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreePotions.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillTrees\AllSkills.cs" />
     <Compile Include="Assets\Scripts\UI\StatusText.cs" />
+    <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqActiveSkillTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

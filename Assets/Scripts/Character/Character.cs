@@ -155,6 +155,23 @@ public class Character
         }
     }
 
+    public List<SkillTree> ActiveSkillTrees
+    {
+        get
+        {
+            List<SkillTree> trees = new List<SkillTree>();
+            foreach(SkillTree t in _weapon.AllowedSkillTrees)
+            {
+                trees.Add(t);
+            }
+            foreach(SkillTree t in _armour.AllowedSkillTrees)
+            {
+                trees.Add(t);
+            }
+            return trees;
+        }
+    }
+
     #region Things that happen to a character
     public int ApplyDamage(int val)
     {

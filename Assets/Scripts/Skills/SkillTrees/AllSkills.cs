@@ -86,7 +86,6 @@ public class AllSkills
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(1, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -107,7 +106,6 @@ public class AllSkills
         cost.SetCostValue(1);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -134,7 +132,6 @@ public class AllSkills
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -162,7 +159,6 @@ public class AllSkills
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -184,7 +180,6 @@ public class AllSkills
         cost.SetCostValue(4);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -210,7 +205,6 @@ public class AllSkills
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -239,7 +233,6 @@ public class AllSkills
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, true, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -260,7 +253,6 @@ public class AllSkills
         cost.SetCostValue(2);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, true, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }
@@ -281,7 +273,6 @@ public class AllSkills
         cost.SetCostValue(3);
         skill.AddSkillCost(cost);
         SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
-        skillTarget.SetAOE(0);
         skill.SetSkillTargetRadius(skillTarget);
         _allSkills.Add(skill);
     }

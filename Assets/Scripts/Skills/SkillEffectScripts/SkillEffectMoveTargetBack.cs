@@ -24,7 +24,7 @@ public class SkillEffectMoveTargetBack : ISkillEffect
                     continue;
                 }
                 //Get position away
-                Vector2 knockBackDir = new Vector2(point.x, point.z) - new Vector2(c.transform.position.x, c.transform.position.z);
+                Vector2 knockBackDir = new Vector2(hitObject.transform.position.x, hitObject.transform.position.z) - new Vector2(c.transform.position.x, c.transform.position.z);
                 knockBackDir = MathUtilities.NearestStraightLineVector(knockBackDir).normalized;
                 hitObject.transform.position += new Vector3(knockBackDir.x, 0, knockBackDir.y) * _knockbackDistance;
             }

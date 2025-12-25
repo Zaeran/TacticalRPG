@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class SkillPrereqActiveSkillTree : ISkillPrerequisite
 {
-    SkillTree requiredSkillTree;
+    SkillTree _requiredSkillTree;
 
-    public bool SetPrereqProperty(object o)
+    public SkillPrereqActiveSkillTree(SkillTree skillTree)
     {
-        if(o is SkillTree)
-        {
-            requiredSkillTree = (SkillTree)o;
-            return true;
-        }
-        return false;
+        _requiredSkillTree = skillTree;
     }
 
     public bool MeetsPrerequisite(CharacterObject c)
     {
-        return c.MyCharacter.ActiveSkillTrees.Contains(requiredSkillTree);
+        return c.MyCharacter.ActiveSkillTrees.Contains(_requiredSkillTree);
     }
 
     public string GetPrerequisiteFailureText()
     {
-        return "Requires active skill tree: " + requiredSkillTree.ToString();
+        return "Requires active skill tree: " + _requiredSkillTree.ToString();
     }
 }

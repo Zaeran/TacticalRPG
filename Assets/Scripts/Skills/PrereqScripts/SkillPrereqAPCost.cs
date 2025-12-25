@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class SkillPrereqAPCost : ISkillPrerequisite
 {
-    int requiredAP;
+    int _apCost;
 
-    public bool SetPrereqProperty(object o)
+    public SkillPrereqAPCost(int cost)
     {
-        if(o is int)
-        {
-            requiredAP = (int)o;
-            return true;
-        }
-        return false;
+        _apCost = cost;
     }
 
     public bool MeetsPrerequisite(CharacterObject c)
     {
-        return c.MyCharacter.Attributes.CurrentAP >= requiredAP;
+        return c.MyCharacter.Attributes.CurrentAP >= _apCost;
     }
 
     public string GetPrerequisiteFailureText()

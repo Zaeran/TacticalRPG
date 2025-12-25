@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class SkillCostAP : ISkillCost
 {
-    int apCost;
+    int _apCost;
 
-   public void SetCostValue(object o)
+   public SkillCostAP(int cost)
     {
-        apCost = (int)o;
+        _apCost = cost;
     }
 
     public bool CanPayCost(CharacterObject c, Vector4 point)
     {
-        return c.MyCharacter.Attributes.CurrentAP >= apCost;
+        return c.MyCharacter.Attributes.CurrentAP >= _apCost;
     }
 
     public bool PayCost(CharacterObject c, Vector4 point)
     {
-        if (c.MyCharacter.Attributes.CurrentAP < apCost)
+        if (c.MyCharacter.Attributes.CurrentAP < _apCost)
         {
             return false;
         }
-        c.MyCharacter.Attributes.ModifyAP(-apCost);
+        c.MyCharacter.Attributes.ModifyAP(-_apCost);
         return true;
     }
 }

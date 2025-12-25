@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface ISkillPrerequisite
 {
-    bool SetPrereqProperty(object o);
     bool MeetsPrerequisite(CharacterObject c);
     string GetPrerequisiteFailureText();
 }

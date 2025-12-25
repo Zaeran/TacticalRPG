@@ -5,10 +5,7 @@ using UnityEngine;
 public class SkillCostSquareDistance : ISkillCost
 {
 
-   public void SetCostValue(object o)
-    {
-        
-    }
+    public SkillCostSquareDistance() { }
 
     public bool CanPayCost(CharacterObject c, Vector4 point)
     {

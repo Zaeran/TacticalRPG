@@ -39,9 +39,10 @@ public class BattleUI : MonoBehaviour
         characterNameText.text = c.CharacterName;
         CharacterAPChanged();
         CharacterHPCHanged();
-        characterEquipmentText.text = "Weapon: " + c.Weapon.Name;
+        CharacterWeaponChanged();
         c.Attributes.OnRemainingAPChanged += CharacterAPChanged;
         c.Attributes.OnRemainingHPChanged += CharacterHPCHanged;
+        c.OnWeaponChanged += CharacterWeaponChanged;
         skillObject.SetActive(false);
     }
 
@@ -49,6 +50,7 @@ public class BattleUI : MonoBehaviour
     {
         c.Attributes.OnRemainingAPChanged -= CharacterAPChanged;
                 c.Attributes.OnRemainingHPChanged -= CharacterHPCHanged;
+        c.OnWeaponChanged -= CharacterWeaponChanged;
     }
 
     void CharacterAPChanged()
@@ -60,5 +62,10 @@ public class BattleUI : MonoBehaviour
     void CharacterHPCHanged()
     {
         characterHPText.text = "HP: " + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.HealthCurrent + "/" + TurnController.CurrentCharacterTurn.MyCharacter.Attributes.HealthMax;
+    }
+
+    void CharacterWeaponChanged()
+    {
+        characterEquipmentText.text = "Weapon: " + TurnController.CurrentCharacterTurn.MyCharacter.Weapon.Name;
     }
 }

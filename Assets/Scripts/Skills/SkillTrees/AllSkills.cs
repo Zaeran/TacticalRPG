@@ -16,6 +16,7 @@ public class AllSkills
         BluntSkills();
         BowSkills();
         GeomancySkills();
+        HydromancySkills();
     }
 
     public static Skill GetSkillForName(string skillName)
@@ -302,7 +303,25 @@ public class AllSkills
     #region Hydromancy
     static void HydromancySkills()
     {
+        CreateIceBlade();
+    }
 
+    static void CreateIceBlade()
+    {
+        Skill skill = new Skill("Create Ice Blade");
+        SkillPrereqAPCost prereq = new SkillPrereqAPCost();
+        prereq.SetPrereqProperty(5);
+        skill.AddPrerequisite(prereq);
+        SkillPrereqActiveSkillTree prereq2 = new SkillPrereqActiveSkillTree();
+        prereq2.SetPrereqProperty(SkillTree.Hydromancy);
+        skill.AddSkillTags(SkillTag.Magical);
+        skill.SetTargeting(new SkillTargetSelf());
+        skill.AddSkillEffect(new SkillEffectCreateWeapon(new EquipmentWeapon("Ice blade", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Hydromancy, SkillTree.Blade }, 2, 1, WeaponTargetingType.Line)));
+        SkillCostAP cost = new SkillCostAP();
+        cost.SetCostValue(5);
+        SkillTargetRadiusAOE skillTarget = new SkillTargetRadiusAOE(0, false, true);
+        skill.SetSkillTargetRadius(skillTarget);
+        _allSkills.Add(skill);
     }
     #endregion
 

@@ -5,24 +5,19 @@ using System.Collections.Generic;
 public class TurnController {
 	
 	static List<CharacterObject> characters = new List<CharacterObject>();
-	static int currentCharacterTurn = 0;
+	static int currentCharacterTurn;
 	static int currentRound; //What is the current round of combat?
 
 	//components
 	static RotateCamera cameraScript;
-	static CharacterGUI guiScript;
 
 	public static event CharacterEvent OnNextCharacterTurn;
 	public static event CharacterEvent OnCharacterTurnEnding;
 	
-	void Start(){
-		StartBattle();
+	public static void StartBattle(){
 		currentRound = 0;
+		currentCharacterTurn = 0;
 		cameraScript = GameObject.FindGameObjectWithTag("MainCamPoint").GetComponent<RotateCamera>();
-		guiScript = GameObject.FindGameObjectWithTag("GUIData").GetComponent<CharacterGUI>();
-	}
-
-	static void StartBattle(){
 		TriggerNextTurn();
 	}
 
@@ -35,7 +30,7 @@ public class TurnController {
         {
             OnNextCharacterTurn(CurrentCharacterTurn.MyCharacter);
         }
-        //	cameraScript.SetFollow(CurrentCharacterTurn.gameObject); //Tell camera to follow the character
+        cameraScript.SetFollow(CurrentCharacterTurn.gameObject); //Tell camera to follow the character
         //guiScript.UpdateTurn(orderedCharacters[currentTurn]); //Tell UI that it's now controlling the correct character
     }
 

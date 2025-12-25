@@ -10,7 +10,7 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI characteAPText;
         public TextMeshProUGUI characterHPText;
 
-    private void Start()
+    private void Awake()
     {
         TurnController.OnCharacterTurnEnding += CharacterTurnEnding;
         TurnController.OnNextCharacterTurn += CharacterTurnStarted;

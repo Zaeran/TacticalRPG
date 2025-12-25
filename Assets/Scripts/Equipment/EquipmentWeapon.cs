@@ -8,7 +8,7 @@ public class EquipmentWeapon : Equipment
     protected int _range;
     protected WeaponTargetingType _targetingType;
 
-    public EquipmentWeapon(string name, EquipmentType eType, int damage, int range, WeaponTargetingType targetType) : base(name, eType)
+    public EquipmentWeapon(string name, EquipmentType eType, List<SkillTree> allowedSkillTrees, int damage, int range, WeaponTargetingType targetType) : base(name, eType, allowedSkillTrees)
     {
         _damage = damage;
         _range = range;

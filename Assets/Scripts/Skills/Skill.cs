@@ -19,15 +19,11 @@ public class Skill
 
     public event Vector4Event OnSkillTargeted;
 
-    public Skill(string sName, SkillTag tags, ISkillTargeting targeting, List<ISkillEffect> effects)
+    public Skill(string sName)
     {
         _name = sName;
-        _tags = tags;
         _prereqs = new List<ISkillPrerequisite>();
-        _targeting = targeting;
-        _effects = effects;
         _skillCost = new List<ISkillCost>();
-
     }
 
     public string Name
@@ -38,6 +34,21 @@ public class Skill
     public void AddPrerequisite(ISkillPrerequisite prereq)
     {
         _prereqs.Add(prereq);
+    }
+
+    public void SetTags(SkillTag tagFlag)
+    {
+        _tags = tagFlag;
+    }
+
+    public void SetTargeting(ISkillTargeting targeting)
+    {
+        _targeting = targeting;
+    }
+
+    public void AddSkillEffect(ISkillEffect effect)
+    {
+        _effects.Add(effect);
     }
 
     public bool TestPrerequisites(CharacterObject c)

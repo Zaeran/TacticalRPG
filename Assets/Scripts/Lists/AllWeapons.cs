@@ -12,7 +12,7 @@ public class AllWeapons
         _allWeapons.Add(new EquipmentWeapon("Sword", new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Club", new List<SkillTree>() { SkillTree.Blunt }, 2, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 1, 5, WeaponTargetingType.Range));
-        _allWeapons.Add(new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Potions }, 0, 0, WeaponTargetingType.Line));
+        _allWeapons.Add(new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Potions }, 0, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Air Focus", new List<SkillTree>() { SkillTree.Aeromancy }, 0, 0, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Earth Focus", new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Energy Focus", new List<SkillTree>() { SkillTree.Pyromancy }, 0, 0, WeaponTargetingType.Line));

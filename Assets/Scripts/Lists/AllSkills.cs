@@ -50,6 +50,7 @@ public class AllSkills
     static void UniversalSkills()
     {
         MoveSkill();
+        PunchSkill();
     }
 
     static void MoveSkill()
@@ -64,7 +65,7 @@ public class AllSkills
         _allSkills.Add(skill);
     }
 
-    static void Punch()
+    static void PunchSkill()
     {
         Skill skill = new Skill("Punch");
         skill.AddPrerequisite(new SkillPrereqAPCost(2));

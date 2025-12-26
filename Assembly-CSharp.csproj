@@ -125,6 +125,8 @@
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectHealing.cs" />
     <Compile Include="Assets\Scripts\Lists\AllWeapons.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectUnarmedDamage.cs" />
+    <Compile Include="Assets\Scripts\UI\ActivateSkillButton.cs" />
+    <Compile Include="Assets\Scripts\Utilities\UIUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

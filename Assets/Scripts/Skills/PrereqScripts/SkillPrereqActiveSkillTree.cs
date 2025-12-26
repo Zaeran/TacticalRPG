@@ -16,6 +16,11 @@ public class SkillPrereqActiveSkillTree : ISkillPrerequisite
         return c.MyCharacter.ActiveSkillTrees.Contains(_requiredSkillTree);
     }
 
+    public bool MeetsPrerequisite(SkillTree tree)
+    {
+        return _requiredSkillTree == tree;
+    }
+
     public string GetPrerequisiteFailureText()
     {
         return "Requires active skill tree: " + _requiredSkillTree.ToString();

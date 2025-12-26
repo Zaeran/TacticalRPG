@@ -1,11 +1,13 @@
-- Create a list of weapons
-- Known bug - cancelling a Shoot skill still fires it off later. I suspect events aren't being cleared when skill is cancelled correcfly.
+
 - UI
   - Dynamically generate skills based on allowed options
-
+- Known bug - cancelling a Shoot skill still fires it off later. I suspect events aren't being cleared when skill is cancelled correcfly.
 - Before battle, choose character weapon to equip
     - Choose up to three characters
+
+
 - Basic inventory
+  - Character slots
   - UI for equipping things
   - Showing what is currently equipped
   - Basic equipment sprites?

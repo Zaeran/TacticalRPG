@@ -11,6 +11,7 @@ public class BattleUI : MonoBehaviour
         public TextMeshProUGUI characterHPText;
     public TextMeshProUGUI characterEquipmentText;
     public GameObject skillObject;
+    public GameObject skillButtonPrefab;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class BattleUI : MonoBehaviour
         c.Attributes.OnRemainingHPChanged += CharacterHPCHanged;
         c.OnWeaponChanged += CharacterWeaponChanged;
         skillObject.SetActive(false);
+        LoadAvailableSkills();
     }
 
     void CharacterTurnEnding(Character c)
@@ -67,5 +69,28 @@ public class BattleUI : MonoBehaviour
     void CharacterWeaponChanged()
     {
         characterEquipmentText.text = "Weapon: " + TurnController.CurrentCharacterTurn.MyCharacter.Weapon.Name;
+    }
+
+    void LoadAvailableSkills()
+    {
+        UIUtilities.ClearChildren(skillObject.transform);
+        List<string> allowedSkills = new List<string>();
+        foreach(Skill s in AllSkills.GetAllSkills)
+        {
+            if(s.Name == "Move")
+            {
+                continue;
+            }
+            if (s.CanUseWithSkillTrees(TurnController.CurrentCharacterTurn.MyCharacter.ActiveSkillTrees))
+            {
+                allowedSkills.Add(s.Name);
+            }
+        }
+
+        foreach(string s in allowedSkills)
+        {
+            GameObject btn = Instantiate(skillButtonPrefab, skillObject.transform);
+            btn.GetComponent<ActivateSkillButton>().Initialize(s, this);
+        }
     }
 }

@@ -64,6 +64,28 @@ public class Skill
         return true;
     }
 
+    public bool CanUseWithSkillTrees(List<SkillTree> t)
+    {
+        int totalPrereqCount = 0;
+        int validPrereqCount = 0;
+        for(int i = 0; i < _prereqs.Count; i++)
+        {
+            if(_prereqs[i] is SkillPrereqActiveSkillTree)
+            {
+                totalPrereqCount++;
+                foreach (SkillTree tree in t)
+                {
+                    if (((SkillPrereqActiveSkillTree)_prereqs[i]).MeetsPrerequisite(tree))
+                    {
+                        validPrereqCount++;
+                    }
+                }
+            }
+        }
+
+        return totalPrereqCount == validPrereqCount;
+    }
+
     public void AddSkillCost(ISkillCost cost)
     {
         _skillCost.Add(cost);

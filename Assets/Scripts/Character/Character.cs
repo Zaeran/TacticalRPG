@@ -30,7 +30,7 @@ public class Character
         }
         else
         {
-            _weapon = new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Potions }, 0, 0, WeaponTargetingType.Range);
         }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 

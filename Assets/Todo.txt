@@ -1,6 +1,8 @@
+- Create a list of weapons
+- Known bug - cancelling a Shoot skill still fires it off later. I suspect events aren't being cleared when skill is cancelled correcfly.
 - UI
   - Dynamically generate skills based on allowed options
-- Create a list of weapons
+
 - Before battle, choose character weapon to equip
     - Choose up to three characters
 - Basic inventory
@@ -50,3 +52,15 @@ SKILL TREES AND UNLOCKS
 - Aeromancy skill: wind direction on entire battlefield. Affects movement and arrows 
 
 - Raise terrain -> Only works on rock. Buildings / water / etc are unaffected
+
+STATUS LIST - NEGATIVE
+- immobilise (can't use Movement tag skills) 
+- silence (can't use Magic tag skills) 
+- disable (can't use Weapon tag skills) 
+- poison (damage each turn) 
+- blind (can only see your character. No terrain or other characters. Fully black otherwise. Can attack without valid target)
+- Confused (UI gives incorrect information sometimes) 
+- 
+
+WEAPON THINGS 
+- Weapons have list of EquipmentEffect that give extra damage, status effects, range, etc.

@@ -22,15 +22,15 @@ public class Character
         if (cName == "Char 1")
         {
             //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
-            _weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Sword", new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line);
         }
         else if(cName == "Char 2")
         {
-            _weapon = new EquipmentWeapon("Bow", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Bow }, 1, 4, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 1, 4, WeaponTargetingType.Range);
         }
         else
         {
-            _weapon = new EquipmentWeapon("Potion Kit", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Geomancy }, 0, 0, WeaponTargetingType.Range);
         }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 
@@ -103,7 +103,7 @@ public class Character
         {
             if (_weapon == null)
             {
-                return new EquipmentWeapon("Unarmed", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Unarmed }, 1, 1, WeaponTargetingType.Line);
+                return new EquipmentWeapon("Unarmed", new List<SkillTree>() { SkillTree.Unarmed }, 1, 1, WeaponTargetingType.Line);
             }
             return _weapon;
         }

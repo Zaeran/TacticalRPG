@@ -63,6 +63,18 @@ public class AllSkills
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false));
         _allSkills.Add(skill);
     }
+
+    static void Punch()
+    {
+        Skill skill = new Skill("Punch");
+        skill.AddPrerequisite(new SkillPrereqAPCost(2));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
+        skill.AddSkillCost(new SkillCostAP(2));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
+        _allSkills.Add(skill);
+    }
     #endregion
     #region Aeromancy
     static void AeromancySkills()
@@ -243,7 +255,7 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
         skill.AddSkillTags(SkillTag.Magical);
         skill.SetTargeting(new SkillTargetSelf());
-        skill.AddSkillEffect(new SkillEffectCreateWeapon(new EquipmentWeapon("Ice blade", EquipmentType.Weapon, new List<SkillTree>() { SkillTree.Hydromancy, SkillTree.Blade }, 2, 1, WeaponTargetingType.Line)));
+        skill.AddSkillEffect(new SkillEffectCreateWeapon(new EquipmentWeapon("Ice blade", new List<SkillTree>() { SkillTree.Hydromancy, SkillTree.Blade }, 2, 1, WeaponTargetingType.Line)));
         skill.AddSkillCost(new SkillCostAP(5));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
         _allSkills.Add(skill);

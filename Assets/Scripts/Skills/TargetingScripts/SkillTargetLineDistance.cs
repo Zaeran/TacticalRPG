@@ -15,7 +15,7 @@ public SkillTargetLineDistance(int range)
     public void SelectTarget(CharacterObject c)
     {
         List<Vector4> validPoints = new List<Vector4>();
-        validPoints = FindValidPoints.GetPoints("Melee", c.gameObject.transform.position, _range, c.MyCharacter.JumpStat);
+        validPoints = FindValidPoints.GetPoints("Melee", c.gameObject.transform.position, _range, c.MyCharacter.JumpStat, false, null);
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }

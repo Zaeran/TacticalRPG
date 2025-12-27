@@ -6,7 +6,7 @@ public class SkillTargetMoveRange : ISkillTargeting
 {
     public void SelectTarget(CharacterObject c)
     {
-        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject.transform.position, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat);
+        List<Vector4> validPoints = FindValidPoints.GetPoints("Move", c.gameObject.transform.position, c.MyCharacter.Attributes.CurrentAP, c.MyCharacter.JumpStat, false, null);
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }

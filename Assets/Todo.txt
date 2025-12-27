@@ -1,6 +1,6 @@
 PHASE 2 - Terrain types + advanced targeting
-+ Terrain types
-- Prerequisite - terrain type
+- Feed terrain type into pathfinding algorithm
+- Feed terrain type into valid squares algorithm
 - Targeting - terrain type
 - Water will need to flow...
 
@@ -8,18 +8,25 @@ PHASE 3 - Targeting improvements
 - Target types (line, cone, AOE, cleave style, everyone, etc.)
 - AOE indicator (blue?) when hovering valid squares
 - Face correct direction when attacking
+- Projectiles travel further when higher, less distance when lower
 
-PHASE 4
+PHASE 4 - Basic graphics overhaul
+- Simple models with animation
+- Materials
+- Animations for attacks
+  - Testing that projectiles hit before applying damage
+
+PHASE 5
 - Basic inventory
   - Character slots
   - UI for equipping things
   - Showing what is currently equipped
   - Basic equipment sprites?
 
+  PHASE 6
 - Status effects -> dictionary string/int of active status effects
-- Animations for attacks
-  - Testing that projectiles hit before applying damage
-- Projectiles travel further when higher, less distance when lower
+
+
 - XP and levelling up
 - Levelling skills independently
 - Learning new skills (how?)

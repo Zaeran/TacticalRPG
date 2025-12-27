@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillTargetMagic : ISkillTargeting
+public class SkillTargetMagicCharacter : ISkillTargeting
 {
     int _magicRange;
     bool _canTargetSelf;
 
-    public SkillTargetMagic(int range, bool canTargetSelf)
+    public SkillTargetMagicCharacter(int range, bool canTargetSelf)
     {
         _magicRange = range;
         _canTargetSelf = canTargetSelf;
@@ -15,7 +15,7 @@ public class SkillTargetMagic : ISkillTargeting
 
     public void SelectTarget(CharacterObject c)
     {
-        List<Vector4> validPoints = FindValidPoints.GetPoints("Magic", c.gameObject.transform.position, _magicRange, 10, _canTargetSelf);
+        List<Vector4> validPoints = FindValidPoints.GetPoints("Magic", c.gameObject.transform.position, _magicRange, 10, _canTargetSelf, null);
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }

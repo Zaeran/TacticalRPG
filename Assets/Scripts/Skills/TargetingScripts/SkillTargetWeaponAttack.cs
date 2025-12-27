@@ -9,11 +9,11 @@ public class SkillTargetWeaponAttack : ISkillTargeting
         List<Vector4> validPoints = new List<Vector4>();
         if (c.MyCharacter.Weapon.TargetingType == WeaponTargetingType.Line)
         {
-            validPoints = FindValidPoints.GetPoints("Melee", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, c.MyCharacter.JumpStat);
+            validPoints = FindValidPoints.GetPoints("Melee", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, c.MyCharacter.JumpStat, false, null);
         }
         else //must be ranged
         {
-            validPoints = FindValidPoints.GetPoints("Ranged", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, 5);
+            validPoints = FindValidPoints.GetPoints("Ranged", c.gameObject.transform.position, c.MyCharacter.Weapon.Range, 5, false, null);
         }
         
         DrawSquaresScript.DrawValidSquares(validPoints);

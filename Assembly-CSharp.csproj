@@ -79,7 +79,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\SkillCostAP.cs" />
     <Compile Include="Assets\Scripts\Camera\RotateCamera.cs" />
     <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMoveRange.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagic.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagicCharacter.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\ISkillEffect.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillCostScripts\SkillCostSquareDistance.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectMove.cs" />
@@ -134,6 +134,7 @@
     <Compile Include="Assets\Scripts\Generic\DrawSquaresScript.cs" />
     <Compile Include="Assets\Scripts\UI\QuitBtn.cs" />
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqStandingOnTerrainType.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagicTerrain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

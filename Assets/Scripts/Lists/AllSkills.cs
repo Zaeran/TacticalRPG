@@ -62,7 +62,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetMoveRange());
         skill.AddSkillCost(new SkillCostSquareDistance());
         skill.AddSkillEffect(new SkillEffectMove());
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, false, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, false, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -83,7 +83,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetSelf());
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(2));
         skill.AddSkillCost(new SkillCostAP(4));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(2, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(2, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -93,10 +93,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Aeromancy));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(4, false));
+        skill.SetTargeting(new SkillTargetMagicCharacter(4, false));
         skill.AddSkillEffect(new SkillEffectPullTowardsCharacter(1));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -106,10 +106,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Aeromancy));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(4, false));
+        skill.SetTargeting(new SkillTargetMagicCharacter(4, false));
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -129,7 +129,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -144,7 +144,7 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillCost(new SkillCostAP(5));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -165,7 +165,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -179,7 +179,7 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
         skill.AddSkillCost(new SkillCostAP(4));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -193,7 +193,7 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillEffect(new SkillEffectLowerTerrain());
         skill.AddSkillCost(new SkillCostAP(4));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, true, true, false, new List<TerrainType>() { TerrainType.Rock }));
         _allSkills.Add(skill);
     }
     #endregion
@@ -212,7 +212,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -225,7 +225,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetLineDistance(1));
         skill.AddSkillEffect(new SkillEffectWeaponAttackMultiplier(2));
         skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -243,10 +243,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Geomancy));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(3, true));
+        skill.SetTargeting(new SkillTargetMagicTerrain(3, new List<TerrainType>() { TerrainType.Rock }));
         skill.AddSkillEffect(new SkillEffectRaiseTerrain());
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false, new List<TerrainType>() { TerrainType.Rock }));
         _allSkills.Add(skill);
     }
 
@@ -256,10 +256,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Geomancy));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(3, true));
+        skill.SetTargeting(new SkillTargetMagicTerrain(3, new List<TerrainType>() { TerrainType.Rock }));
         skill.AddSkillEffect(new SkillEffectLowerTerrain());
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false, new List<TerrainType>() { TerrainType.Rock }));
         _allSkills.Add(skill);
     }
 
@@ -268,11 +268,12 @@ public class AllSkills
         Skill skill = new Skill("Throw Rock");
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Geomancy));
+        skill.AddPrerequisite(new SkillPrereqStandingOnTerrainType(new List<TerrainType>() { TerrainType.Rock }));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(3, false));
+        skill.SetTargeting(new SkillTargetMagicCharacter(3, false));
         skill.AddSkillEffect(new SkillEffectEarthDamage(2));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -294,7 +295,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetSelf());
         skill.AddSkillEffect(new SkillEffectCreateWeapon(new EquipmentWeapon("Ice blade", new List<SkillTree>() { SkillTree.Hydromancy, SkillTree.Blade }, 2, 1, WeaponTargetingType.Line)));
         skill.AddSkillCost(new SkillCostAP(5));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, false, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, false, true, null));
         _allSkills.Add(skill);
     }
 
@@ -304,10 +305,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
         skill.AddSkillTags(SkillTag.Buff);
-        skill.SetTargeting(new SkillTargetMagic(1, true));
+        skill.SetTargeting(new SkillTargetMagicCharacter(1, true));
         skill.AddSkillEffect(new SkillEffectHealing(1));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true, null));
         _allSkills.Add(skill);
     }
 
@@ -318,10 +319,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
         skill.AddPrerequisite(new SkillPrereqStandingOnTerrainType(new List<TerrainType>() { TerrainType.Water }));
         skill.AddSkillTags(SkillTag.Buff);
-        skill.SetTargeting(new SkillTargetMagic(1, true));
+        skill.SetTargeting(new SkillTargetMagicCharacter(1, true));
         skill.AddSkillEffect(new SkillEffectHealing(5));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true, null));
         _allSkills.Add(skill);
     }
 
@@ -331,10 +332,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
         skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetMagic(3, false));
+        skill.SetTargeting(new SkillTargetMagicCharacter(3, false));
         skill.AddSkillEffect(new SkillEffectEarthDamage(2));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -353,10 +354,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(3));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Potions));
         skill.AddSkillTags(SkillTag.Buff);
-        skill.SetTargeting(new SkillTargetMagic(1, true));
+        skill.SetTargeting(new SkillTargetMagicCharacter(1, true));
         skill.AddSkillEffect(new SkillEffectHealing(2));
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true, null));
         _allSkills.Add(skill);
     }
 
@@ -366,10 +367,10 @@ public class AllSkills
         skill.AddPrerequisite(new SkillPrereqAPCost(5));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Potions));
         skill.AddSkillTags(SkillTag.Buff);
-        skill.SetTargeting(new SkillTargetMagic(3, true));
+        skill.SetTargeting(new SkillTargetMagicCharacter(3, true));
         skill.AddSkillEffect(new SkillEffectEarthDamage(2));
         skill.AddSkillCost(new SkillCostAP(5));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(1, false, true, true, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(1, false, true, true, true, null));
         _allSkills.Add(skill);
     }
     #endregion
@@ -398,7 +399,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectUnarmedDamage());
         skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
 
@@ -413,7 +414,7 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectUnarmedDamage());
         skill.AddSkillEffect(new SkillEffectUnarmedDamage());
         skill.AddSkillCost(new SkillCostAP(5));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false, null));
         _allSkills.Add(skill);
     }
     #endregion

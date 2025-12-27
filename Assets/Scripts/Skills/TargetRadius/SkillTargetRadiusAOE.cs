@@ -9,14 +9,16 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
     bool _canHitCharacters = false;
     bool _requiresConfirmation = true;
     bool _canTargetSelf;
+    List<TerrainType> _allowedTerrainTypes;
 
-    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters, bool requiresConfirmation, bool canTargetSelf)
+    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters, bool requiresConfirmation, bool canTargetSelf, List<TerrainType> allowedTerrainTypes)
     {
         _aoeDistance = distance;
         _canHitTerrain = canHitTerrain;
         _canHitCharacters = canHitCharacters;
         _requiresConfirmation = requiresConfirmation;
         _canTargetSelf = canTargetSelf;
+        _allowedTerrainTypes = allowedTerrainTypes;
     }
 
     public void SetAOE(int distance)
@@ -36,7 +38,7 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
 
    public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)
     {
-        List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1, true);
+        List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1, true, _allowedTerrainTypes);
         List<ClickableTarget> hitCharacters = new List<ClickableTarget>();
         foreach (Vector4 square in points)
         {

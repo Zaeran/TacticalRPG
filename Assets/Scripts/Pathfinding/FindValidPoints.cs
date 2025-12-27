@@ -2,32 +2,36 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class FindValidPoints : MonoBehaviour {
+public class FindValidPoints : MonoBehaviour
+{
 
 	static int terrainLayerMask = 1 << 8;
-	static Vector3[] MoveDirections = new Vector3[]{Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
+	static Vector3[] MoveDirections = new Vector3[] { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
 	static List<Vector4> validPoints;
 
-    public static List<Vector4> GetPoints(string type, Vector3 origin, int maxRange = 0, int maxJump = 0, bool canSelfTarget = false){ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
-		switch(type){
-		case "Move":
-			validPoints = GetValidMovePoints(maxRange, maxJump, origin, canSelfTarget);
-			return validPoints;
-		case "Melee": // melee
-			validPoints = GetValidMeleePoints(maxRange, maxJump, origin, canSelfTarget);
-			return validPoints;
-		case "Ranged": // ranged
-			validPoints = GetValidRangedPoints(maxRange, maxJump, origin, canSelfTarget);
-			return validPoints;
-		case "Magic":
-			validPoints = GetValidMagicPoints(maxRange, maxJump, origin, canSelfTarget);
-			return validPoints;
-		default:
-			return new List<Vector4>();
+	public static List<Vector4> GetPoints(string type, Vector3 origin, int maxRange, int maxJump, bool canSelfTarget, List<TerrainType> validTerrainTypes)
+	{ //1 - move. 		2 - melee attack.		3 - ranged attack.		4 - spell.
+		switch (type)
+		{
+			case "Move":
+				validPoints = GetValidMovePoints(maxRange, maxJump, origin, canSelfTarget);
+				return validPoints;
+			case "Melee": // melee
+				validPoints = GetValidMeleePoints(maxRange, maxJump, origin, canSelfTarget);
+				return validPoints;
+			case "Ranged": // ranged
+				validPoints = GetValidRangedPoints(maxRange, maxJump, origin, canSelfTarget);
+				return validPoints;
+			case "Magic":
+				validPoints = GetValidMagicPoints(maxRange, maxJump, origin, canSelfTarget, validTerrainTypes);
+				return validPoints;
+			default:
+				return new List<Vector4>();
 		}
 	}
-	
-	private static List<Vector4> GetValidMovePoints(int maxMove, int maxJump, Vector3 origin, bool canSelfTarget){
+
+	private static List<Vector4> GetValidMovePoints(int maxMove, int maxJump, Vector3 origin, bool canSelfTarget)
+	{
 		//declare variables
 		int heightDifference = 0;
 		int distanceWalked = 0;
@@ -40,54 +44,66 @@ public class FindValidPoints : MonoBehaviour {
 		List<Vector3> positionList = new List<Vector3>();
 		RaycastHit[] walkableTiles;
 		RaycastHit[] initialTile;
-		
+
 		//begin at the object's location
 		initialTile = Physics.RaycastAll(new Vector3(Mathf.Floor(origin.x), Mathf.Floor(origin.y), Mathf.Floor(origin.z)) + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
-		foreach(RaycastHit r in initialTile){ //get current tile, instead of tile at same x/z but different height
-			if(r.point.y == origin.y){
+		foreach (RaycastHit r in initialTile)
+		{ //get current tile, instead of tile at same x/z but different height
+			if (r.point.y == origin.y)
+			{
 				startPoint = r.point;
 				break;
-				}
+			}
 		}
 		//add the starting point to the list of available positions
 		positionList.Add(startPoint);
 		pointList.Add(new Vector4(startPoint.x, startPoint.y, startPoint.z, 0));
 		testPoint = startPoint;
-		
+
 		//determine the maximum amount of possible tiles that can be moved to
 		int moveTiles = 0;
-		for(int i = maxMove; i > 0; i--){
+		for (int i = maxMove; i > 0; i--)
+		{
 			moveTiles += (maxMove * 4) + 1;
 		}
 		//run for each tile
-		for(int i = 0; i < moveTiles; i++){
-			for(int moveDir = 0; moveDir < MoveDirections.Length; moveDir++){
+		for (int i = 0; i < moveTiles; i++)
+		{
+			for (int moveDir = 0; moveDir < MoveDirections.Length; moveDir++)
+			{
 				//set next point to test as adjacent
 				nextPoint = testPoint + MoveDirections[moveDir];
-				
+
 				//raycast to get height of current point, then use raycasting to find if adjacent points are valid
-				initialTile = Physics.RaycastAll(testPoint + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-				foreach(RaycastHit r in initialTile){ //get current tile, instead of tile at same x/z but different height
-					if(r.point.y == testPoint.y){
+				initialTile = Physics.RaycastAll(testPoint + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
+				foreach (RaycastHit r in initialTile)
+				{ //get current tile, instead of tile at same x/z but different height
+					if (r.point.y == testPoint.y)
+					{
 						currentPoint = r;
 						break;
 					}
 				}
 				//raycast the adjacent tile
 				walkableTiles = Physics.RaycastAll(nextPoint + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
-				foreach(RaycastHit rh in walkableTiles){
+				foreach (RaycastHit rh in walkableTiles)
+				{
 					//ensure that tile is empty
-					if(Physics.OverlapSphere(rh.point, 0.3f, ~terrainLayerMask).Length == 0){
+					if (Physics.OverlapSphere(rh.point, 0.3f, ~terrainLayerMask).Length == 0)
+					{
 						//calculate the height difference between current and adjacent tile
 						heightDifference = Mathf.FloorToInt(rh.point.y - currentPoint.point.y + 0.1f);
 						//can character reach this height?
-						if(Mathf.Abs(heightDifference) <= maxJump){
+						if (Mathf.Abs(heightDifference) <= maxJump)
+						{
 							//adjacent point is within acceptable height limits
-							if(!positionList.Contains(rh.point)){
+							if (!positionList.Contains(rh.point))
+							{
 								//point hasn't been travelled to before
-								if(distanceWalked < maxMove){
+								if (distanceWalked < maxMove)
+								{
 									//haven't exceeded max move distance
-									pointList.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, distanceWalked+1));
+									pointList.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, distanceWalked + 1));
 									positionList.Add(rh.point);
 								}
 							}
@@ -96,28 +112,33 @@ public class FindValidPoints : MonoBehaviour {
 				}
 			}
 			//if more points exist, go to the first point on the list, then remove it from pointList
-			if(pointList.Count > 0){
+			if (pointList.Count > 0)
+			{
 				testPoint = pointList[0];
 				distanceWalked = (int)pointList[0].w;
 				finalPointList.Add(pointList[0]);
-				pointList.Remove(pointList[0]);				
-			}				
+				pointList.Remove(pointList[0]);
+			}
 		}
 		return finalPointList;
 	}
-	
+
 	//gets valid points for melee combat.
 	//points are in a straight line
-	private static List<Vector4> GetValidMeleePoints(int maxRange, int maxJump, Vector3 origin, bool canSelfTarget){
+	private static List<Vector4> GetValidMeleePoints(int maxRange, int maxJump, Vector3 origin, bool canSelfTarget)
+	{
 		int heightDifference = 0;
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit currentPoint = new RaycastHit();
 		RaycastHit[] initialTile;
 		//test each direction
-		for(int moveDir = 0; moveDir < MoveDirections.Length; moveDir++){
-			initialTile = Physics.RaycastAll(origin + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-			foreach(RaycastHit rh in initialTile){
-				if(rh.point.y == origin.y){
+		for (int moveDir = 0; moveDir < MoveDirections.Length; moveDir++)
+		{
+			initialTile = Physics.RaycastAll(origin + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
+			foreach (RaycastHit rh in initialTile)
+			{
+				if (rh.point.y == origin.y)
+				{
 					currentPoint = rh;
 					break;
 				}
@@ -125,18 +146,21 @@ public class FindValidPoints : MonoBehaviour {
 			Vector3 testPoint = currentPoint.point;
 			int pointDistance = 1;
 			//make sure that the max attack range is not exceeded
-			for(int r = 0; r <= maxRange; r++){
-				if(r == 0 && !canSelfTarget)
-                {
+			for (int r = 0; r <= maxRange; r++)
+			{
+				if (r == 0 && !canSelfTarget)
+				{
 					continue;
-                }
+				}
 				Vector3 nextPoint = testPoint + (MoveDirections[moveDir] * r);
 				//raycast to get height of current point, then use raycasting to find if adjacent points are valid
-				
-				initialTile = Physics.RaycastAll(nextPoint + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-				foreach(RaycastHit rh in initialTile){
+
+				initialTile = Physics.RaycastAll(nextPoint + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
+				foreach (RaycastHit rh in initialTile)
+				{
 					heightDifference = Mathf.FloorToInt(rh.point.y - currentPoint.point.y + 0.1f);
-					if(Mathf.Abs(heightDifference) <= maxJump){
+					if (Mathf.Abs(heightDifference) <= maxJump)
+					{
 						validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, pointDistance + 1));
 						pointDistance++;
 					}
@@ -145,47 +169,74 @@ public class FindValidPoints : MonoBehaviour {
 		}
 		return validAttacks;
 	}
-	
+
 	//gets valid points for ranged attacks
 	//points can be at any location in range. no adjacent tiles required
-	private static List<Vector4> GetValidRangedPoints(int maxRange, int maxDrop, Vector3 origin, bool canTargetSelf){
+	private static List<Vector4> GetValidRangedPoints(int maxRange, int maxDrop, Vector3 origin, bool canTargetSelf)
+	{
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit[] initialTile;
 		int horDistanceToPoint = 0;
-		for(int x = -maxRange; x <= maxRange; x++){ // x direction
-			for(int z = -(maxRange - Mathf.Abs(x)); z <= maxRange - Mathf.Abs(x); z++){
-				initialTile = Physics.RaycastAll(origin + new Vector3(x,0,z) + (Vector3.up * 30), Vector3.down, 50,terrainLayerMask);
-				foreach(RaycastHit rh in initialTile){
+		for (int x = -maxRange; x <= maxRange; x++)
+		{ // x direction
+			for (int z = -(maxRange - Mathf.Abs(x)); z <= maxRange - Mathf.Abs(x); z++)
+			{
+				initialTile = Physics.RaycastAll(origin + new Vector3(x, 0, z) + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
+				foreach (RaycastHit rh in initialTile)
+				{
 					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - origin.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - origin.z))));
-					if(Mathf.FloorToInt(horDistanceToPoint + ((rh.point.y - origin.y)/maxDrop)) <= maxRange && (horDistanceToPoint > 0 || canTargetSelf))
+					if (Mathf.FloorToInt(horDistanceToPoint + ((rh.point.y - origin.y) / maxDrop)) <= maxRange && (horDistanceToPoint > 0 || canTargetSelf))
 					{ // adds range for height decrease, reduces for height increase
 						validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 					}
 				}
 			}
 		}
-		
+
 		return validAttacks;
 	}
-	
-	private static List<Vector4> GetValidMagicPoints(int maxRange, int maxDrop, Vector3 origin, bool canTargetSelf){
+
+	private static List<Vector4> GetValidMagicPoints(int maxRange, int maxDrop, Vector3 origin, bool canTargetSelf, List<TerrainType> validTerrainTypes)
+	{
 		List<Vector4> validAttacks = new List<Vector4>();
 		RaycastHit[] initialTile;
 		int horDistanceToPoint = 0;
-		for(int x = -maxRange; x <= maxRange; x++){ // x direction
+		for (int x = -maxRange; x <= maxRange; x++)
+		{ // x direction
 			for (int z = -(maxRange - Mathf.Abs(x)); z <= maxRange - Mathf.Abs(x); z++)
 			{
 				initialTile = Physics.RaycastAll(origin + new Vector3(x, 0, z) + (Vector3.up * 30), Vector3.down, 50, terrainLayerMask);
-				foreach (RaycastHit rh in initialTile){
+				foreach (RaycastHit rh in initialTile)
+				{
 					horDistanceToPoint = Mathf.FloorToInt(Mathf.Abs((int)(rh.point.x - origin.x))) + (Mathf.FloorToInt(Mathf.Abs((int)(rh.point.z - origin.z))));
 					if (horDistanceToPoint > 0 || canTargetSelf)
 					{
-						validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
+						bool validPoint = validTerrainTypes == null;
+						//test terrain type
+						if (!validPoint)
+						{
+							TerrainObject t = rh.collider.gameObject.GetComponent<TerrainObject>();
+							if (t == null)
+							{
+								continue;
+							}
+							foreach (TerrainType tType in validTerrainTypes)
+							{
+								if (t.MyTerrainType == tType)
+								{
+									validPoint = true;
+									break;
+								}
+							}
+							if (validPoint)
+							{
+								validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
+							}
+						}
 					}
 				}
 			}
 		}
-		
 		return validAttacks;
 	}
 }

@@ -12,7 +12,7 @@ public class SkillEffectRaiseTerrain : ISkillEffect
         {
             //if(hitObject is TerrainObject)
             {
-                hitObject.transform.position += new Vector3(0, 1, 0);
+                hitObject.transform.position += new Vector3(0, 0.5f, 0);
             }
         }
     }

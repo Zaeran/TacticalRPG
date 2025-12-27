@@ -135,7 +135,7 @@ public class AllSkills
 
     static void TripleSlice()
     {
-        Skill skill = new Skill("Triple lice");
+        Skill skill = new Skill("Triple slice");
         skill.AddPrerequisite(new SkillPrereqAPCost(5));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Blade));
         skill.AddSkillTags(SkillTag.Attack);
@@ -153,6 +153,7 @@ public class AllSkills
     {
         WhackSkill();
         KnockbackSkill();
+        Smash();
     }
 
     static void WhackSkill()
@@ -179,6 +180,20 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
         skill.AddSkillCost(new SkillCostAP(4));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        _allSkills.Add(skill);
+    }
+
+    static void Smash()
+    {
+        Skill skill = new Skill("Smash");
+        skill.AddPrerequisite(new SkillPrereqAPCost(4));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Blunt));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectLowerTerrain());
+        skill.AddSkillCost(new SkillCostAP(4));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, true, true, false));
         _allSkills.Add(skill);
     }
     #endregion
@@ -332,7 +347,7 @@ public class AllSkills
 
     static void BombPotion()
     { 
-        Skill skill = new Skill("Bomb");
+        Skill skill = new Skill("Alchemy Bomb");
         skill.AddPrerequisite(new SkillPrereqAPCost(5));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Potions));
         skill.AddSkillTags(SkillTag.Buff);
@@ -374,7 +389,7 @@ public class AllSkills
 
     static void FlurryOfBlows()
     {
-        Skill skill = new Skill("Punch");
+        Skill skill = new Skill("Flurry of Blows");
         skill.AddPrerequisite(new SkillPrereqAPCost(5));
         skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Unarmed));
         skill.AddSkillTags(SkillTag.Attack);

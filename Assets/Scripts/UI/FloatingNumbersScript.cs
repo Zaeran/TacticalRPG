@@ -13,7 +13,7 @@ public class FloatingNumbersScript : MonoBehaviour {
 
     public static void CreateFloatingNumber(Vector3 position, string val, Color c)
     {
-		GameObject number = Instantiate(instance.floatingNumberObj, Camera.main.WorldToScreenPoint(position), Quaternion.identity, instance.transform);
+		GameObject number = Instantiate(instance.floatingNumberObj, Camera.main.WorldToScreenPoint(position) + new Vector3(Random.Range(-25,25), Random.Range(-25,25), 0), Quaternion.identity, instance.transform);
 		number.GetComponent<FloatingNumber>().Initialize(val, c);
     }
 }

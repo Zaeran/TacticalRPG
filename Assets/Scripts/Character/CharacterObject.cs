@@ -68,6 +68,7 @@ public class CharacterObject : ClickableTarget
     public void StartMyTurn()
     {
         _myCharacter.Attributes.RefillAP();
+        Fall();
     }
 
     public void StartSetFacingDirection()

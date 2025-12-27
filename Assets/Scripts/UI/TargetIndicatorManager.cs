@@ -18,7 +18,7 @@ public class TargetIndicatorManager : MonoBehaviour
                 //create indicators per target
         foreach(ClickableTarget t in targets)
         {
-            Instantiate(indicator, t.transform.position + new Vector3(0,1,0), Quaternion.identity);
+            Instantiate(indicator, t.transform.position + (t is TerrainObject ? new Vector3(0,t.transform.localScale.y + 1.5f, 0) : new Vector3(0,1,0)), Quaternion.identity);
             //create indicator
         }
     }

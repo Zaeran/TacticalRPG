@@ -245,8 +245,8 @@ public class AllSkills
         skill.AddSkillTags(SkillTag.Attack);
         skill.SetTargeting(new SkillTargetMagic(3, true));
         skill.AddSkillEffect(new SkillEffectRaiseTerrain());
-        skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, true, true, true));
+        skill.AddSkillCost(new SkillCostAP(3));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false));
         _allSkills.Add(skill);
     }
 
@@ -259,7 +259,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetMagic(3, true));
         skill.AddSkillEffect(new SkillEffectLowerTerrain());
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, true, true, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false));
         _allSkills.Add(skill);
     }
 

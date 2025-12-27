@@ -7,17 +7,24 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
     int _aoeDistance = 1;
     bool _canHitTerrain = false;
     bool _canHitCharacters = false;
+    bool _requiresConfirmation = true;
 
-    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters)
+    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters, bool requiresConfirmation)
     {
         _aoeDistance = distance;
         _canHitTerrain = canHitTerrain;
         _canHitCharacters = canHitCharacters;
+        _requiresConfirmation = requiresConfirmation;
     }
 
     public void SetAOE(int distance)
     {
         _aoeDistance = distance;
+    }
+
+    public bool RequiresConfirmation()
+    {
+        return _requiresConfirmation;
     }
 
    public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)

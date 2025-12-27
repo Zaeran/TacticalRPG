@@ -89,6 +89,19 @@ public class CharacterObject : ClickableTarget
 
     void SkillTargeted(Vector4 point)
     {
+        if(_activeSkill.RequiresTargetConfirmation)
+        {
+            _activeSkill.PrepareConfirmingTargets(this, point);
+        }
+        else
+        {
+            ConfirmTargets(point);
+        }
+    }
+
+    void ConfirmTargets(Vector4 point)
+    {
+         //show valid targets, then confirm
         if (_activeSkill.ProcessSkillEffect(this, point)) //skill succeeded
         {
             _activeSkill.OnSkillTargeted -= SkillTargeted;
@@ -100,7 +113,6 @@ public class CharacterObject : ClickableTarget
             _activeSkill.StartSkillTargeting(this);
             StatusText.SetStatusText("Action: " + _activeSkill.Name);
         }
-
     }
 
     public void SetAction(string actionName)

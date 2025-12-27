@@ -88,7 +88,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -99,7 +99,7 @@ MonoBehaviour:
       y: 21
       width: 826.5
       height: 396
-    m_Scale: {x: 0.73333335, y: 0.73333335}
+    m_Scale: {x: 0.89208007, y: 0.89208007}
     m_Translation: {x: 413.25, y: 198}
     m_MarginLeft: 0
     m_MarginRight: 0
@@ -107,10 +107,10 @@ MonoBehaviour:
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -563.5227
-      y: -270
-      width: 1127.0454
-      height: 540
+      x: -463.24316
+      y: -221.95317
+      width: 926.4863
+      height: 443.90634
     m_MinimalGUI: 1
   m_defaultScale: 0.73333335
   m_LastWindowPixelSize: {x: 1653, y: 834}
@@ -188,8 +188,8 @@ MonoBehaviour:
     y: 0
     width: 271
     height: 438
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ccf9ffff
-      m_LastClickedID: -1588
+      m_SelectedIDs: ee660000
+      m_LastClickedID: 0
       m_ExpandedIDs: b8f9ffffccf9ffff36fbffff2858000032580000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 5}
+        m_ClientGUIView: {fileID: 0}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -592,11 +592,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.17077655, y: 0.7277076, z: -0.19577655, w: 0.6347818}
     speed: 2
-    m_Value: {x: 0.17077656, y: 0.7277076, z: -0.19577655, w: 0.6347818}
+    m_Value: {x: 0.1707766, y: 0.72770786, z: -0.19577663, w: 0.634782}
   m_Size:
-    m_Target: 1.4025669
+    m_Target: 1.5751809
     speed: 2
-    m_Value: 1.4025669
+    m_Value: 1.5751809
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -689,22 +689,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/UI
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/UI
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/nathanbeattie/Documents/GitHub/TacticalRPG
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 364}
-    m_SelectedIDs: 5c5a0000
-    m_LastClickedID: 23132
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 2a5a0000
+    m_LastClickedID: 23082
     m_ExpandedIDs: 00000000125900001459000016590000185900001a59000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -758,8 +758,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 865a0000
-    m_LastClickedInstanceID: 23174
+    m_SelectedInstanceIDs: ee660000
+    m_LastClickedInstanceID: 26350
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -777,7 +777,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 9}
+      m_ClientGUIView: {fileID: 0}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -838,8 +838,8 @@ MonoBehaviour:
     y: 0
     width: 340.5
     height: 739
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}

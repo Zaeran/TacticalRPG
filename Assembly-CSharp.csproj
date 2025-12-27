@@ -131,6 +131,8 @@
     <Compile Include="Assets/Scripts/Skills/SkillEffectScripts/SkillEffectHealing.cs" />
     <Compile Include="Assets/Scripts/Skills/PrereqScripts/ISkillPrerequisite.cs" />
     <Compile Include="Assets/Scripts/Generic/DrawSquaresScript.cs" />
+    <Compile Include="Assets/Scripts/UI/TargetIndicator.cs" />
+    <Compile Include="Assets/Scripts/UI/TargetIndicatorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

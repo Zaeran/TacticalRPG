@@ -1,21 +1,28 @@
+PHASE 1 - skills, weapons and associated skill trees
 - Confirm targets before processing attack
 - indicator above targets that will be hit
-- AOE indicator (blue?) when hovering valid squares
 - Known bug - cancelling a Shoot skill still fires it off later. I suspect events aren't being cleared when skill is cancelled correcfly.
+- Can cancel Passing turn
 - Before battle, choose character weapon to equip
     - Choose up to three characters
 
 
+PHASE 2 - Terrain types + advanced targeting
+- AOE indicator (blue?) when hovering valid squares
+- Target types (line, cone, AOE, cleave style, everyone, etc.)
 - Terrain types
 - Prerequisite - terrain type
+- terrain actually changes height, not moving an object up/down
+- Face correct direction when attacking
 
+PHASE 3
 
 - Basic inventory
   - Character slots
   - UI for equipping things
   - Showing what is currently equipped
   - Basic equipment sprites?
-- Face correct direction when attacking
+
 - Status effects -> dictionary string/int of active status effects
 - Animations for attacks
   - Testing that projectiles hit before applying damage

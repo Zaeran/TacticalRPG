@@ -111,6 +111,24 @@ public class Skill
         }
     }
 
+    public bool RequiresTargetConfirmation
+    {
+        get{return _targetRadius.RequiresConfirmation();}
+    }
+
+    public bool PrepareConfirmingTargets(CharacterObject c, Vector4 point)
+    {
+        List<ClickableTarget> hitCharacters = _targetRadius.GetTargets(c, point);
+        if (hitCharacters == null) //No valid character found
+        {
+            Debug.Log("no valid targets");
+            StatusText.SetStatusText("No valid targets", 1.0f);
+            return false;
+        }
+        TargetIndicatorManager.instance.CreateTargetIndicators(hitCharacters);
+        return true;
+    }
+
     public bool ProcessSkillEffect(CharacterObject c, Vector4 point)
     {
         bool canPayCost = true;

@@ -117,6 +117,7 @@ public class AllSkills
     static void BladeSkills()
     {
         SliceSkill();
+        TripleSlice();
     }
 
     static void SliceSkill()
@@ -128,6 +129,21 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillCost(new SkillCostAP(2));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        _allSkills.Add(skill);
+    }
+
+    static void TripleSlice()
+    {
+        Skill skill = new Skill("Triple lice");
+        skill.AddPrerequisite(new SkillPrereqAPCost(5));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Blade));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillCost(new SkillCostAP(5));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
         _allSkills.Add(skill);
     }
@@ -170,6 +186,7 @@ public class AllSkills
     public static void BowSkills()
     {
         ShootSkill();
+        PointBlankShot();
     }
     static void ShootSkill()
     {
@@ -179,6 +196,19 @@ public class AllSkills
         skill.AddSkillTags(SkillTag.Attack);
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
+        skill.AddSkillCost(new SkillCostAP(2));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        _allSkills.Add(skill);
+    }
+
+    static void PointBlankShot()
+    {
+         Skill skill = new Skill("Point Blank Shot");
+        skill.AddPrerequisite(new SkillPrereqAPCost(2));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Bow));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetLineDistance(1));
+        skill.AddSkillEffect(new SkillEffectWeaponAttackMultiplier(2));
         skill.AddSkillCost(new SkillCostAP(2));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
         _allSkills.Add(skill);
@@ -236,6 +266,7 @@ public class AllSkills
     static void HydromancySkills()
     {
         CreateIceBlade();
+        WaterHeal();
     }
 
     static void CreateIceBlade()
@@ -250,12 +281,39 @@ public class AllSkills
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, false, true));
         _allSkills.Add(skill);
     }
+
+    static void WaterHeal()
+    {
+          Skill skill = new Skill("Water Heal");
+        skill.AddPrerequisite(new SkillPrereqAPCost(3));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
+        skill.AddSkillTags(SkillTag.Buff);
+        skill.SetTargeting(new SkillTargetMagic(1, true));
+        skill.AddSkillEffect(new SkillEffectHealing(1));
+        skill.AddSkillCost(new SkillCostAP(3));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        _allSkills.Add(skill);
+    }
+
+    static void IceBall()
+    {
+          Skill skill = new Skill("Ice Ball");
+        skill.AddPrerequisite(new SkillPrereqAPCost(3));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetMagic(3, false));
+        skill.AddSkillEffect(new SkillEffectEarthDamage(2));
+        skill.AddSkillCost(new SkillCostAP(3));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        _allSkills.Add(skill);
+    }
     #endregion
     #region Potions
     static void PotionSkills()
     {
         //healing potion skill
         HealthPotion();
+        BombPotion();
         //poison skill
     }
 
@@ -269,6 +327,19 @@ public class AllSkills
         skill.AddSkillEffect(new SkillEffectHealing(2));
         skill.AddSkillCost(new SkillCostAP(3));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        _allSkills.Add(skill);
+    }
+
+    static void BombPotion()
+    { 
+        Skill skill = new Skill("Bomb");
+        skill.AddPrerequisite(new SkillPrereqAPCost(5));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Potions));
+        skill.AddSkillTags(SkillTag.Buff);
+        skill.SetTargeting(new SkillTargetMagic(3, true));
+        skill.AddSkillEffect(new SkillEffectEarthDamage(2));
+        skill.AddSkillCost(new SkillCostAP(5));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(1, false, true, true, true));
         _allSkills.Add(skill);
     }
     #endregion
@@ -285,6 +356,7 @@ public class AllSkills
     static void UnarmedSkills()
     {
            PunchSkill();
+           FlurryOfBlows();
     }
 
     static void PunchSkill()
@@ -296,6 +368,21 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectUnarmedDamage());
         skill.AddSkillCost(new SkillCostAP(2));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
+        _allSkills.Add(skill);
+    }
+
+    static void FlurryOfBlows()
+    {
+        Skill skill = new Skill("Punch");
+        skill.AddPrerequisite(new SkillPrereqAPCost(5));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Unarmed));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
+        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
+        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
+        skill.AddSkillCost(new SkillCostAP(5));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, false));
         _allSkills.Add(skill);
     }

@@ -4609,3 +4609,292 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002510 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16f787000 may have been prematurely finalized
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.264 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1265ms)
+		BeginReloadAssembly (139ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (57ms)
+		EndReloadAssembly (1041ms)
+			LoadAssemblies (56ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (214ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (49ms)
+			SetupLoadedEditorAssemblies (691ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (44ms)
+				ProcessInitializeOnLoadAttributes (625ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (3ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3013 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (22.0 KB). Loaded Objects now: 3754.
+Memory consumption went from 115.2 MB to 115.2 MB.
+Total: 3.088333 ms (FindLiveObjects: 0.188375 ms CreateObjectMapping: 0.061667 ms MarkObjects: 2.810958 ms  DeleteObjects: 0.025750 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 839.559004 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectMove.cs
+  artifactKey: Guid(7962e76a4fca6364789e616649ffc35c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectMove.cs using Guid(7962e76a4fca6364789e616649ffc35c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9ffb9b11bddf1d891609ff8cef6aaa6') in 0.009479 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.726547 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectPullTowardsCharacter.cs
+  artifactKey: Guid(7d5b9d9025b0c5e4fab476623aeae896) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectPullTowardsCharacter.cs using Guid(7d5b9d9025b0c5e4fab476623aeae896) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '329a367dfde2a9a4c50a88b825d6f988') in 0.001324 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.182178 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectRaiseTerrain.cs
+  artifactKey: Guid(484c24bb3317b534cba5e7afaaf1ebcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectRaiseTerrain.cs using Guid(484c24bb3317b534cba5e7afaaf1ebcb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '072610926cdbfc198f08f93c503c75d5') in 0.001290 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.455986 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectUnarmedDamage.cs
+  artifactKey: Guid(5e8bdb7e264fbae42800da396e700e8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectUnarmedDamage.cs using Guid(5e8bdb7e264fbae42800da396e700e8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0762f094c7cd0e88431464f2a66a014') in 0.001458 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.430785 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttack.cs
+  artifactKey: Guid(7517a4421b1f5f043ac1f3d8a4e186d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttack.cs using Guid(7517a4421b1f5f043ac1f3d8a4e186d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1820d59d757263cee646af9229bc7210') in 0.001330 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1.437893 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttack1.cs
+  artifactKey: Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttack1.cs using Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8037d81f28e8f6dd0b27b9e4863668e') in 0.001276 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 12.845384 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttackMultiplier.cs
+  artifactKey: Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttackMultiplier.cs using Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6650a1298cf1796439b8186965fa9937') in 0.003195 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002200 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16f787000 may have been prematurely finalized
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.307 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1308ms)
+		BeginReloadAssembly (161ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (14ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (62ms)
+		EndReloadAssembly (1055ms)
+			LoadAssemblies (62ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (220ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (56ms)
+			SetupLoadedEditorAssemblies (689ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (44ms)
+				ProcessInitializeOnLoadAttributes (623ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (3ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3014 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (22.0 KB). Loaded Objects now: 3758.
+Memory consumption went from 115.3 MB to 115.2 MB.
+Total: 3.092875 ms (FindLiveObjects: 0.160625 ms CreateObjectMapping: 0.072500 ms MarkObjects: 2.817125 ms  DeleteObjects: 0.041625 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 134.608005 seconds.
+  path: Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttackMultiplier.cs
+  artifactKey: Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/SkillEffectScripts/SkillEffectWeaponAttackMultiplier.cs using Guid(e63dd5eabbe78486ea25de1646582786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e58da28aad6157144ed5afbd63bd8fd') in 0.006533 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 12.202455 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetMoveRange.cs
+  artifactKey: Guid(f34f3b583662168479be75d8e973dac0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetMoveRange.cs using Guid(f34f3b583662168479be75d8e973dac0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0f4421ed5f69783d1814b8c68e9e703') in 0.001245 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.653400 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetSelf.cs
+  artifactKey: Guid(ef751e162623d7542874676a22e53977) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetSelf.cs using Guid(ef751e162623d7542874676a22e53977) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '350754951cc41a72ab5932fb77c38b9d') in 0.002372 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.536929 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack.cs
+  artifactKey: Guid(55765468f9518aa41bdcaa6667399665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack.cs using Guid(55765468f9518aa41bdcaa6667399665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '560760d8123bf794eea608b85b40e75f') in 0.001444 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 2.720990 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack1.cs
+  artifactKey: Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetWeaponAttack1.cs using Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8954de93305251104eec42d4e22bd7e') in 0.001134 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 10.713502 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetLineDistance.cs
+  artifactKey: Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetLineDistance.cs using Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c2040e7289138ba37aa8ad1a8e9f6d2') in 0.003001 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002105 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16f787000 may have been prematurely finalized
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.51 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.312 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1313ms)
+		BeginReloadAssembly (156ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (16ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (57ms)
+		EndReloadAssembly (1070ms)
+			LoadAssemblies (62ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (226ms)
+			ReleaseScriptCaches (3ms)
+			RebuildScriptCaches (51ms)
+			SetupLoadedEditorAssemblies (702ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (45ms)
+				ProcessInitializeOnLoadAttributes (635ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (3ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3015 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 18 unused Assets / (22.0 KB). Loaded Objects now: 3762.
+Memory consumption went from 115.3 MB to 115.3 MB.
+Total: 3.007375 ms (FindLiveObjects: 0.164792 ms CreateObjectMapping: 0.078000 ms MarkObjects: 2.734625 ms  DeleteObjects: 0.029083 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 477.241570 seconds.
+  path: Assets/Scripts/Skills/TargetingScripts/SkillTargetLineDistance.cs
+  artifactKey: Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Scripts/Skills/TargetingScripts/SkillTargetLineDistance.cs using Guid(0f1af0a5ecdaf4379964d3ca82a7ba35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f69fb78f92da93fcf51ee77c2537d6de') in 0.006403 seconds 
+Number of asset objects unloaded after import = 0

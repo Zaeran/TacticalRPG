@@ -19,6 +19,6 @@ public class SkillEffectCreateWeapon : ISkillEffect
 
     public string Description(CharacterObject c)
     {
-        return string.Format("Summon and equip weapon: {0}", _weapon.Name);
+        return string.Format("Summon and equip weapon: {0}\n{1}", _weapon.Name, _weapon.WeaponInformation);
     }
 }

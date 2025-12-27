@@ -121,6 +121,11 @@ public class Skill
         get{return _targetRadius.RequiresConfirmation();}
     }
 
+    public List<Vector4> ValidSquaresForPosition(CharacterObject c, Vector4 point)
+    {
+        return _targetRadius.ValidSquares(c, point);
+    }
+
     public bool PrepareConfirmingTargets(CharacterObject c, Vector4 point)
     {
         List<ClickableTarget> hitCharacters = _targetRadius.GetTargets(c, point);

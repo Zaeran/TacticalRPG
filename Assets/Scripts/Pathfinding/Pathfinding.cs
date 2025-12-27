@@ -42,7 +42,6 @@ public class Pathfinding
 
 			int increment = 1;
 			bool pointFound = false;
-			Debug.Log("Current point: " + currentPoint);
 			while (currentPoint.w - increment >= 0)
 			{
 				foreach (Vector4 pnt in openList)
@@ -80,13 +79,11 @@ public class Pathfinding
 		while (currentPoint.w != 0); //repeat until the starting point is reached
 
 		Vector3[] pathList = new Vector3[closedList.Count];
-		Debug.Log("Path list count: " + pathList.Length);
 		//convert the Vector4s into Vector3s
 		int currentPnt = 0;
 		for (int i = 0; i < closedList.Count; i++)
 		{
 			pathList[i] = (Vector3)closedList[closedList.Count - 1 - i];
-			Debug.Log("Point " + i + ": " + pathList[i] + " -- " + closedList[i].w);
 		}
 		//foreach(Vector4 pnt in closedList){
 		//	pathList[Mathf.FloorToInt(pnt.w)] = (Vector3)pnt;

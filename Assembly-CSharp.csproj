@@ -134,7 +134,7 @@
     <Compile Include="Assets\Scripts\Generic\DrawSquaresScript.cs" />
     <Compile Include="Assets\Scripts\UI\QuitBtn.cs" />
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\SkillPrereqStandingOnTerrainType.cs" />
-    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagicCharacter1.cs" />
+    <Compile Include="Assets\Scripts\Skills\TargetingScripts\SkillTargetMagicTerrain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

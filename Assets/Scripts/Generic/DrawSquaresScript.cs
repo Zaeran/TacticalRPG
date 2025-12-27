@@ -6,8 +6,11 @@ public class DrawSquaresScript : MonoBehaviour {
 
 	public static DrawSquaresScript instance;
 
-	public GameObject Node;
-	static List<GameObject> createdObject = new List<GameObject>();
+	public GameObject validSquareObject;
+	static List<GameObject> validTargetSquares = new List<GameObject>();
+	public GameObject aoeSquareObject;
+	static List<GameObject> aoeTargetSquares = new List<GameObject>();
+
 
     private void Awake()
     {
@@ -21,17 +24,37 @@ public class DrawSquaresScript : MonoBehaviour {
 		foreach (Vector4 square in squares)
 		{
 			Vector3 squarePosition = square;
-			createdObject.Add(Instantiate(instance.Node, squarePosition + (Vector3.up * 0.02f), Quaternion.identity) as GameObject);
+			validTargetSquares.Add(Instantiate(instance.validSquareObject, squarePosition + (Vector3.up * 0.02f), Quaternion.identity));
+
+		}
+	}
+
+	public static void DrawAOETagetSquares(List<Vector4> squares)
+    {
+		DestroyAOESquares();
+		foreach (Vector4 square in squares)
+		{
+			Vector3 squarePosition = square;
+			aoeTargetSquares.Add(Instantiate(instance.aoeSquareObject, squarePosition + (Vector3.up * 0.04f), Quaternion.identity));
 
 		}
 	}
 	
 	//removes all created squares
 	public static void DestroyValidSquares(){
-		foreach(GameObject g in createdObject){
+		foreach(GameObject g in validTargetSquares){
 			Destroy(g);
 		}
-		createdObject = new List<GameObject>();
+		validTargetSquares = new List<GameObject>();
 	}
+
+	public static void DestroyAOESquares()
+    {
+		foreach(GameObject g in aoeTargetSquares)
+        {
+			Destroy(g);
+        }
+		aoeTargetSquares = new List<GameObject>();
+    }
 	
 }

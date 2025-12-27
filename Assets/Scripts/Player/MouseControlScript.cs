@@ -11,16 +11,16 @@ public class MouseControlScript : MonoBehaviour
 	static Vector3 clickPosition = Vector3.zero;
 	static Vector4 clickPosition4D = Vector4.zero;
 
+	static Vector3 hoveredSquare = Vector3.zero;
+
 	static List<Vector4> validPoints = new List<Vector4>();
 
 	public static event Vector4Event OnTileClicked;
+	public static event Vector3Event OnTileHovered;
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			LeftClick();
-		}
+		GetValidHoveredSquare();
 	}
 
 	public static void SelectPosition(List<Vector4> valid)
@@ -34,7 +34,7 @@ public class MouseControlScript : MonoBehaviour
 	}
 
 	//left mouse click
-	private static void LeftClick()
+	private static void GetValidHoveredSquare()
 	{
 		clickPosition4D = Vector4.zero;
 		//gets the in-game position of mouse, ensures that only flat ground is clicked, then uses that value for input
@@ -52,11 +52,22 @@ public class MouseControlScript : MonoBehaviour
 					}
 				}
 				if (clickPosition4D != Vector4.zero)
-				{ //the position clicked was a valid position
-					validPoints = new List<Vector4>();
-					if (OnTileClicked != null)
+				{
+					if (hoveredSquare != clickPosition)
 					{
-						OnTileClicked(clickPosition4D); //4D because different elevation can exist for a given position
+						hoveredSquare = clickPosition;
+						if (OnTileHovered != null)
+						{
+							OnTileHovered(hoveredSquare);
+						}
+					}
+					if (Input.GetMouseButtonDown(0))
+					{
+						validPoints = new List<Vector4>();
+						if (OnTileClicked != null)
+						{
+							OnTileClicked(clickPosition4D); //4D because different elevation can exist for a given position
+						}
 					}
 				}
 			}

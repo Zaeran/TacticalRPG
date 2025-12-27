@@ -1,6 +1,5 @@
 PHASE 3 - Targeting improvements
 - Target types (line, cone, AOE, cleave style, everyone, etc.)
-- AOE indicator (blue?) when hovering valid squares
 - Face correct direction when attacking
 - Ranged attacks travel further when higher, less distance when lower
 

@@ -232,10 +232,10 @@ public class FindValidPoints : MonoBehaviour
 									break;
 								}
 							}
-							if (validPoint)
-							{
-								validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
-							}
+						}
+						if (validPoint)
+						{
+							validAttacks.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, horDistanceToPoint));
 						}
 					}
 				}

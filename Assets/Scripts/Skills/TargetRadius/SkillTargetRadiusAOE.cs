@@ -77,4 +77,9 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
     {
         return _aoeDistance.ToString();
     }
+
+    public List<Vector4> ValidSquares(CharacterObject c, Vector4 point)
+    {
+        return FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1, true, _allowedTerrainTypes);
+    }
 }

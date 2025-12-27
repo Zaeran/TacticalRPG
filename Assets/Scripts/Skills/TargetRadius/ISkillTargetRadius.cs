@@ -8,4 +8,5 @@ public interface ISkillTargetRadius
 		string Description(CharacterObject c);
 		bool RequiresConfirmation();
 		bool CanTargetSelf();
+	List<Vector4> ValidSquares(CharacterObject c, Vector4 point);
 }

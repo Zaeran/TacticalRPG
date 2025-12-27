@@ -8,7 +8,7 @@ public class TerrainObject : ClickableTarget
 
     public void Start()
     {
-        if ((int)Random.Range(0, 5) == 2)
+        if ((int)Random.Range(0, 20) == 2)
         {
             _myTerrainType = TerrainType.Water;
         }
@@ -17,7 +17,7 @@ public class TerrainObject : ClickableTarget
             _myTerrainType = TerrainType.Rock;
         }
         
-        GetComponent<MeshRenderer>().material.color = _myTerrainType == TerrainType.Rock ? Color.gray : Color.blue;
+        GetComponent<MeshRenderer>().material.color = _myTerrainType == TerrainType.Rock ? new Color(0.75f,0.75f,0.75f) : Color.blue;
     }
 
     public TerrainType MyTerrainType

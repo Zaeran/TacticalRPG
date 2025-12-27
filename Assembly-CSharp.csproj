@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\BattleUI.cs" />
     <Compile Include="Assets\Scripts\Generic\MovementScript.cs" />
-    <Compile Include="Assets\Scripts\MapContent\TerrainObject.cs" />
+    <Compile Include="Assets\Scripts\Terrain\TerrainObject.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillTrees\SkillTreeGeomancy.cs" />
     <Compile Include="Assets\Scripts\Equipment\Equipment.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectPullTowardsCharacter.cs" />

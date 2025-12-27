@@ -29,4 +29,20 @@ public class EquipmentWeapon : Equipment
     {
         get { return _targetingType; }
     }
+
+    public string WeaponInformation
+    {
+        get
+        {
+            string wName = _name;
+            string damage = _damage.ToString();
+            string range = _range.ToString();
+            string skillTrees = "";
+            foreach(SkillTree s in _allowedSkillTrees)
+            {
+                skillTrees += "- " + s.ToString() + "\n";
+            }
+            return string.Format("{0}\nDAMAGE: {1}\nRANGE: {2}\nSKILL TREES\n{3}", wName, damage, range, skillTrees);
+        }
+    }
 }

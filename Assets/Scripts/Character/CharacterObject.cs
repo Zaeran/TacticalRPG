@@ -110,11 +110,16 @@ public class CharacterObject : ClickableTarget
         if(_activeSkill.RequiresTargetConfirmation)
         {
             proposedTargetPoint = point;
+            StatusText.SetStatusText("Confirm targets? (Press ENTER or ESC)");
             if(_activeSkill.PrepareConfirmingTargets(this, point))
             {
                 confirmingTarget = true;
             }
-            StatusText.SetStatusText("Confirm targets? (Press ENTER or ESC)");
+            else
+            {
+                _activeSkill.StartSkillTargeting(this);
+                StatusText.SetStatusText("Action: " + _activeSkill.Name);
+            }
         }
         else
         {

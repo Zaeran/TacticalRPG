@@ -19,19 +19,6 @@ public class Character
         _characterName = cName;
         _attributes = new Attributes();
         _skills = new List<Skill>();
-        if (cName == "Char 1")
-        {
-            //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
-            _weapon = new EquipmentWeapon("Air Focus", new List<SkillTree>() { SkillTree.Aeromancy }, 0, 0, WeaponTargetingType.Line);
-        }
-        else if(cName == "Char 2")
-        {
-            _weapon = new EquipmentWeapon("Water Focus", new List<SkillTree>() { SkillTree.Hydromancy }, 0, 0, WeaponTargetingType.Line);
-        }
-        else
-        {
-            _weapon = new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 2, 4, WeaponTargetingType.Range);
-        }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 
         SetupSkills();
@@ -135,7 +122,7 @@ public class Character
         get
         {
             List<SkillTree> trees = new List<SkillTree>();
-            foreach(SkillTree t in _weapon.AllowedSkillTrees)
+            foreach(SkillTree t in Weapon.AllowedSkillTrees)
             {
                 trees.Add(t);
             }

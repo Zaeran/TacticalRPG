@@ -12,6 +12,7 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI characterEquipmentText;
     public GameObject skillObject;
     public GameObject skillButtonPrefab;
+        public GameObject weaponButtonPrefab;
 
     public TextMeshProUGUI skillDescriptionText;
 
@@ -47,13 +48,12 @@ public class BattleUI : MonoBehaviour
         c.Attributes.OnRemainingHPChanged += CharacterHPCHanged;
         c.OnWeaponChanged += CharacterWeaponChanged;
         skillObject.SetActive(false);
-        LoadAvailableSkills();
     }
 
     void CharacterTurnEnding(Character c)
     {
         c.Attributes.OnRemainingAPChanged -= CharacterAPChanged;
-                c.Attributes.OnRemainingHPChanged -= CharacterHPCHanged;
+        c.Attributes.OnRemainingHPChanged -= CharacterHPCHanged;
         c.OnWeaponChanged -= CharacterWeaponChanged;
     }
 
@@ -71,6 +71,19 @@ public class BattleUI : MonoBehaviour
     void CharacterWeaponChanged()
     {
         characterEquipmentText.text = "Weapon: " + TurnController.CurrentCharacterTurn.MyCharacter.Weapon.Name;
+        skillObject.SetActive(false);
+        SetSkillDescriptionText("");
+    }
+
+    public void OpenSkillList()
+    {
+        skillObject.SetActive(true);
+        LoadAvailableSkills();
+    }
+    public void OpenWeaponList()
+    {
+        skillObject.SetActive(true);
+        LoadAvailableWeapons();
     }
 
     void LoadAvailableSkills()
@@ -99,5 +112,16 @@ public class BattleUI : MonoBehaviour
     public void SetSkillDescriptionText(string text)
     {
         skillDescriptionText.text = text;
+    }
+
+    void LoadAvailableWeapons()
+    {
+        UIUtilities.ClearChildren(skillObject.transform);
+        List<EquipmentWeapon> allowedSkills = new List<EquipmentWeapon>();
+        foreach(EquipmentWeapon weapon in AllWeapons.GetAllWeapons)
+        {
+            GameObject btn = Instantiate(weaponButtonPrefab, skillObject.transform);
+            btn.GetComponent<WeaponSelectionButton>().Initialize(weapon, this);
+        }
     }
 }

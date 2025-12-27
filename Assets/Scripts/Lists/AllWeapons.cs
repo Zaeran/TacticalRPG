@@ -9,6 +9,7 @@ public class AllWeapons
     public static void Initialize()
     {
         _allWeapons = new List<EquipmentWeapon>();
+        _allWeapons.Add(new EquipmentWeapon("Unarmed", new List<SkillTree>() { SkillTree.Unarmed }, 1, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Sword", new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Club", new List<SkillTree>() { SkillTree.Blunt }, 2, 1, WeaponTargetingType.Line));
         _allWeapons.Add(new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 1, 5, WeaponTargetingType.Range));

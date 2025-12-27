@@ -132,6 +132,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillEffectScripts\SkillEffectHealing.cs" />
     <Compile Include="Assets\Scripts\Skills\PrereqScripts\ISkillPrerequisite.cs" />
     <Compile Include="Assets\Scripts\Generic\DrawSquaresScript.cs" />
+    <Compile Include="Assets\Scripts\UI\QuitBtn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

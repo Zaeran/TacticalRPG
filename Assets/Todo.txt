@@ -1,9 +1,13 @@
-
-- UI
-  - Dynamically generate skills based on allowed options
+- Confirm targets before processing attack
+- indicator above targets that will be hit
+- AOE indicator (blue?) when hovering valid squares
 - Known bug - cancelling a Shoot skill still fires it off later. I suspect events aren't being cleared when skill is cancelled correcfly.
 - Before battle, choose character weapon to equip
     - Choose up to three characters
+
+
+- Terrain types
+- Prerequisite - terrain type
 
 
 - Basic inventory

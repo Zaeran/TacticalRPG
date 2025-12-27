@@ -153,4 +153,28 @@ public class Skill
         return true;
     }
 
+    public string SkillDescription()
+    {
+        CharacterObject currentCharacter = TurnController.CurrentCharacterTurn;
+        string sName = _name;
+        string prereqs = "";
+        for(int i = 0; i < _prereqs.Count; i++)
+        {
+            prereqs += "- " + _prereqs[i].Description(currentCharacter) + "\n";
+        }
+        string costs = "";
+        for(int i = 0; i < _skillCost.Count; i++)
+        {
+            costs += "- " + _skillCost[i].Description(currentCharacter) + "\n";
+        }
+        string targeting = _targeting.Description(currentCharacter);
+        string targetRadius = _targetRadius.Description(currentCharacter);
+        string effects = "";
+        for(int i = 0; i < _effects.Count; i++)
+        {
+            effects += "- " + _effects[i].Description(currentCharacter) + "\n";
+        }
+        return string.Format("{0}\nPREREQUISITES\n{1}COSTS\n{2}\nRANGE: {3}\nRADIUS: {4}\nEFFECTS\n{5}", sName, prereqs, costs, targeting, targetRadius, effects);
+    }
+
 }

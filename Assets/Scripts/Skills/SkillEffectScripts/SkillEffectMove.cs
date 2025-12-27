@@ -14,4 +14,9 @@ public class SkillEffectMove : ISkillEffect
             c.GetComponent<MovementScript>().MoveToPoint(c, movePath);
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Move character");
+    }
 }

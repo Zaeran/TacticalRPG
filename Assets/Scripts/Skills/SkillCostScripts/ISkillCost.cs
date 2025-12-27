@@ -6,4 +6,6 @@ public interface ISkillCost
 {
     bool CanPayCost(CharacterObject o, Vector4 point);
    bool PayCost(CharacterObject c, Vector4 point);
+
+   string Description(CharacterObject c);
 }

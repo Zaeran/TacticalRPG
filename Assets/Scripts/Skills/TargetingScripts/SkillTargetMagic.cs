@@ -19,5 +19,10 @@ public class SkillTargetMagic : ISkillTargeting
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }
+
+    public string Description(CharacterObject c)
+    {
+        return string.Format("{0}{1}", _magicRange, _canTargetSelf ? "(S)" : "");
+    }
 }
 

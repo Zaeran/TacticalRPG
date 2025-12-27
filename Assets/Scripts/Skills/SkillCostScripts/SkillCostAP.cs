@@ -25,4 +25,9 @@ public class SkillCostAP : ISkillCost
         c.MyCharacter.Attributes.ModifyAP(-_apCost);
         return true;
     }
+
+    public string Description(CharacterObject c)
+    {
+        return "AP: " + _apCost.ToString();
+    }
 }

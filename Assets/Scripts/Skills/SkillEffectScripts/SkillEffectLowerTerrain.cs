@@ -16,4 +16,9 @@ public class SkillEffectLowerTerrain : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Lower terrain height by 1");
+    }
 }

@@ -19,4 +19,9 @@ public class SkillTargetWeaponAttack : ISkillTargeting
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }
+
+     public string Description(CharacterObject c)
+    {
+        return string.Format("Weapon range ({0})", c.MyCharacter.Weapon.Range);
+    }
 }

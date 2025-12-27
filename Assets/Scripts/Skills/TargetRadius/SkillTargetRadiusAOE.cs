@@ -52,4 +52,9 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
         }
         return hitCharacters;
     }
+
+     public string Description(CharacterObject c)
+    {
+        return _aoeDistance.ToString();
+    }
 }

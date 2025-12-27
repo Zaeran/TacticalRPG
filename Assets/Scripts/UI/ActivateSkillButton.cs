@@ -5,19 +5,29 @@ using TMPro;
 
 public class ActivateSkillButton : MonoBehaviour
 {
-    string _mySkill;
+    Skill _mySkill;
     BattleUI _ui;
     public TextMeshProUGUI myText;
 
-    public void Initialize(string skill, BattleUI ui)
+    public void Initialize(Skill skill, BattleUI ui)
     {
         _mySkill = skill;
-        myText.text = skill;
+        myText.text = skill.Name;
         _ui = ui;
     }
 
     public void SelectSkill()
     {
-        _ui.UseAction(_mySkill);
+        _ui.UseAction(_mySkill.Name);
+    }
+
+    public void ShowSkillDescription()
+    {
+        _ui.SetSkillDescriptionText(_mySkill.SkillDescription());
+    }
+
+    public void HideSkillDescriptionText()
+    {
+        _ui.SetSkillDescriptionText("");
     }
 }

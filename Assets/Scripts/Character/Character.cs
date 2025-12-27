@@ -22,15 +22,15 @@ public class Character
         if (cName == "Char 1")
         {
             //_weapon = new EquipmentWeapon("Sword", EquipmentType.Weapon, 2, 1, WeaponTargetingType.Line);
-            _weapon = new EquipmentWeapon("Sword", new List<SkillTree>() { SkillTree.Blade }, 2, 1, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Air Focus", new List<SkillTree>() { SkillTree.Aeromancy }, 0, 0, WeaponTargetingType.Line);
         }
         else if(cName == "Char 2")
         {
-            _weapon = new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 1, 4, WeaponTargetingType.Range);
+            _weapon = new EquipmentWeapon("Water Focus", new List<SkillTree>() { SkillTree.Hydromancy }, 0, 0, WeaponTargetingType.Line);
         }
         else
         {
-            _weapon = new EquipmentWeapon("Potion Kit", new List<SkillTree>() { SkillTree.Potions }, 0, 1, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Club", new List<SkillTree>() { SkillTree.Blunt }, 2, 1, WeaponTargetingType.Line);
         }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 

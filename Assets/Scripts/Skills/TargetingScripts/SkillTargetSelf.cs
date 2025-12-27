@@ -9,4 +9,9 @@ public class SkillTargetSelf : ISkillTargeting
         DrawSquaresScript.DrawValidSquares(new List<Vector4>() { c.transform.position });
         MouseControlScript.SelectPosition(new List<Vector4>() { c.transform.position });
     }
+
+     public string Description(CharacterObject c)
+    {
+        return string.Format("Self");
+    }
 }

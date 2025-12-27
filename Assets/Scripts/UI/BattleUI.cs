@@ -13,6 +13,8 @@ public class BattleUI : MonoBehaviour
     public GameObject skillObject;
     public GameObject skillButtonPrefab;
 
+    public TextMeshProUGUI skillDescriptionText;
+
     private void Awake()
     {
         TurnController.OnCharacterTurnEnding += CharacterTurnEnding;
@@ -74,7 +76,7 @@ public class BattleUI : MonoBehaviour
     void LoadAvailableSkills()
     {
         UIUtilities.ClearChildren(skillObject.transform);
-        List<string> allowedSkills = new List<string>();
+        List<Skill> allowedSkills = new List<Skill>();
         foreach(Skill s in AllSkills.GetAllSkills)
         {
             if(s.Name == "Move")
@@ -83,14 +85,19 @@ public class BattleUI : MonoBehaviour
             }
             if (s.CanUseWithSkillTrees(TurnController.CurrentCharacterTurn.MyCharacter.ActiveSkillTrees))
             {
-                allowedSkills.Add(s.Name);
+                allowedSkills.Add(s);
             }
         }
 
-        foreach(string s in allowedSkills)
+        foreach(Skill s in allowedSkills)
         {
             GameObject btn = Instantiate(skillButtonPrefab, skillObject.transform);
             btn.GetComponent<ActivateSkillButton>().Initialize(s, this);
         }
+    }
+
+    public void SetSkillDescriptionText(string text)
+    {
+        skillDescriptionText.text = text;
     }
 }

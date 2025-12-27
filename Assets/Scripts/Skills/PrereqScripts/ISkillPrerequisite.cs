@@ -6,4 +6,5 @@ public interface ISkillPrerequisite
 {
     bool MeetsPrerequisite(CharacterObject c);
     string GetPrerequisiteFailureText();
+    string Description(CharacterObject c);
 }

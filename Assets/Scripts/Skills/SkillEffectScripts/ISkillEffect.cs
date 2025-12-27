@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ISkillEffect
 {
     void ProcessEffect(CharacterObject c, List<ClickableTarget> hitCharacters, Vector4 point);
+    string Description(CharacterObject c);
 }

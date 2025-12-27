@@ -16,4 +16,9 @@ public class SkillEffectCreateWeapon : ISkillEffect
         DrawSquaresScript.DestroyValidSquares();
         c.MyCharacter.EquipNewWeapon(_weapon);
     }
+
+    public string Description(CharacterObject c)
+    {
+        return string.Format("Summon and equip weapon: {0}", _weapon.Name);
+    }
 }

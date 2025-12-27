@@ -18,4 +18,9 @@ public class SkillEffectWeaponAttack : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Deal damage equal to your weapon's attack stat ({0})", c.MyCharacter.Weapon.Damage);
+    }
 }

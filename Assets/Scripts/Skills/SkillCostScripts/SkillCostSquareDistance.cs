@@ -30,4 +30,9 @@ public class SkillCostSquareDistance : ISkillCost
         c.MyCharacter.Attributes.ModifyAP(-apCost);
         return true;
     }
+
+    public string Description(CharacterObject c)
+    {
+        return "One AP per square";
+    }
 }

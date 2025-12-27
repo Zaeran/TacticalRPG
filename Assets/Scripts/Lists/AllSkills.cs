@@ -19,6 +19,7 @@ public class AllSkills
         HydromancySkills();
         PotionSkills();
         ShieldSkills();
+        UnarmedSkills();
     }
 
     public static Skill GetSkillForName(string skillName)
@@ -50,7 +51,7 @@ public class AllSkills
     static void UniversalSkills()
     {
         MoveSkill();
-        PunchSkill();
+
     }
 
     static void MoveSkill()
@@ -62,18 +63,6 @@ public class AllSkills
         skill.AddSkillCost(new SkillCostSquareDistance());
         skill.AddSkillEffect(new SkillEffectMove());
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false));
-        _allSkills.Add(skill);
-    }
-
-    static void PunchSkill()
-    {
-        Skill skill = new Skill("Punch");
-        skill.AddPrerequisite(new SkillPrereqAPCost(2));
-        skill.AddSkillTags(SkillTag.Attack);
-        skill.SetTargeting(new SkillTargetWeaponAttack());
-        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
-        skill.AddSkillCost(new SkillCostAP(2));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
         _allSkills.Add(skill);
     }
     #endregion
@@ -94,7 +83,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetSelf());
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(2));
         skill.AddSkillCost(new SkillCostAP(4));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(1, false, true));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(2, false, true));
         _allSkills.Add(skill);
     }
 
@@ -172,7 +161,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetWeaponAttack());
         skill.AddSkillEffect(new SkillEffectWeaponAttack());
         skill.AddSkillEffect(new SkillEffectKnockbackFromCharacter(1));
-        skill.AddSkillCost(new SkillCostAP(2));
+        skill.AddSkillCost(new SkillCostAP(4));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
         _allSkills.Add(skill);
     }
@@ -289,6 +278,26 @@ public class AllSkills
     {
         //block skill
         //blocking is a status effect
+    }
+    #endregion
+
+    #region Unarmed
+    static void UnarmedSkills()
+    {
+           PunchSkill();
+    }
+
+    static void PunchSkill()
+    {
+        Skill skill = new Skill("Punch");
+        skill.AddPrerequisite(new SkillPrereqAPCost(2));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Unarmed));
+        skill.AddSkillTags(SkillTag.Attack);
+        skill.SetTargeting(new SkillTargetWeaponAttack());
+        skill.AddSkillEffect(new SkillEffectUnarmedDamage());
+        skill.AddSkillCost(new SkillCostAP(2));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true));
+        _allSkills.Add(skill);
     }
     #endregion
 }

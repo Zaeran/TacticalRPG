@@ -24,4 +24,9 @@ public class SkillEffectHealing : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Heal {0} damage from targets", _healing);
+    }
 }

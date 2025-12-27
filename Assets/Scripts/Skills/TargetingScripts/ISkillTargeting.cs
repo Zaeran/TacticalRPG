@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ISkillTargeting
 {
     void SelectTarget(CharacterObject c);
+    string Description(CharacterObject c);
 }

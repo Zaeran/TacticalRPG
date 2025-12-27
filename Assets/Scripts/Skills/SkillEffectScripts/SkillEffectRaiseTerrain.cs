@@ -16,4 +16,9 @@ public class SkillEffectRaiseTerrain : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Raise terrain height by 1");
+    }
 }

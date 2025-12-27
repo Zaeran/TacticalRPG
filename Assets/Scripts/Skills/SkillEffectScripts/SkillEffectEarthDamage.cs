@@ -24,4 +24,9 @@ public class SkillEffectEarthDamage : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Deal {0} damage to targets", _damage);
+    }
 }

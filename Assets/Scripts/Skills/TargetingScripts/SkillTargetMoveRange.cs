@@ -10,4 +10,9 @@ public class SkillTargetMoveRange : ISkillTargeting
         DrawSquaresScript.DrawValidSquares(validPoints);
         MouseControlScript.SelectPosition(validPoints);
     }
+
+     public string Description(CharacterObject c)
+    {
+        return "One square per AP";
+    }
 }

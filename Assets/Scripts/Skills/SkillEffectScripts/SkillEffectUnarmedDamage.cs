@@ -18,4 +18,9 @@ public class SkillEffectUnarmedDamage : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Deal 1 damage to targets");
+    }
 }

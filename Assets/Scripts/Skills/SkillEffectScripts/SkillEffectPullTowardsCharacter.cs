@@ -46,4 +46,9 @@ public class SkillEffectPullTowardsCharacter : ISkillEffect
             }
         }
     }
+
+        public string Description(CharacterObject c)
+    {
+        return string.Format("Pull target {0} squares towards caster", _pullDistance);
+    }
 }

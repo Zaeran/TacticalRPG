@@ -46,4 +46,9 @@ public class SkillEffectKnockbackFromCharacter : ISkillEffect
             }
         }
     }
+
+    public string Description(CharacterObject c)
+    {
+        return string.Format("Move target {0} squares away from caster", _knockbackDistance);
+    }
 }

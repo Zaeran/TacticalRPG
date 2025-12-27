@@ -20,4 +20,9 @@ public class SkillPrereqAPCost : ISkillPrerequisite
     {
         return "Not enough AP";
     }
+
+    public string Description(CharacterObject c)
+    {
+        return "AP: " + _apCost.ToString();
+    }
 }

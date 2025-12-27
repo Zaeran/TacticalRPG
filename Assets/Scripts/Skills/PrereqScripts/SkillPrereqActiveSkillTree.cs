@@ -25,4 +25,9 @@ public class SkillPrereqActiveSkillTree : ISkillPrerequisite
     {
         return "Requires active skill tree: " + _requiredSkillTree.ToString();
     }
+
+    public string Description(CharacterObject c)
+    {
+        return "Active skill tree: " + _requiredSkillTree;
+    }
 }

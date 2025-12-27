@@ -111,6 +111,11 @@ public class Skill
         }
     }
 
+    public void CancelSkill()
+    {
+        MouseControlScript.OnTileClicked -= TargetSelected;
+    }
+
     public bool RequiresTargetConfirmation
     {
         get{return _targetRadius.RequiresConfirmation();}

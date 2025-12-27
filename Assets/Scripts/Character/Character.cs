@@ -30,7 +30,7 @@ public class Character
         }
         else
         {
-            _weapon = new EquipmentWeapon("Club", new List<SkillTree>() { SkillTree.Blunt }, 2, 1, WeaponTargetingType.Line);
+            _weapon = new EquipmentWeapon("Bow", new List<SkillTree>() { SkillTree.Bow }, 2, 4, WeaponTargetingType.Range);
         }
        // _armour = new EquipmentArmour("Light", EquipmentType.Armour, new List<SkillTree>() { SkillTree.Armour }, 1, 1);
 

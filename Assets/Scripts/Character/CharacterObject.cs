@@ -96,11 +96,13 @@ public class CharacterObject : ClickableTarget
         if (_activeSkill != null)
         {
             _activeSkill.OnSkillTargeted -= SkillTargeted;
+            _activeSkill.CancelSkill();
             _activeSkill = null;
             StatusText.SetStatusText("");
         }
         DrawSquaresScript.DestroyValidSquares();
         TargetIndicatorManager.RemoveIndicators();
+        confirmingTarget = false;
     }
 
     void SkillTargeted(Vector4 point)

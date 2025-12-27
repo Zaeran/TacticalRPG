@@ -30,6 +30,18 @@ public class AllWeapons
             return _allWeapons;
         }
     }
+
+    public static EquipmentWeapon GetWeaponByName(string wName)
+    {
+        foreach(EquipmentWeapon w in _allWeapons)
+        {
+            if(w.Name == wName)
+            {
+                return w;
+            }
+        }
+        return null;
+    }
 }
 
 /*

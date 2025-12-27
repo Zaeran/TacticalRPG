@@ -246,7 +246,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetMagicTerrain(3, new List<TerrainType>() { TerrainType.Rock }));
         skill.AddSkillEffect(new SkillEffectRaiseTerrain());
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false, new List<TerrainType>() { TerrainType.Rock }));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, true, new List<TerrainType>() { TerrainType.Rock }));
         _allSkills.Add(skill);
     }
 
@@ -259,7 +259,7 @@ public class AllSkills
         skill.SetTargeting(new SkillTargetMagicTerrain(3, new List<TerrainType>() { TerrainType.Rock }));
         skill.AddSkillEffect(new SkillEffectLowerTerrain());
         skill.AddSkillCost(new SkillCostAP(3));
-        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, false, new List<TerrainType>() { TerrainType.Rock }));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, true, false, true, true, new List<TerrainType>() { TerrainType.Rock }));
         _allSkills.Add(skill);
     }
 

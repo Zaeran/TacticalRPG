@@ -38,7 +38,7 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
 
    public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)
     {
-        List<Vector4> points = FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1, true, _allowedTerrainTypes);
+        List<Vector4> points = FindValidPoints.GetPoints("Magic", point, _aoeDistance, 1, true, _allowedTerrainTypes);
         List<ClickableTarget> hitCharacters = new List<ClickableTarget>();
         foreach (Vector4 square in points)
         {
@@ -80,6 +80,6 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
 
     public List<Vector4> ValidSquares(CharacterObject c, Vector4 point)
     {
-        return FindValidPoints.GetPoints("Ranged", point, _aoeDistance, 1, true, _allowedTerrainTypes);
+        return FindValidPoints.GetPoints("Magic", point, _aoeDistance, 1, true, _allowedTerrainTypes);
     }
 }

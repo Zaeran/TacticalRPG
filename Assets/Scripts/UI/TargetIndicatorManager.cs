@@ -25,6 +25,7 @@ public class TargetIndicatorManager : MonoBehaviour
 
     public static void RemoveIndicators()
     {
+        Debug.Log("Calling remove indicators");
         TargetIndicator.RemoveIndicators();
     }
 }

@@ -10,6 +10,7 @@ public class CharacterObject : ClickableTarget
     Skill _activeSkill;
 
     bool selectingFacing = false;
+    bool confirmingTarget;
 
     private void Awake()
     {
@@ -46,6 +47,20 @@ public class CharacterObject : ClickableTarget
             {
                 selectingFacing = false;
                 TurnController.TurnOver();
+            }
+        }
+        if (confirmingTarget)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Debug.Log("Confirm");
+                ConfirmTargets(proposedTargetPoint);
+                confirmingTarget = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                 confirmingTarget = false;
+                 CancelSkill();
             }
         }
     }
@@ -85,19 +100,27 @@ public class CharacterObject : ClickableTarget
             StatusText.SetStatusText("");
         }
         DrawSquaresScript.DestroyValidSquares();
+        TargetIndicatorManager.RemoveIndicators();
     }
 
     void SkillTargeted(Vector4 point)
     {
         if(_activeSkill.RequiresTargetConfirmation)
         {
-            _activeSkill.PrepareConfirmingTargets(this, point);
+            proposedTargetPoint = point;
+            if(_activeSkill.PrepareConfirmingTargets(this, point))
+            {
+                confirmingTarget = true;
+            }
+            StatusText.SetStatusText("Confirm targets? (Press ENTER or ESC)");
         }
         else
         {
             ConfirmTargets(point);
         }
     }
+
+Vector4 proposedTargetPoint;
 
     void ConfirmTargets(Vector4 point)
     {
@@ -113,6 +136,7 @@ public class CharacterObject : ClickableTarget
             _activeSkill.StartSkillTargeting(this);
             StatusText.SetStatusText("Action: " + _activeSkill.Name);
         }
+        TargetIndicatorManager.RemoveIndicators();
     }
 
     public void SetAction(string actionName)

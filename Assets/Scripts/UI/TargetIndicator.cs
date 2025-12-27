@@ -13,7 +13,8 @@ public class TargetIndicator : MonoBehaviour
 
     void Remove()
     {
-         OnTimeToGo += Remove;   
+        Debug.Log("Removing indicator");
+         OnTimeToGo -= Remove;   
         Destroy(gameObject);
     }
 

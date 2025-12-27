@@ -19,4 +19,9 @@ public class TerrainObject : ClickableTarget
         
         GetComponent<MeshRenderer>().material.color = _myTerrainType == TerrainType.Rock ? Color.gray : Color.blue;
     }
+
+    public TerrainType MyTerrainType
+    {
+        get { return _myTerrainType; }
+    }
 }

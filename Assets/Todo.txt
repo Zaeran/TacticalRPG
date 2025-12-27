@@ -1,6 +1,7 @@
 PHASE 2 - Terrain types + advanced targeting
 + Terrain types
 - Prerequisite - terrain type
+- Targeting - terrain type
 - Water will need to flow...
 
 PHASE 3 - Targeting improvements

@@ -282,6 +282,7 @@ public class AllSkills
     {
         CreateIceBlade();
         WaterHeal();
+        FullWaterHeal();
     }
 
     static void CreateIceBlade()
@@ -305,6 +306,20 @@ public class AllSkills
         skill.AddSkillTags(SkillTag.Buff);
         skill.SetTargeting(new SkillTargetMagic(1, true));
         skill.AddSkillEffect(new SkillEffectHealing(1));
+        skill.AddSkillCost(new SkillCostAP(3));
+        skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
+        _allSkills.Add(skill);
+    }
+
+    static void FullWaterHeal()
+    {
+        Skill skill = new Skill("Full Water Heal");
+        skill.AddPrerequisite(new SkillPrereqAPCost(3));
+        skill.AddPrerequisite(new SkillPrereqActiveSkillTree(SkillTree.Hydromancy));
+        skill.AddPrerequisite(new SkillPrereqStandingOnTerrainType(new List<TerrainType>() { TerrainType.Water }));
+        skill.AddSkillTags(SkillTag.Buff);
+        skill.SetTargeting(new SkillTargetMagic(1, true));
+        skill.AddSkillEffect(new SkillEffectHealing(5));
         skill.AddSkillCost(new SkillCostAP(3));
         skill.SetSkillTargetRadius(new SkillTargetRadiusAOE(0, false, true, true, true));
         _allSkills.Add(skill);

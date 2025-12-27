@@ -99,11 +99,15 @@ public class FindValidPoints : MonoBehaviour
 							//adjacent point is within acceptable height limits
 							if (!positionList.Contains(rh.point))
 							{
+								//Calculate move requirement of terrain
+								TerrainObject terrain = rh.collider.GetComponent<TerrainObject>();
+								int moveCost = terrain.MyTerrainType == TerrainType.Rock ? 1 : 2;
+
 								//point hasn't been travelled to before
-								if (distanceWalked < maxMove)
+								if (distanceWalked + moveCost <= maxMove)
 								{
 									//haven't exceeded max move distance
-									pointList.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, distanceWalked + 1));
+									pointList.Add(new Vector4(rh.point.x, rh.point.y, rh.point.z, distanceWalked + moveCost));
 									positionList.Add(rh.point);
 								}
 							}

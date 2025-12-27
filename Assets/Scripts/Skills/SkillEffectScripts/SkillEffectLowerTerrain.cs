@@ -13,6 +13,10 @@ public class SkillEffectLowerTerrain : ISkillEffect
             bool isCharacterToMove = false;
             if(hitObject is TerrainObject)
             {
+                if(((TerrainObject)hitObject).MyTerrainType != TerrainType.Rock)
+                {
+                    continue;
+                }
                 hitObject.transform.parent.localScale += new Vector3(0, -0.5f, 0);
                 if (hitObject.transform.parent.localScale.y < 0.5f)
                 {

@@ -12,6 +12,10 @@ public class SkillEffectRaiseTerrain : ISkillEffect
         {
             if (hitObject is TerrainObject)
             {
+                if (((TerrainObject)hitObject).MyTerrainType != TerrainType.Rock)
+                {
+                    continue;
+                }
                 hitObject.transform.parent.localScale += new Vector3(0, 0.5f, 0);
             }
             RaycastHit hit;

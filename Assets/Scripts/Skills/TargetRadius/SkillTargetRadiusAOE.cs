@@ -8,13 +8,15 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
     bool _canHitTerrain = false;
     bool _canHitCharacters = false;
     bool _requiresConfirmation = true;
+    bool _canTargetSelf;
 
-    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters, bool requiresConfirmation)
+    public SkillTargetRadiusAOE(int distance, bool canHitTerrain, bool canHitCharacters, bool requiresConfirmation, bool canTargetSelf)
     {
         _aoeDistance = distance;
         _canHitTerrain = canHitTerrain;
         _canHitCharacters = canHitCharacters;
         _requiresConfirmation = requiresConfirmation;
+        _canTargetSelf = canTargetSelf;
     }
 
     public void SetAOE(int distance)
@@ -25,6 +27,11 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
     public bool RequiresConfirmation()
     {
         return _requiresConfirmation;
+    }
+
+    public bool CanTargetSelf()
+    {
+        return _canTargetSelf;
     }
 
    public List<ClickableTarget> GetTargets(CharacterObject c, Vector4 point)
@@ -44,6 +51,10 @@ public class SkillTargetRadiusAOE : ISkillTargetRadius
                 ClickableTarget hitObject = hits[i].collider.GetComponent<ClickableTarget>();
                 if (hitObject != null)
                 {
+                    if(hitObject == c && !_canTargetSelf)
+                    {
+                        continue;
+                    }
                     if ((hitObject is TerrainObject && _canHitTerrain) || (hitObject is CharacterObject && _canHitCharacters))
                     {
                         hitCharacters.Add(hitObject);

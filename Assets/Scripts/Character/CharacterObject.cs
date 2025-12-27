@@ -74,7 +74,7 @@ public class CharacterObject : ClickableTarget
     {
         selectingFacing = true;
         DrawSquaresScript.DestroyValidSquares();
-        StatusText.SetStatusText("Set facing direction");
+        StatusText.SetStatusText("Set facing direction\n(Arrow keys + Enter)");
     }
 
     public void UseAP(int amount)

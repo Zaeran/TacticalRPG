@@ -1,13 +1,8 @@
-PHASE 2 - Terrain types + advanced targeting
-- Feed terrain type into pathfinding algorithm
-- Targeting - terrain type
-- Water will need to flow...
-
 PHASE 3 - Targeting improvements
 - Target types (line, cone, AOE, cleave style, everyone, etc.)
 - AOE indicator (blue?) when hovering valid squares
 - Face correct direction when attacking
-- Projectiles travel further when higher, less distance when lower
+- Ranged attacks travel further when higher, less distance when lower
 
 PHASE 4 - Basic graphics overhaul
 - Simple models with animation
@@ -22,9 +17,17 @@ PHASE 5
   - Showing what is currently equipped
   - Basic equipment sprites?
 
-  PHASE 6
+ PHASE 6
 - Status effects -> dictionary string/int of active status effects
 
+PHASE 7
+- Flowing water
+- Terrain type: Water source - Doesn't disappear when flowing
+- Water terrain flows downwards
+- Hydromancy - create water source
+
+PHASE 8
+- Multi-turn skills
 
 - XP and levelling up
 - Levelling skills independently

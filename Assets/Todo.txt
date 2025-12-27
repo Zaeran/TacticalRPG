@@ -1,13 +1,14 @@
 PHASE 2 - Terrain types + advanced targeting
-- terrain actually changes height, not moving an object up/down
-- Terrain types
++ Terrain types
 - Prerequisite - terrain type
+- Water will need to flow...
+
+PHASE 3 - Targeting improvements
 - Target types (line, cone, AOE, cleave style, everyone, etc.)
 - AOE indicator (blue?) when hovering valid squares
 - Face correct direction when attacking
 
-PHASE 3
-
+PHASE 4
 - Basic inventory
   - Character slots
   - UI for equipping things
